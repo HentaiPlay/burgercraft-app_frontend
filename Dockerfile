@@ -1,12 +1,13 @@
 # BUILD
-FROM node:lts-alpine as build-stage
-WORKDIR /app
-COPY package*.json ./
+FROM node:18.16.0 as build-stage
+WORKDIR /
+COPY burgercraft-app_frontend/package*.json ./
 RUN npm install
-COPY . .
+COPY burgercraft-app_frontend .
+COPY .env ./
 RUN npm run build
 
 # PROD
-FROM nginx:stable-alpine as production-stage
-COPY --from=build-stage /app/dist /usr/share/nginx/html
+FROM nginx:1.19.0-alpine as production-stage
+COPY --from=build-stage /dist /usr/share/nginx/html
 CMD ["nginx", "-g", "daemon off;"]
