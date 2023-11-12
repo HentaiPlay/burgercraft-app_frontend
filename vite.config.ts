@@ -47,7 +47,7 @@ export default defineConfig({
           importStyle: 'sass'
         })
       ],
-      dts: 'src/components.d.ts'
+      dts: 'src/shared/components.d.ts'
     })
   ]
 })
