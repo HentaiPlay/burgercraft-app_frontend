@@ -1,0 +1,76 @@
+// margins
+@mixin ma($margin) {
+  margin: $margin !important;
+}
+
+@mixin mt($margin) {
+  margin-top: $margin !important;
+}
+
+@mixin mr($margin) {
+  margin-right: $margin !important;
+}
+
+@mixin mb($margin) {
+  margin-bottom: $margin !important;
+}
+
+@mixin ml($margin) {
+  margin-left: $margin !important;
+}
+
+@mixin mx($margin) {
+  @include mr($margin);
+  @include ml($margin);
+}
+
+@mixin my($margin) {
+  @include mt($margin);
+  @include mb($margin);
+}
+
+// paddings
+@mixin pa($padding) {
+  padding: $padding !important;
+}
+
+@mixin pt($padding) {
+  padding-top: $padding !important;
+}
+
+@mixin pr($padding) {
+  padding-right: $padding !important;
+}
+
+@mixin pb($padding) {
+  padding-bottom: $padding !important;
+}
+
+@mixin pl($padding) {
+  padding-left: $padding !important;
+}
+
+@mixin px($padding) {
+  @include pr($padding);
+  @include pl($padding);
+}
+
+@mixin py($padding) {
+  @include pt($padding);
+  @include pb($padding);
+}
+
+// прочее
+@mixin border($style, $size, $color, $radius: 0px) {
+  border: $style $size $color !important;
+  border-radius: $radius !important;
+}
+
+@mixin color-scheme($color, $background-color) {
+  color: $color !important;
+  background-color: $background-color !important;
+}
+
+@mixin no__copy {
+  user-select: none;
+}
