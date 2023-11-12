@@ -1,0 +1,15 @@
+@use './themes/colors/default.colors' as colors;
+
+// Переопределяем цвета основной темы и стили компонентов которые есть
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: colors.$colors,
+  $bg-color: colors.$bg-color,
+  // Кнопки
+  $button-padding-horizontal:
+    (
+      'default': 20px
+    )
+);
+
+// Подключаем темную тему
+@use './themes/dark.scss';
