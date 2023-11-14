@@ -1,14 +1,25 @@
 @use './themes/colors/default.colors' as colors;
+@use './components/index.scss' as components;
 
 // Переопределяем цвета основной темы и стили компонентов которые есть
 @forward 'element-plus/theme-chalk/src/common/var.scss' with (
   $colors: colors.$colors,
   $bg-color: colors.$bg-color,
-  // Кнопки
-  $button-padding-horizontal:
-    (
-      'default': 20px
-    )
+  // Кнопка
+  $button: components.$button,
+  $button-padding-horizontal: components.$button-padding-horizontal,
+  $button-padding-vertical: components.$button-padding-vertical,
+  // Инпут
+  $input: components.$input,
+  $input-disabled: components.$input-disabled,
+  $input-font-size: components.$input-font-size,
+  $input-padding-horizontal: components.$input-padding-horizontal,
+  // Селект
+  $select: components.$select,
+  $select-option: components.$select-option,
+  $select-group: components.$select-group,
+  $select-dropdown: components.$select-dropdown,
+  $select-tags-prefix-padding: components.$select-tags-prefix-padding
 );
 
 // Подключаем темную тему
