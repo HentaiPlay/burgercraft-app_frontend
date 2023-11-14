@@ -1,26 +1,26 @@
 $colors: (
   'primary': (
-    'base': green
+    'base': #3b255e
   ),
   'success': (
     'base': #21ba45
   ),
   'warning': (
-    'base': #f2711c
+    'base': #e8af3c
   ),
   'danger': (
-    'base': #db2828
+    'base': #ed6351
   ),
   'error': (
-    'base': #db2828
+    'base': #ed6351
   ),
   'info': (
-    'base': #42b8dd
+    'base': #615f5f
   )
 );
 
 $bg-color: (
-  '': #f7f5fc,
-  'page': #d3c8f3,
-  'overlay': rgb(175, 175, 175)
+  '': #f9f5fc,
+  'page': #905fde,
+  'overlay': #b3aeb8
 );
