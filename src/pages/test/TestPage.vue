@@ -1,26 +1,126 @@
 <script setup lang="ts">
   import { useDark, useToggle } from '@vueuse/core'
+  import { ref } from 'vue'
+  // кнопки
   const isDark = useDark()
   const toggleDark = useToggle(isDark)
+  function changeTheme() {
+    toggleDark()
+  }
+
+  // инпуты
+  const input = ref('')
+
+  // селекты
+  const select = ref('')
+  const options = [
+    {
+      value: 'Option1',
+      label: 'Option1'
+    },
+    {
+      value: 'Option2',
+      label: 'Option2'
+    },
+    {
+      value: 'Option3',
+      label: 'Option3'
+    },
+    {
+      value: 'Option4',
+      label: 'Option4'
+    },
+    {
+      value: 'Option5',
+      label: 'Option5'
+    }
+  ]
 </script>
 
 <template>
   <div class="d-flex flex-column">
-    <el-button @click="toggleDark()">Сменить тему</el-button>
+    <!-- Кнопки -->
+    <div class="buttons">
+      <el-button disabled>Заблокировано</el-button>
+      <el-button>Просто кнопка</el-button>
+      <el-button type="success">Принять</el-button>
+      <el-button type="warning">Отклонить</el-button>
+      <el-button type="danger">Удалить</el-button>
+      <el-button @click="changeTheme">Сменить тему</el-button>
+    </div>
+
+    <!-- Инпуты -->
+    <div class="inputs">
+      <el-input
+        v-model="input"
+        placeholder="Please input"
+      />
+      <el-input
+        v-model="input"
+        disabled
+        placeholder="Please input"
+      />
+    </div>
+
+    <!-- Селекты -->
+    <div class="selects">
+      <!-- Обычный селект -->
+      <el-select
+        v-model="select"
+        placeholder="Select"
+      >
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+
+      <!-- Заблокированный селект -->
+      <el-select
+        v-model="select"
+        disabled
+        placeholder="Select disable"
+      >
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+    </div>
 
     <my-test-component />
 
-    <a href="https://google.com">какая та ссылка</a>
+    <div class="link">
+      <a href="https://google.com">какая та ссылка</a>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
   div {
     background-color: colors.$bg-color;
-    color: var(--el-color-primary) !important;
-    @include mixins.color-scheme(red, green);
   }
-  a {
-    color: colors.$primary;
+  .link {
+    a {
+      color: colors.$primary;
+    }
+    padding: 15px;
+    background-color: colors.$bg-color-page;
+  }
+  .inputs {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    width: 800px !important;
+  }
+  .buttons {
+    padding: 20px;
+  }
+  .selects {
+    padding: 20px;
   }
 </style>
