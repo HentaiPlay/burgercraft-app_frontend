@@ -1,0 +1,32 @@
+@use '@assets/styles/_colors.scss' as colors;
+
+// Button
+$button: (
+  'font-weight': regular,
+  'border-color': colors.$primary,
+  'bg-color': colors.$bg-color,
+  'text-color': colors.$primary,
+  'disabled-text-color': colors.$bg-color-overlay,
+  'disabled-bg-color': colors.$bg-color,
+  'disabled-border-color': colors.$bg-color-overlay,
+  'divide-border-color': rgba(white, 0.5),
+  'hover-text-color': colors.$bg-color,
+  'hover-bg-color': colors.$primary,
+  'hover-border-color': colors.$primary,
+  'active-text-color': colors.$primary,
+  'active-border-color': getCssVar('disabled-text-color'),
+  'active-bg-color': colors.$bg-color,
+  'outline-color': none,
+  'hover-link-text-color': colors.$bg-color-page,
+  'active-color': colors.$bg-color-page
+);
+$button-padding-horizontal: (
+  'large': 36px,
+  'default': 28px,
+  'small': 18px
+);
+$button-padding-vertical: (
+  'large': 32px,
+  'default': 18px,
+  'small': 10px
+);
