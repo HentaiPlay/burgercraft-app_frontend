@@ -1,0 +1,39 @@
+@use '@assets/styles/_colors.scss' as colors;
+
+// Select
+$select: (
+  'border-color-hover': colors.$bg-color-page,
+  'disabled-border': colors.$info,
+  'font-size': getCssVar('font-size-base'),
+  'close-hover-color': colors.$primary,
+  'input-color': colors.$bg-color,
+  'multiple-input-color': getCssVar('text-color-regular'),
+  'input-focus-border-color': colors.$primary,
+  'input-font-size': 16px
+);
+$select-option: (
+  'text-color': colors.$info,
+  'disabled-color': colors.$bg-color-overlay,
+  'height': 34px,
+  'hover-background': colors.$bg-color-overlay,
+  'selected-text-color': colors.$primary
+);
+$select-group: (
+  'text-color': colors.$bg-color-page,
+  'height': 30px,
+  'font-size': 12px
+);
+$select-dropdown: (
+  'bg-color': colors.$bg-color,
+  'shadow': getCssVar('box-shadow-light'),
+  'empty-color': getCssVar('text-color-secondary'),
+  'max-height': 274px,
+  'padding': 6px 0,
+  'empty-padding': 10px 0,
+  'border': 2px solid getCssVar('border-color-light')
+);
+$select-tags-prefix-padding: (
+  'large': 8px,
+  'default': 6px,
+  'small': 4px
+);
