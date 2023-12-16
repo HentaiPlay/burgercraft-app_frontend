@@ -36,13 +36,6 @@ export default defineConfig({
   },
   plugins: [
     vue(),
-    // vue({
-    //   template: {
-    //     compilerOptions: {
-    //       isCustomElement: (tag) => ['My'].includes(tag),
-    //     }
-    //   }
-    // }),
     eslintPlugin(),
     checker({
       vueTsc: true
