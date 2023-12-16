@@ -13,9 +13,6 @@
         case 'app':
           layout.value = markRaw(AppLayout)
           break
-        case 'auth':
-          layout.value = markRaw(DefaultLayout)
-          break
         default:
           layout.value = markRaw(DefaultLayout)
       }
