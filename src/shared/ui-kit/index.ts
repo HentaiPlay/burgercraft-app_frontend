@@ -1,7 +1,7 @@
 import type { App } from 'vue'
-import MyTestComponent from './components/my-test-component.vue'
+import MyLogo from './components/MyLogo.vue'
 export default {
   install: (app: App) => {
-    app.component('my-test-component', MyTestComponent)
+    app.component('MyLogo', MyLogo)
   }
 }
