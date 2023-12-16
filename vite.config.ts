@@ -29,12 +29,20 @@ export default defineConfig({
           @use "@assets/styles/element/index.scss" as *;
           @use "@assets/styles/_mixins.scss" as mixins;
           @use "@assets/styles/_colors.scss" as colors;
+          @use "@assets/styles/_variables.scss" as variables;
         `
       }
     }
   },
   plugins: [
     vue(),
+    // vue({
+    //   template: {
+    //     compilerOptions: {
+    //       isCustomElement: (tag) => ['My'].includes(tag),
+    //     }
+    //   }
+    // }),
     eslintPlugin(),
     checker({
       vueTsc: true
