@@ -66,6 +66,8 @@
     <div class="selects">
       <!-- Обычный селект -->
       <el-select
+        :clearable="true"
+        collapse-tags
         v-model="select"
         placeholder="Select"
       >
@@ -91,8 +93,6 @@
         />
       </el-select>
     </div>
-
-    <my-test-component />
 
     <div class="link">
       <a href="https://google.com">какая та ссылка</a>
