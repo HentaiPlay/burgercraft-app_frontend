@@ -3,6 +3,7 @@ import path from 'path'
 import vue from '@vitejs/plugin-vue'
 import eslintPlugin from 'vite-plugin-eslint'
 import checker from 'vite-plugin-checker'
+import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
@@ -40,14 +41,12 @@ export default defineConfig({
     checker({
       vueTsc: true
     }),
+    AutoImport({
+      resolvers: [ElementPlusResolver({ importStyle: 'sass' })],
+      dts: 'src/shared/auto-imports.d.ts'
+    }),
     Components({
-      extensions: ['vue', 'md'],
-      include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-      resolvers: [
-        ElementPlusResolver({
-          importStyle: 'sass'
-        })
-      ],
+      resolvers: [ElementPlusResolver({ importStyle: 'sass' })],
       dts: 'src/shared/components.d.ts'
     })
   ]
