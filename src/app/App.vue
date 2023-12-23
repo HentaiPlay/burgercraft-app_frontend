@@ -21,6 +21,7 @@
 </script>
 
 <template>
+  <MyNotification :maxCount="5" />
   <component :is="layout">
     <RouterView />
   </component>
