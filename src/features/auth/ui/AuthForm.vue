@@ -1,8 +1,23 @@
 <script lang="ts" setup>
   import { ref, reactive } from 'vue'
   import type { FormInstance, FormRules } from 'element-plus'
+  import AuthService from '@/entities/auth/auth.service'
+  import { setTokens } from '@/entities/auth/helpers/cookies.helper'
+  import { useRouter } from 'vue-router'
+  import useMyNotification from '@/shared/ui-kit/composables/my-notification'
 
+  const router = useRouter()
+  const myNotify = useMyNotification()
+
+  const form = reactive({
+    name: '',
+    password: ''
+  })
+
+  // Ссылка шаблона на форму
   const authFormRef = ref<FormInstance>()
+
+  // Правила валидации
   const rules = reactive<FormRules>({
     name: [
       { required: true, message: 'Обязательное поле', trigger: 'blur' },
@@ -14,18 +29,32 @@
     ]
   })
 
-  const form = reactive({
-    name: '',
-    password: ''
-  })
   let loading = ref(false)
 
   const submit = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
     loading.value = true
+    // Валидация формы
     formEl.validate(async (valid) => {
       if (valid) {
-        console.log('Валидация пройдена')
+        await AuthService.login(form)
+          .then((r) => {
+            // записываем токен
+            setTokens({
+              accessToken: r.data.accessToken,
+              refreshToken: r.data.refreshToken
+            })
+            // редирект
+            router.push({ name: 'home' })
+          })
+          .catch((e) => {
+            myNotify({
+              type: 'error',
+              title: 'Ошибка',
+              message: e.response.data.message ?? 'Ошибка сервера'
+            })
+            form.password = ''
+          })
       } else {
         return false
       }
@@ -88,7 +117,7 @@
     height: auto;
     width: 360px;
     border-radius: 10px;
-    background-color: white;
+    background-color: colors.$bg-color;
     box-shadow: colors.$box-shadow;
     .logo {
       display: flex;
