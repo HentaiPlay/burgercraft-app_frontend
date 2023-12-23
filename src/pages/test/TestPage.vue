@@ -1,11 +1,26 @@
 <script setup lang="ts">
   import { useDark, useToggle } from '@vueuse/core'
   import { ref } from 'vue'
+
+  import useMyNotification from '@/shared/ui-kit/composables/my-notification'
+  const myNotify = useMyNotification()
+
+  import useAudioPlayer from '@/features/audio-player'
+  const audioPlayer = useAudioPlayer()
+
   // кнопки
   const isDark = useDark()
   const toggleDark = useToggle(isDark)
   function changeTheme() {
     toggleDark()
+  }
+  const showNotify = () => {
+    myNotify({
+      type: 'success',
+      title: 'Заголовок',
+      message: 'Какое то сообщение'
+    })
+    audioPlayer('readyOrder')
   }
 
   // инпуты
@@ -42,7 +57,7 @@
     <!-- Кнопки -->
     <div class="buttons">
       <el-button disabled>Заблокировано</el-button>
-      <el-button>Просто кнопка</el-button>
+      <el-button @click="showNotify">Уведомление</el-button>
       <el-button type="success">Принять</el-button>
       <el-button type="warning">Отклонить</el-button>
       <el-button type="danger">Удалить</el-button>
