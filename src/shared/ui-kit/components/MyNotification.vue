@@ -95,7 +95,6 @@
   .notify-wrapper {
     position: absolute;
     width: 100%;
-    min-height: 50px;
     height: 0px;
     display: flex;
     flex-direction: column;
