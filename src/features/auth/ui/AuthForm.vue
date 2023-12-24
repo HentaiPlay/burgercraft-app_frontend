@@ -73,6 +73,7 @@
     <!-- Форма -->
     <el-form
       ref="authFormRef"
+      @keyup.enter="submit(authFormRef)"
       :model="form"
       :rules="rules"
     >
