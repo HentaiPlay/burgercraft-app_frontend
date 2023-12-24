@@ -27,6 +27,7 @@
     }
     .main__content {
       position: relative;
+      height: 100vh;
       z-index: 3;
     }
   }
