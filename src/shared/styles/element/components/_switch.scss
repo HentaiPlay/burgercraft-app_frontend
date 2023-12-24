@@ -1,0 +1,7 @@
+@use '@assets/styles/_colors.scss' as colors;
+
+// switch
+$switch: (
+  'on-color': colors.$bg-color-page,
+  'off-color': colors.$bg-color-overlay,
+)
