@@ -31,7 +31,9 @@ router.beforeEach((to, from, next) => {
     case !hasTokens && isAuthPath:
       next()
       break
-    // Проверка на существующий роут и редирект на предыдущий (если есть, иначе на главную страницу)
+    // Если есть токены, но роут auth, или роут не существует,
+    // редиректим на предыдущий (если есть, иначе на главную страницу)
+    case hasTokens && isAuthPath:
     case !issetRoute:
       next({ name: redirectPath })
       break
