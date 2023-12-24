@@ -19,7 +19,9 @@
   $select-option: components.$select-option,
   $select-group: components.$select-group,
   $select-dropdown: components.$select-dropdown,
-  $select-tags-prefix-padding: components.$select-tags-prefix-padding
+  $select-tags-prefix-padding: components.$select-tags-prefix-padding,
+  // Свитч
+  $switch: components.$switch
 );
 
 // Подключаем темную тему
