@@ -2,10 +2,13 @@
   import { watch, ref, computed, markRaw, onMounted } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
   import { AppLayout, DefaultLayout } from '@/widgets/layouts'
+  import { Preloader } from '@/widgets/preloader'
+  import { useUIStateStore } from '@/shared/ui-state.store'
 
   const layout = ref()
   const route = useRoute()
   const router = useRouter()
+  const uiStore = useUIStateStore()
 
   // Установка шаблона
   const setLayout = async () => {
@@ -30,9 +33,19 @@
 </script>
 
 <template>
+  <!-- Уведомления -->
   <MyNotification :maxCount="5" />
+  <!-- Шаблон страницы -->
   <component :is="layout">
-    <RouterView />
+    <!-- Прелоадер -->
+    <Preloader v-if="uiStore.isActivePreloader" />
+    <!-- Содержимое роутера -->
+    <RouterView
+      v-else
+      v-slot="{ Component }"
+    >
+      <component :is="Component" />
+    </RouterView>
   </component>
 </template>
 
