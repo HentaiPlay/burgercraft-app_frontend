@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { useDark, useToggle } from '@vueuse/core'
   import { ref } from 'vue'
+  import { Moon, Sunny } from '@element-plus/icons-vue'
 
   import useMyNotification from '@/shared/ui-kit/composables/my-notification'
   const myNotify = useMyNotification()
@@ -50,6 +51,9 @@
       label: 'Option5'
     }
   ]
+
+  // свитч
+  const switchVar = ref(true)
 </script>
 
 <template>
@@ -107,6 +111,15 @@
           :value="item.value"
         />
       </el-select>
+    </div>
+
+    <!-- Свитчи -->
+    <div class="switch">
+      <el-switch
+        v-model="switchVar"
+        :active-action-icon="Moon"
+        :inactive-action-icon="Sunny"
+      />
     </div>
 
     <div class="link">
