@@ -9,9 +9,6 @@ export const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  // Установка заголовков
-  document.title = typeof to.meta.title === 'string' ? to.meta.title : 'BurgerCraft'
-
   // Включение прелоадера
   const uiStore = useUIStateStore()
   uiStore.showPreloader()
@@ -39,5 +36,8 @@ router.beforeEach((to, from, next) => {
       break
     default:
       next()
+
+      // Установка заголовков
+      document.title = typeof to.meta.title === 'string' ? to.meta.title : 'BurgerCraft'
   }
 })
