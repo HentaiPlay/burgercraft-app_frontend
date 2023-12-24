@@ -42,12 +42,10 @@ export default defineConfig({
       vueTsc: true
     }),
     AutoImport({
-      resolvers: [ElementPlusResolver({ importStyle: 'sass' })],
-      dts: 'src/shared/auto-imports.d.ts'
+      resolvers: [ElementPlusResolver({ importStyle: 'sass' })]
     }),
     Components({
-      resolvers: [ElementPlusResolver({ importStyle: 'sass' })],
-      dts: 'src/shared/components.d.ts'
+      resolvers: [ElementPlusResolver({ importStyle: 'sass' })]
     })
   ]
 })
