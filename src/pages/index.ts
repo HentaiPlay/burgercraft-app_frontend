@@ -14,12 +14,16 @@ export const routes: Array<RouteRecordRaw> = [
     name: 'test',
     component: () => import('./test/TestPage.vue'),
     meta: {
+      title: 'Тестовая',
       layout: 'app'
     }
   },
   {
     path: '/auth',
     name: 'auth',
-    component: () => import('./auth/AuthPage.vue')
+    component: () => import('./auth/AuthPage.vue'),
+    meta: {
+      title: 'Авторизация'
+    }
   }
 ]
