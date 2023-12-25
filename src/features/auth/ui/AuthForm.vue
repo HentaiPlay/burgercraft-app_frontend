@@ -1,13 +1,11 @@
 <script lang="ts" setup>
   import { ref, reactive } from 'vue'
   import type { FormInstance, FormRules } from 'element-plus'
-  import AuthService from '@/entities/auth/auth.service'
-  import { setTokens } from '@/entities/auth/helpers/cookies.helper'
+  import { useAuthService } from '@/entities/auth'
   import { useRouter } from 'vue-router'
-  import useMyNotification from '@/shared/ui-kit/composables/my-notification'
 
   const router = useRouter()
-  const myNotify = useMyNotification()
+  const authService = useAuthService()
 
   const form = reactive({
     name: '',
@@ -37,24 +35,8 @@
     // Валидация формы
     formEl.validate(async (valid) => {
       if (valid) {
-        await AuthService.login(form)
-          .then((r) => {
-            // записываем токен
-            setTokens({
-              accessToken: r.data.accessToken,
-              refreshToken: r.data.refreshToken
-            })
-            // редирект
-            router.push({ name: 'home' })
-          })
-          .catch((e) => {
-            myNotify({
-              type: 'error',
-              title: 'Ошибка',
-              message: e.response.data.message ?? 'Ошибка сервера'
-            })
-            form.password = ''
-          })
+        const successLogin = await authService.login(form)
+        successLogin ? router.push({ name: 'home' }) : (form.password = '')
       } else {
         return false
       }
@@ -142,3 +124,4 @@
     }
   }
 </style>
+@/entities/auth/service@/entities/user/model/store
