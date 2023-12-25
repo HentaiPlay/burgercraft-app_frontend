@@ -1,5 +1,5 @@
 import Cookies from 'cookies-ts'
-import { ITokens } from '@/entities/auth/auth.types'
+import { ITokens } from '../model/types'
 
 const cookies = new Cookies()
 
@@ -22,4 +22,9 @@ export function getTokens(): ITokens {
 export function setTokens(tokens: ITokens): void {
   cookies.set('accessToken', tokens.accessToken)
   cookies.set('refreshToken', tokens.refreshToken)
+}
+
+export function removeTokens(): void {
+  cookies.remove('accessToken')
+  cookies.remove('refreshToken')
 }
