@@ -2,16 +2,21 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { routes } from '@/pages'
 import { useUIStateStore } from '@/shared/ui-state.store'
 import { issetTokens } from '@/entities/auth/helpers/cookies.helper'
+import { useUserStore } from '@/entities/user/model/store'
+import { useUserApi } from '@/entities/user'
 
 export const router = createRouter({
   history: createWebHistory(),
   routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   // Включение прелоадера
   const uiStore = useUIStateStore()
   uiStore.showPreloader()
+
+  // Данные о пользователи
+  const userStore = useUserStore()
 
   const hasTokens = issetTokens()
   const isAuthPath = to.name === 'auth'
@@ -36,6 +41,13 @@ router.beforeEach((to, from, next) => {
       break
     default:
       next()
+
+      // Если есть токены но нет данных о пользователе в сторе,
+      // делаем запрос на их получение
+      if (hasTokens && !userStore.hasInfo) {
+        const userApi = useUserApi()
+        await userApi.getUserInfo().then((res) => userStore.setUserInfo(res.data))
+      }
 
       // Установка заголовков
       document.title = typeof to.meta.title === 'string' ? to.meta.title : 'BurgerCraft'
