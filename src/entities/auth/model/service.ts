@@ -3,6 +3,7 @@ import { IAuthData } from '../model/types'
 import { getTokens, setTokens, removeTokens } from '../helpers/cookies.helper'
 import { useUserStore } from '@/entities/user/model/store'
 import useMyNotification from '@/shared/ui-kit/composables/my-notification'
+import { globalComposable } from '@/app/composables'
 
 export default function useAuthService() {
   const authApi = useAuthApi()
@@ -39,10 +40,14 @@ export default function useAuthService() {
     // Рефреш токенов
     tokenRefresh: async () => {
       const refreshToken = getTokens().refreshToken
-      await authApi.refreshTokens({ token: refreshToken }).then((res) => console.log(res))
+      return await authApi.refreshTokens({ token: refreshToken })
     },
 
     // Логаут
-    logout: removeTokens
+    logout: () => {
+      removeTokens()
+      globalComposable.router?.push({ name: 'auth' })
+      console.clear()
+    }
   }
 }
