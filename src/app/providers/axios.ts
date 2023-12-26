@@ -1,31 +1,55 @@
 import axios, { AxiosInstance } from 'axios'
+import { useAuthService } from '@/entities/auth'
+import { getTokens, setTokens, issetTokens } from '@/entities/auth/helpers/cookies.helper'
+
+const authService = useAuthService()
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  headers: { 'Content-Type': 'application/json' }
+  headers: { 'Content-Type': 'application/json' },
+  withCredentials: true
 })
 
 apiClient.interceptors.request.use(
   function (config) {
-    // Do something before request is sent
+    // Если нет токена делаем логаут
+    if (!issetTokens()) {
+      authService.logout()
+    }
+    // Устанавливаем Bearer
+    const token = getTokens().accessToken
+    config.headers['Authorization'] = `Bearer ${token}`
+
     return config
   },
+
   function (error) {
-    // Do something with request error
     return Promise.reject(error)
   }
 )
 
-// Add a response interceptor
 apiClient.interceptors.response.use(
   function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
     return response
   },
-  function (error) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
+
+  async function (error) {
+    const originalConfig = error.config
+
+    if (error.response.status === 401 && !error.config._isRetry) {
+      originalConfig._isRetry = true
+
+      await authService
+        .tokenRefresh()
+        .then((res) => setTokens(res.data))
+        .catch((err) => {
+          if (err.response.status === 401) {
+            authService.logout()
+          }
+        })
+
+      return apiClient.request(originalConfig)
+    }
     return Promise.reject(error)
   }
 )
