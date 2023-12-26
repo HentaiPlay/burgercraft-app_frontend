@@ -1,7 +1,11 @@
 <script setup lang="ts">
   import { useDark, useToggle } from '@vueuse/core'
-  import { ref } from 'vue'
+  import { onMounted, ref } from 'vue'
   import { Moon, Sunny } from '@element-plus/icons-vue'
+
+  // Тест запроса
+  import { useUserApi } from '@/entities/user'
+  const userApi = useUserApi()
 
   import useMyNotification from '@/shared/ui-kit/composables/my-notification'
   const myNotify = useMyNotification()
@@ -54,6 +58,8 @@
 
   // свитч
   const switchVar = ref(true)
+
+  onMounted(async () => await userApi.getUserInfo())
 </script>
 
 <template>
