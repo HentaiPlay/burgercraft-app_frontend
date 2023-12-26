@@ -10,6 +10,10 @@
   const router = useRouter()
   const uiStore = useUIStateStore()
 
+  // Установка глобального роутера
+  import { globalComposable } from '@/app/composables'
+  globalComposable.router = router
+
   // Установка шаблона
   const setLayout = async () => {
     switch (route.meta?.layout) {
