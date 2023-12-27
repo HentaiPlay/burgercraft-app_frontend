@@ -1,0 +1,20 @@
+@use '@assets/styles/_colors.scss' as colors;
+
+// Menu
+$menu: (
+  // 'active-color': getCssVar('color-primary'),
+  // 'text-color': getCssVar('text-color-primary'),
+  // 'hover-text-color': getCssVar('color-primary'),
+  // 'bg-color': getCssVar('fill-color', 'blank'),
+  // 'hover-bg-color': getCssVar('color-primary-light-9'),
+  // 'item-height': 56px,
+  // 'sub-item-height': calc(#{getCssVar('menu-item-height')} - 6px),
+  // 'horizontal-height': 60px,
+  // 'horizontal-sub-item-height': 36px,
+  // 'item-font-size': getCssVar('font-size-base'),
+  // 'item-hover-fill': getCssVar('color-primary-light-9'),
+  'border-color': colors.$color-scheme,
+  // 'base-level-padding': 20px,
+  // 'level-padding': 20px,
+  // 'icon-width': 24px,
+);
