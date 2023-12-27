@@ -21,7 +21,9 @@
   $select-dropdown: components.$select-dropdown,
   $select-tags-prefix-padding: components.$select-tags-prefix-padding,
   // Свитч
-  $switch: components.$switch
+  $switch: components.$switch,
+  // Меню
+  $menu: components.$menu
 );
 
 // Подключаем темную тему
