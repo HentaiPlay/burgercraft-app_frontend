@@ -1,21 +1,24 @@
 <script setup lang="ts">
-  import { useRouter, RouteRecordName } from 'vue-router'
+  import { useRoute, useRouter } from 'vue-router'
+  const route = useRoute()
   const router = useRouter()
-
   const menuItems = router.getRoutes().filter((route) => route.meta.isMenuItem)
-  const redirect = (name: RouteRecordName | undefined) => router.push({ name })
 </script>
 
 <template>
   <!-- Меню -->
-  <el-menu class="el-menu-vertical-demo">
+  <el-menu
+    class="el-menu-vertical-demo"
+    :default-active="route.path"
+    router
+  >
     <!-- Заказы -->
     <el-menu-item
       v-for="(item, i) in menuItems"
-      :index="i.toString()"
+      :index="item.path"
       :key="i"
+      :route="{ name: item.name }"
       :disabled="false"
-      @click="redirect(item.name)"
     >
       <el-icon>
         <component :is="item.meta.icon" />
