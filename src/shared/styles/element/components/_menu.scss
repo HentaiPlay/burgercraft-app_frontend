@@ -2,7 +2,7 @@
 
 // Menu
 $menu: (
-  // 'active-color': getCssVar('color-primary'),
+  'active-color': colors.$bg-color-page,
   // 'text-color': getCssVar('text-color-primary'),
   // 'hover-text-color': getCssVar('color-primary'),
   // 'bg-color': getCssVar('fill-color', 'blank'),
