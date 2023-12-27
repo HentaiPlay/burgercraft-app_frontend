@@ -1,14 +1,18 @@
 <script setup lang="ts">
   import { HeaderWidget } from '@/widgets/header'
+  import { AsideWidget } from '@/widgets/aside'
 </script>
 
 <template>
   <div class="common-layout">
     <el-container direction="vertical">
       <HeaderWidget />
+
       <el-container>
-        <!-- Менюшка -->
-        <el-aside width="400px">Menu</el-aside>
+        <!-- Меню -->
+        <AsideWidget />
+
+        <!-- Контент -->
         <el-container>
           <el-main class="main">
             <slot></slot>
