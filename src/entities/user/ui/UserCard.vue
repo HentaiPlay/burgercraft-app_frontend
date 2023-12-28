@@ -1,9 +1,20 @@
 <script setup lang="ts">
   import { ref, onMounted } from 'vue'
-  import { useUserStore } from '../model/store'
   import { useUserApi } from '@/entities/user'
 
-  const userStore = useUserStore()
+  defineProps({
+    name: {
+      type: String,
+      required: true,
+      default: 'Неизвестно'
+    },
+    role: {
+      type: String,
+      required: true,
+      default: 'Неизвестно'
+    }
+  })
+
   const userApi = useUserApi()
 
   const avatar = ref('')
@@ -27,10 +38,10 @@
     </div>
     <!-- Описание -->
     <div class="user-card__description">
-      <h4>{{ userStore.user?.name ?? 'Неизвестно' }}</h4>
+      <h4>{{ name }}</h4>
       <div class="role">
         <span class="role-title">Должность:</span>
-        <span>{{ userStore.role?.name ?? 'Неизвестно' }}</span>
+        <span>{{ role }}</span>
       </div>
     </div>
   </div>
@@ -53,6 +64,7 @@
     }
   }
   .user-card__description {
+    max-width: 210px;
     display: flex;
     justify-content: center;
     flex-direction: column;
