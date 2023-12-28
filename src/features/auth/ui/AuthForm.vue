@@ -3,9 +3,12 @@
   import type { FormInstance, FormRules } from 'element-plus'
   import { useAuthService } from '@/entities/auth'
   import { useRouter } from 'vue-router'
+  import { setPermissions } from '@/entities/auth/helpers/roles'
+  import { useUserStore } from '@/entities/user/model/store'
 
   const router = useRouter()
   const authService = useAuthService()
+  const userStore = useUserStore()
 
   const form = reactive({
     name: '',
@@ -36,7 +39,13 @@
     formEl.validate(async (valid) => {
       if (valid) {
         const successLogin = await authService.login(form)
-        successLogin ? router.push({ name: 'home' }) : (form.password = '')
+        if (successLogin) {
+          // Устанавливаем пермишены для роутов и редиректим на главную
+          router.options.routes = setPermissions(router.getRoutes(), userStore.role?.accessList.pages)
+          router.push({ name: 'home' })
+        } else {
+          form.password = ''
+        }
       } else {
         return false
       }
@@ -124,4 +133,3 @@
     }
   }
 </style>
-@/entities/auth/service@/entities/user/model/store
