@@ -10,7 +10,7 @@
   import useMyNotification from '@/shared/ui-kit/composables/my-notification'
   const myNotify = useMyNotification()
 
-  import useAudioPlayer from '@/features/audio-player'
+  import { useAudioPlayer } from '@/app/composables'
   const audioPlayer = useAudioPlayer()
 
   // кнопки
