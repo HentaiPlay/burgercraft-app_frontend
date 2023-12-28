@@ -11,7 +11,7 @@
   const uiStore = useUIStateStore()
 
   // Установка глобального роутера
-  import { globalComposable } from '@/app/composables'
+  import { globalComposable } from '@/shared/composables'
   globalComposable.router = router
 
   // Установка шаблона
