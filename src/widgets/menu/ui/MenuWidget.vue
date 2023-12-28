@@ -18,7 +18,7 @@
       :index="item.path"
       :key="i"
       :route="{ name: item.name }"
-      :disabled="false"
+      :disabled="!item.meta.hasPermission"
     >
       <el-icon>
         <component :is="item.meta.icon" />
