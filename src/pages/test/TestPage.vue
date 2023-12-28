@@ -59,7 +59,7 @@
   // свитч
   const switchVar = ref(true)
 
-  onMounted(async () => await userApi.getUserInfo())
+  onMounted(async () => await userApi.getUserInfo().catch((e) => console.log(e)))
 </script>
 
 <template>
