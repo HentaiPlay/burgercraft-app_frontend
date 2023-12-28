@@ -5,7 +5,7 @@ type AudioPlayer = (type: AudioType) => void
 
 export default function useAudioPlayer() {
   // Проигрывание аудио файлов с сервера по параметру
-  const play: AudioPlayer = (type: AudioType) => {
+  const play: AudioPlayer = (type: AudioType): void => {
     let audioName: string = 'default-notify'
     switch (type) {
       case 'readyOrder':
