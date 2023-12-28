@@ -1,12 +1,26 @@
 import type { RouteRecordRaw } from 'vue-router'
 
+declare module 'vue-router' {
+  interface RouteMeta {
+    title: string
+    layout?: 'app' | 'default'
+    isMenuItem?: boolean
+    icon?: string
+    hasPermission: boolean
+  }
+}
+
 export const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
     component: () => import('./home/HomePage.vue'),
     meta: {
-      layout: 'app'
+      title: 'Профиль',
+      layout: 'app',
+      isMenuItem: true,
+      icon: 'avatar',
+      hasPermission: true
     }
   },
   {
@@ -15,7 +29,8 @@ export const routes: Array<RouteRecordRaw> = [
     component: () => import('./test/TestPage.vue'),
     meta: {
       title: 'Тестовая',
-      layout: 'app'
+      layout: 'app',
+      hasPermission: false
     }
   },
   {
@@ -23,7 +38,8 @@ export const routes: Array<RouteRecordRaw> = [
     name: 'auth',
     component: () => import('./auth/AuthPage.vue'),
     meta: {
-      title: 'Авторизация'
+      title: 'Авторизация',
+      hasPermission: true
     }
   },
   {
@@ -34,7 +50,8 @@ export const routes: Array<RouteRecordRaw> = [
       title: 'Заказы',
       layout: 'app',
       isMenuItem: true,
-      icon: 'list'
+      icon: 'list',
+      hasPermission: false
     }
   },
   {
@@ -45,7 +62,8 @@ export const routes: Array<RouteRecordRaw> = [
       title: 'Продукты',
       layout: 'app',
       isMenuItem: true,
-      icon: 'fries'
+      icon: 'fries',
+      hasPermission: false
     }
   },
   {
@@ -56,7 +74,8 @@ export const routes: Array<RouteRecordRaw> = [
       title: 'Статистика',
       layout: 'app',
       isMenuItem: true,
-      icon: 'histogram'
+      icon: 'histogram',
+      hasPermission: false
     }
   }
 ]
