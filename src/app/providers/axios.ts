@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios'
 import { useAuthService } from '@/entities/auth'
-import { getTokens, setTokens, issetTokens } from '@/entities/auth/helpers/cookies.helper'
+import { getTokens, setTokens, issetTokens } from '@/entities/auth/helpers/cookies'
 
 const authService = useAuthService()
 
