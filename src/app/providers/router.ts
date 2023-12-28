@@ -1,9 +1,10 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordName } from 'vue-router'
 import { routes } from '@/pages'
 import { useUIStateStore } from '@/shared/ui-state.store'
-import { issetTokens } from '@/entities/auth/helpers/cookies.helper'
+import { issetTokens } from '@/entities/auth/helpers/cookies'
 import { useUserStore } from '@/entities/user/model/store'
 import { useUserApi } from '@/entities/user'
+import { setPermissions } from '@/entities/auth/helpers/roles'
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -11,45 +12,55 @@ export const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-  // Включение прелоадера
-  const uiStore = useUIStateStore()
-  uiStore.showPreloader()
-
-  // Данные о пользователи
   const userStore = useUserStore()
-
   const hasTokens = issetTokens()
   const isAuthPath = to.name === 'auth'
   const issetRoute = routes.some((route) => to.name === route.name)
-  const redirectPath = from?.name ? from.name : 'home'
+
+  // Если есть токены но нет данных о пользователе в сторе,
+  // делаем запрос на их получение
+  if (hasTokens && !userStore.hasInfo) {
+    const userApi = useUserApi()
+    await userApi
+      .getUserInfo()
+      .then((res) => userStore.setUserInfo(res.data))
+      .finally(() => {
+        router.options.routes = setPermissions(router.getRoutes(), userStore.role?.accessList?.pages)
+        // При переопредлении meta роутов для пермишенов,
+        // актульное состояние роутов доступно только в matches,
+        // поэтому для текущего роута нужно перезаписывать meta
+        to.meta = to.matched[0].meta
+        to.meta.getInfo = true
+      })
+  }
+
+  const hasPermission = to.meta.hasPermission
+
+  let redirectRouteName: RouteRecordName | null | undefined
 
   // Сценарии валидации роутинга
   switch (true) {
-    // Если нет токенов и роут не auth
-    case !hasTokens && !isAuthPath:
-      next({ name: 'auth' })
+    // Если нет токенов и переход не в /auth, то отправляем именно туда
+    case !hasTokens:
+      redirectRouteName = isAuthPath ? to.name : 'auth'
       break
-    // Если не токенов, но роут auth
-    case !hasTokens && isAuthPath:
-      next()
-      break
-    // Если есть токены, но роут auth, или роут не существует,
-    // редиректим на предыдущий (если есть, иначе на главную страницу)
+    // Если несуществующий роут (404) или переход на /auth (будучи авторизованным)
     case hasTokens && isAuthPath:
     case !issetRoute:
-      next({ name: redirectPath })
+      redirectRouteName = from?.name ? from.name : 'home'
       break
+    // Обычный сценарий с ролевым доступом
     default:
-      next()
-
-      // Если есть токены но нет данных о пользователе в сторе,
-      // делаем запрос на их получение
-      if (hasTokens && !userStore.hasInfo) {
-        const userApi = useUserApi()
-        await userApi.getUserInfo().then((res) => userStore.setUserInfo(res.data))
-      }
-
-      // Установка заголовков
-      document.title = typeof to.meta.title === 'string' ? to.meta.title : 'BurgerCraft'
+      redirectRouteName = hasPermission ? to.name : from?.name ? from.name : 'home'
   }
+
+  // Включение прелоадера
+  if (hasPermission) {
+    const uiStore = useUIStateStore()
+    uiStore.showPreloader()
+  }
+
+  // Установка заголовка и редирект
+  document.title = router.getRoutes().find((route) => route.name === redirectRouteName)?.meta.title ?? 'BurgerCraft'
+  redirectRouteName?.toString() === to.name ? next() : next({ name: redirectRouteName?.toString() })
 })
