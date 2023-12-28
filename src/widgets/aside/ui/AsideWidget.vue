@@ -25,6 +25,8 @@
     <!-- Карточка пользователя -->
     <UserCard
       v-if="!!userStore.hasInfo"
+      :name="userStore.user?.name"
+      :role="userStore?.role?.name"
       class="aside-block__user-card"
     />
 
@@ -48,7 +50,7 @@
   .aside-block {
     display: flex;
     flex-direction: column;
-    min-width: 360px;
+    min-width: 380px;
     @include mixins.pa(20px);
   }
   .aside-block__user-card {
