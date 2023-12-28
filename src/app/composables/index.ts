@@ -1,2 +1,3 @@
 import globalComposable from './global'
-export { globalComposable }
+import useAudioPlayer from './audio-player'
+export { globalComposable, useAudioPlayer }
