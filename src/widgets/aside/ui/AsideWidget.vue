@@ -14,6 +14,9 @@
   const authService = useAuthService()
   const userStore = useUserStore()
 
+  // по умолчанию темная тема
+  isDark.value = true
+
   watch(isDark, () => toggleDark)
 </script>
 
