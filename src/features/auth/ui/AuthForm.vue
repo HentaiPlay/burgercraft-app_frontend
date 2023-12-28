@@ -5,6 +5,7 @@
   import { useRouter } from 'vue-router'
   import { setPermissions } from '@/entities/auth/helpers/roles'
   import { useUserStore } from '@/entities/user/model/store'
+  import { UserFilled, Lock, InfoFilled } from '@element-plus/icons-vue'
 
   const router = useRouter()
   const authService = useAuthService()
@@ -75,6 +76,7 @@
             v-model="form.name"
             placeholder="Введите имя"
             :validate-event="false"
+            :prefix-icon="UserFilled"
           />
         </el-form-item>
 
@@ -86,12 +88,14 @@
             type="password"
             show-password
             :validate-event="false"
+            :prefix-icon="Lock"
           />
         </el-form-item>
       </div>
 
-      <!-- Войти -->
       <div class="action">
+        <div></div>
+        <!-- Войти -->
         <el-button
           @click="submit(authFormRef)"
           :loading="loading"
@@ -99,6 +103,18 @@
         >
           Войти
         </el-button>
+
+        <!-- Информация -->
+        <div class="action__info">
+          <el-tooltip placement="top">
+            <template #content>
+              Регистрация доступна только администратору
+              <br />
+              Аккаунт создается в интерфейсе его профиля
+            </template>
+            <el-icon><InfoFilled /></el-icon>
+          </el-tooltip>
+        </div>
       </div>
     </el-form>
   </div>
@@ -128,8 +144,22 @@
     }
     .action {
       @include mixins.pa(20px);
-      display: flex;
-      justify-content: center;
+      display: grid;
+      align-items: center;
+      grid-template-columns: repeat(3, 1fr);
+      align-content: center;
+      .action__info {
+        display: flex;
+        justify-content: end;
+        font-size: 1.6em;
+        > i {
+          color: colors.$info;
+          &:hover {
+            color: colors.$primary;
+            cursor: pointer;
+          }
+        }
+      }
     }
   }
 </style>
