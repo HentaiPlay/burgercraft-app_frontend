@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { ref, reactive } from 'vue'
+  import { ref, reactive, computed, watch } from 'vue'
   import type { FormInstance, FormRules } from 'element-plus'
   import { useAuthService } from '@/entities/auth'
   import { useRouter } from 'vue-router'
@@ -12,6 +12,7 @@
   const router = useRouter()
   const authService = useAuthService()
   const userStore = useUserStore()
+  const locale = computed(() => global.i18n?.locale.value)
 
   const form = reactive({
     name: '',
@@ -22,16 +23,19 @@
   const authFormRef = ref<FormInstance>()
 
   // Правила валидации
-  const rules = reactive<FormRules>({
+  const setMessage = (key: string, args?: Record<string, string | number>): string => {
+    return global.i18n ? global.i18n.t(key, args || {}) : ''
+  }
+  const rules = computed<FormRules>(() => ({
     name: [
-      { required: true, message: global.i18n?.t('rules.required'), trigger: 'blur' },
-      { min: 3, message: 'Минимум 3 символа', trigger: 'blur' }
+      { required: true, message: setMessage('rules.required'), trigger: 'blur' },
+      { min: 3, message: setMessage('rules.min', { min: 3 }), trigger: 'blur' }
     ],
     password: [
-      { required: true, message: 'Обязательное поле', trigger: 'blur' },
-      { min: 6, max: 12, message: 'Минимум 6 - максиумм 12 символов', trigger: 'blur' }
+      { required: true, message: setMessage('rules.required'), trigger: 'blur' },
+      { min: 6, max: 12, message: setMessage('rules.min_max', { min: 6, max: 12 }), trigger: 'blur' }
     ]
-  })
+  }))
 
   let loading = ref(false)
 
@@ -54,6 +58,12 @@
       }
     })
     loading.value = false
+
+    // При смене локали очищаем форму и сбрасываем валидацию
+    watch(locale, () => {
+      authFormRef.value?.clearValidate()
+      authFormRef.value?.resetFields()
+    })
   }
 </script>
 
@@ -70,6 +80,7 @@
       @keyup.enter="submit(authFormRef)"
       :model="form"
       :rules="rules"
+      :validate-on-rule-change="false"
     >
       <div class="content">
         <!-- Никнейм -->
