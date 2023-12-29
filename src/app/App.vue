@@ -4,15 +4,19 @@
   import { AppLayout, DefaultLayout } from '@/widgets/layouts'
   import { Preloader } from '@/widgets/preloader'
   import { useUIStateStore } from '@/shared/ui-state.store'
+  import { useI18n } from 'vue-i18n'
+  import { MessageSchema, LanguageList } from '@/app/providers'
 
   const layout = ref()
   const route = useRoute()
   const router = useRouter()
   const uiStore = useUIStateStore()
+  const i18n = useI18n<{ message: MessageSchema }, LanguageList>({ useScope: 'global' })
 
-  // Установка глобального роутера
-  import { globalComposable } from '@/shared/composables'
-  globalComposable.router = router
+  // Установка глобального композабла
+  import { global } from '@/shared/composables'
+  global.router = router
+  global.i18n = i18n
 
   // Установка шаблона
   const setLayout = async () => {
@@ -40,7 +44,10 @@
   <!-- Уведомления -->
   <MyNotification :maxCount="5" />
   <!-- Шаблон страницы -->
-  <component :is="layout">
+  <component
+    :is="layout"
+    v-if="global.isReady()"
+  >
     <!-- Прелоадер -->
     <Preloader v-if="uiStore.isActivePreloader" />
     <!-- Содержимое роутера -->
