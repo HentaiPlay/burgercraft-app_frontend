@@ -1,0 +1,24 @@
+{
+  "routes": {
+    "home": "Profile",
+    "test": "Test",
+    "auth": "Authorization",
+    "orders": "Orders",
+    "products": "Products",
+    "stats": "Stats"
+  },
+  "rules": {
+    "required": "required field",
+    "min": "Minimum {min} {name}",
+    "min_max": "Minimum {min} - maximum {max} {name}"
+  },
+  "authForm": {
+    "namePlaceholder": "Type nickname",
+    "passwordPlaceholder": "Type password",
+    "button": "Sign in",
+    "info": {
+      "line1": "Registration is only available to administrators",
+      "line2": "An account is created in its profile interface"
+    }
+  }
+}
