@@ -23,7 +23,7 @@
       <el-icon>
         <component :is="item.meta.icon" />
       </el-icon>
-      <span>{{ item.meta.title }}</span>
+      <span>{{ $t(item.meta.title) }}</span>
     </el-menu-item>
   </el-menu>
 </template>
