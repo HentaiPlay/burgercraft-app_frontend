@@ -16,7 +16,7 @@ export const routes: Array<RouteRecordRaw> = [
     name: 'home',
     component: () => import('./home/HomePage.vue'),
     meta: {
-      title: 'Профиль',
+      title: 'routes.home',
       layout: 'app',
       isMenuItem: true,
       icon: 'avatar',
@@ -28,7 +28,7 @@ export const routes: Array<RouteRecordRaw> = [
     name: 'test',
     component: () => import('./test/TestPage.vue'),
     meta: {
-      title: 'Тестовая',
+      title: 'routes.test',
       layout: 'app',
       hasPermission: false
     }
@@ -38,7 +38,7 @@ export const routes: Array<RouteRecordRaw> = [
     name: 'auth',
     component: () => import('./auth/AuthPage.vue'),
     meta: {
-      title: 'Авторизация',
+      title: 'routes.auth',
       hasPermission: true
     }
   },
@@ -47,7 +47,7 @@ export const routes: Array<RouteRecordRaw> = [
     name: 'orders',
     component: () => import('./test/TestPage.vue'),
     meta: {
-      title: 'Заказы',
+      title: 'routes.orders',
       layout: 'app',
       isMenuItem: true,
       icon: 'list',
@@ -59,7 +59,7 @@ export const routes: Array<RouteRecordRaw> = [
     name: 'products',
     component: () => import('./test/TestPage.vue'),
     meta: {
-      title: 'Продукты',
+      title: 'routes.products',
       layout: 'app',
       isMenuItem: true,
       icon: 'fries',
@@ -71,7 +71,7 @@ export const routes: Array<RouteRecordRaw> = [
     name: 'stats',
     component: () => import('./test/TestPage.vue'),
     meta: {
-      title: 'Статистика',
+      title: 'routes.stats',
       layout: 'app',
       isMenuItem: true,
       icon: 'histogram',
