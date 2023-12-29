@@ -6,6 +6,7 @@
   import { UserCard } from '@/entities/user'
   import { useAuthService } from '@/entities/auth'
   import { useUserStore } from '@/entities/user/model/store'
+  import { SwitchLocale } from '@/features/switch-locale'
 
   // Смена темы
   const isDark = useDark()
@@ -34,12 +35,17 @@
     <MenuWidget class="aside-block__menu" />
 
     <div class="aside-block__footer">
-      <!-- Смена темы -->
-      <el-switch
-        v-model="isDark"
-        :active-action-icon="Moon"
-        :inactive-action-icon="Sunny"
-      />
+      <div class="footer__switchers">
+        <!-- Смена языка -->
+        <SwitchLocale class="delimiter" />
+
+        <!-- Смена темы -->
+        <el-switch
+          v-model="isDark"
+          :active-action-icon="Moon"
+          :inactive-action-icon="Sunny"
+        />
+      </div>
       <!-- Логаут -->
       <el-button @click="authService.logout">Выйти</el-button>
     </div>
@@ -71,5 +77,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    .footer__switchers {
+      display: flex;
+      align-items: center;
+      .delimiter {
+        @include mixins.pr(20px);
+        @include mixins.mr(20px);
+        border-right: 1px solid colors.$bg-color-overlay;
+      }
+    }
   }
 </style>
