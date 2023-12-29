@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { AuthForm } from '@/features/auth'
+  import { AuthForm } from '@/entities/auth'
 </script>
 
 <template>
