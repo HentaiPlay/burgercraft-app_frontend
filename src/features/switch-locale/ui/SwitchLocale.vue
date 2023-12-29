@@ -51,9 +51,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    color: colors.$info;
     @include mixins.no__copy();
     &:hover {
       cursor: pointer;
+      color: colors.$primary;
     }
   }
 </style>
