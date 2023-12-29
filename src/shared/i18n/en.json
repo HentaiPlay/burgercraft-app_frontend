@@ -8,9 +8,9 @@
     "stats": "Stats"
   },
   "rules": {
-    "required": "required field",
-    "min": "Minimum {min} {name}",
-    "min_max": "Minimum {min} - maximum {max} {name}"
+    "required": "Required field",
+    "min": "Minimum {min}",
+    "min_max": "Minimum {min} - maximum {max}"
   },
   "authForm": {
     "namePlaceholder": "Type nickname",
@@ -20,5 +20,11 @@
       "line1": "Registration is only available to administrators",
       "line2": "An account is created in its profile interface"
     }
+  },
+  "aside": {
+    "buttonLogout": "Logout"
+  },
+  "userCard": {
+    "position": "Position"
   }
 }
