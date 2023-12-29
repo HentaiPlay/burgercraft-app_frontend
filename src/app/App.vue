@@ -3,7 +3,7 @@
   import { useRoute, useRouter } from 'vue-router'
   import { AppLayout, DefaultLayout } from '@/widgets/layouts'
   import { Preloader } from '@/widgets/preloader'
-  import { useUIStateStore } from '@/shared/ui-state.store'
+  import { useUIStateStore } from '@/shared/store/ui-state'
   import { useI18n } from 'vue-i18n'
   import { MessageSchema, LanguageList } from '@/app/providers'
 
