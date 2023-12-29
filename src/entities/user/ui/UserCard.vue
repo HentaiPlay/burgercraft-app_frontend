@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { ref, onMounted } from 'vue'
   import { useUserApi } from '@/entities/user'
+  import { global } from '@/shared/composables'
 
   defineProps({
     name: {
@@ -40,7 +41,7 @@
     <div class="user-card__description">
       <h4>{{ name }}</h4>
       <div class="role">
-        <span class="role-title">Должность:</span>
+        <span class="role-title">{{ global.i18n?.t('userCard.position') }}:</span>
         <span>{{ role }}</span>
       </div>
     </div>
