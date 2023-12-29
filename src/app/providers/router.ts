@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordName } from 'vue-router'
 import { routes } from '@/pages'
-import { useUIStateStore } from '@/shared/ui-state.store'
+import { useUIStateStore } from '@/shared/store/ui-state'
 import { issetTokens } from '@/entities/auth/helpers/cookies'
 import { useUserStore } from '@/entities/user/model/store'
 import { useUserApi } from '@/entities/user'
@@ -47,7 +47,7 @@ router.beforeEach(async (to, from, next) => {
     // Если несуществующий роут (404) или переход на /auth (будучи авторизованным)
     case hasTokens && isAuthPath:
     case !issetRoute:
-      redirectRouteName = from?.name ? from.name : 'home'
+      redirectRouteName = from.name ? from.name : 'home'
       break
     // Обычный сценарий с ролевым доступом
     default:
@@ -60,7 +60,12 @@ router.beforeEach(async (to, from, next) => {
     uiStore.showPreloader()
   }
 
-  // Установка заголовка и редирект
-  document.title = router.getRoutes().find((route) => route.name === redirectRouteName)?.meta.title ?? 'BurgerCraft'
+  // Редирект
   redirectRouteName?.toString() === to.name ? next() : next({ name: redirectRouteName?.toString() })
+})
+
+router.afterEach((to) => {
+  // Установка заголовка
+  const uiStore = useUIStateStore()
+  uiStore.changeTitle(to.meta?.title)
 })
