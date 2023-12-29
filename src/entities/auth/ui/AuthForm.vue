@@ -6,6 +6,8 @@
   import { setPermissions } from '@/entities/auth/helpers/roles'
   import { useUserStore } from '@/entities/user/model/store'
   import { UserFilled, Lock, InfoFilled } from '@element-plus/icons-vue'
+  import { global } from '@/shared/composables'
+  import { SwitchLocale } from '@/features/switch-locale'
 
   const router = useRouter()
   const authService = useAuthService()
@@ -22,7 +24,7 @@
   // Правила валидации
   const rules = reactive<FormRules>({
     name: [
-      { required: true, message: 'Обязательное поле', trigger: 'blur' },
+      { required: true, message: global.i18n?.t('rules.required'), trigger: 'blur' },
       { min: 3, message: 'Минимум 3 символа', trigger: 'blur' }
     ],
     password: [
@@ -74,7 +76,7 @@
         <el-form-item prop="name">
           <el-input
             v-model="form.name"
-            placeholder="Введите имя"
+            :placeholder="$t('authForm.namePlaceholder')"
             :validate-event="false"
             :prefix-icon="UserFilled"
           />
@@ -84,7 +86,7 @@
         <el-form-item prop="password">
           <el-input
             v-model="form.password"
-            placeholder="Введите пароль"
+            :placeholder="$t('authForm.passwordPlaceholder')"
             type="password"
             show-password
             :validate-event="false"
@@ -94,23 +96,25 @@
       </div>
 
       <div class="action">
-        <div></div>
+        <div>
+          <SwitchLocale />
+        </div>
         <!-- Войти -->
         <el-button
           @click="submit(authFormRef)"
           :loading="loading"
           :disabled="loading"
         >
-          Войти
+          {{ $t('authForm.button') }}
         </el-button>
 
         <!-- Информация -->
         <div class="action__info">
           <el-tooltip placement="top">
             <template #content>
-              Регистрация доступна только администратору
+              {{ $t('authForm.info.line1') }}
               <br />
-              Аккаунт создается в интерфейсе его профиля
+              {{ $t('authForm.info.line2') }}
             </template>
             <el-icon><InfoFilled /></el-icon>
           </el-tooltip>
