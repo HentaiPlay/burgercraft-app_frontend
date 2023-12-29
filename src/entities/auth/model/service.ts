@@ -3,7 +3,7 @@ import { IAuthData } from '../model/types'
 import { getTokens, setTokens, removeTokens } from '../helpers/cookies'
 import { useUserStore } from '@/entities/user/model/store'
 import useMyNotification from '@/shared/ui-kit/composables/my-notification'
-import { globalComposable } from '@/shared/composables'
+import { global } from '@/shared/composables'
 
 export default function useAuthService() {
   const authApi = useAuthApi()
@@ -46,7 +46,7 @@ export default function useAuthService() {
     // Логаут
     logout: () => {
       removeTokens()
-      globalComposable.router?.push({ name: 'auth' })
+      global.router?.push({ name: 'auth' })
       console.clear()
     }
   }
