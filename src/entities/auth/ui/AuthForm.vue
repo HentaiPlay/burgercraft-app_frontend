@@ -4,7 +4,7 @@
   import { useAuthService } from '@/entities/auth'
   import { useRouter } from 'vue-router'
   import { setPermissions } from '@/entities/auth/helpers/roles'
-  import { useUserStore } from '@/entities/user/model/store'
+  import { useUserStore } from '@/entities/user'
   import { UserFilled, Lock, InfoFilled } from '@element-plus/icons-vue'
   import { global } from '@/shared/composables'
   import { SwitchLocale } from '@/features/switch-locale'
@@ -58,13 +58,10 @@
       }
     })
     loading.value = false
-
-    // При смене локали очищаем форму и сбрасываем валидацию
-    watch(locale, () => {
-      authFormRef.value?.clearValidate()
-      authFormRef.value?.resetFields()
-    })
   }
+
+  // При смене локали очищаем форму и сбрасываем ошибки при валидации
+  watch(locale, async () => authFormRef.value?.clearValidate())
 </script>
 
 <template>
