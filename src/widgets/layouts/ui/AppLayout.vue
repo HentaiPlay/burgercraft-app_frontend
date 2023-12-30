@@ -18,9 +18,9 @@
             <slot></slot>
           </el-main>
           <el-footer class="footer">
-            Это мой учебный-демонстрационный проект
+            {{ $t('footer.line1') }}
             <br />
-            &#169; Все медиа файлы взяты из интернета, все права принадлежат их владельцам
+            &#169; {{ $t('footer.line2') }}
           </el-footer>
         </el-container>
       </el-container>
