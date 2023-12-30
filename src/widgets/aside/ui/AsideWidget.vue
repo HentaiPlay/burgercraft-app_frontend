@@ -36,6 +36,18 @@
 
     <div class="aside-block__footer">
       <div class="footer__switchers">
+        <!-- Информация -->
+        <div class="switchers__info delimiter">
+          <el-tooltip placement="top">
+            <template #content>
+              {{ $t('aside.info.line1') }}
+              <br />
+              {{ $t('aside.info.line2') }}
+            </template>
+            <el-icon><InfoFilled /></el-icon>
+          </el-tooltip>
+        </div>
+
         <!-- Смена языка -->
         <SwitchLocale class="delimiter" />
 
@@ -80,6 +92,18 @@
     .footer__switchers {
       display: flex;
       align-items: center;
+      .switchers__info {
+        display: flex;
+        justify-content: end;
+        font-size: 1.6em;
+        > i {
+          color: colors.$info;
+          &:hover {
+            color: colors.$primary;
+            cursor: pointer;
+          }
+        }
+      }
       .delimiter {
         @include mixins.pr(20px);
         @include mixins.mr(20px);
