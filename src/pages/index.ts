@@ -69,7 +69,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/stats',
     name: 'stats',
-    component: () => import('./test/TestPage.vue'),
+    component: () => import('./stats/StatsPage.vue'),
     meta: {
       title: 'routes.stats',
       layout: 'app',
