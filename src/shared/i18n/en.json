@@ -22,6 +22,10 @@
     }
   },
   "aside": {
+    "info": {
+      "line1": "There is no multi language on the server yet",
+      "line2": "Therefore the content is not fully translated"
+    },
     "buttonLogout": "Logout"
   },
   "userCard": {
