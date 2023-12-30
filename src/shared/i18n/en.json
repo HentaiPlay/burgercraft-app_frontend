@@ -40,5 +40,9 @@
       "sum": "Sum",
       "loading": "Data loading in progress ..."
     }
+  },
+  "footer": {
+    "line1": "This is my educational demonstration project",
+    "line2": "All media files are taken from the Internet, all rights belong to their owners"
   }
 }
