@@ -1,4 +1,5 @@
 import UserCard from './ui/UserCard.vue'
 import useUserApi from './api/user.api'
 import useUserService from './model/service'
-export { UserCard, useUserApi, useUserService }
+import { useUserStore } from './model/store'
+export { UserCard, useUserApi, useUserStore, useUserService }
