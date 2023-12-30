@@ -16,3 +16,8 @@ export interface IUser {
 export interface IUserInfo extends IUser {
   role: IRole
 }
+
+export const enum Roles {
+  ADMIN = 1,
+  CRAFTER = 2
+}
