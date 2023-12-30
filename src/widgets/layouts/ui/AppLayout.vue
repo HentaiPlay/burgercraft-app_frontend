@@ -32,6 +32,18 @@
   .main {
     height: variables.$main-height !important;
     background-color: colors.$bg-color;
+    // стили для ползунка скрола
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-track {
+      background: colors.$bg-color;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: colors.$primary;
+      border-radius: 20px;
+      border: 6px solid colors.$primary;
+    }
   }
   .footer {
     display: flex;
