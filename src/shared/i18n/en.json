@@ -30,5 +30,15 @@
   },
   "userCard": {
     "position": "Position"
+  },
+  "stats": {
+    "buttonLoad": "Update data",
+    "table": {
+      "crafterId": "ID crafter",
+      "crafterName": "Nickname crafter",
+      "amountOrders": "Amount oreders",
+      "sum": "Sum",
+      "loading": "Data loading in progress ..."
+    }
   }
 }
