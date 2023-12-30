@@ -1,6 +1,8 @@
 <script setup lang="ts">
   import { HeaderWidget } from '@/widgets/header'
   import { AsideWidget } from '@/widgets/aside'
+  import { useRoute } from 'vue-router'
+  const route = useRoute()
 </script>
 
 <template>
@@ -15,6 +17,11 @@
         <!-- Контент -->
         <el-container>
           <el-main class="main">
+            <!-- Название страницы -->
+            <div class="page-title">
+              <h3>{{ $t(`${route.meta.title}`) }}</h3>
+            </div>
+            <!-- Контент роута -->
             <slot></slot>
           </el-main>
           <el-footer class="footer">
@@ -32,6 +39,14 @@
   .main {
     height: variables.$main-height !important;
     background-color: colors.$bg-color;
+    .page-title {
+      @include mixins.mb(20px);
+      @include mixins.pa(10px);
+      top: -20px;
+      position: sticky;
+      background-color: colors.$bg-color;
+      border-bottom: 1px solid colors.$bg-color-overlay;
+    }
     // стили для ползунка скрола
     &::-webkit-scrollbar {
       width: 6px;
