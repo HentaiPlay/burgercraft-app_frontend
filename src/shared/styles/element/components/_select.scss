@@ -6,7 +6,7 @@ $select: (
   'disabled-border': colors.$info,
   'font-size': getCssVar('font-size-base'),
   'close-hover-color': colors.$primary,
-  'input-color': colors.$bg-color,
+  'input-color': colors.$primary,
   'multiple-input-color': getCssVar('text-color-regular'),
   'input-focus-border-color': colors.$primary,
   'input-font-size': 16px
