@@ -1,7 +1,7 @@
 import { useAuthApi } from '..'
 import { IAuthData } from '../model/types'
 import { getTokens, setTokens, removeTokens } from '../helpers/cookies'
-import { useUserStore } from '@/entities/user/model/store'
+import { useUserStore } from '@/entities/user'
 import useMyNotification from '@/shared/ui-kit/composables/my-notification'
 import { global } from '@/shared/composables'
 
