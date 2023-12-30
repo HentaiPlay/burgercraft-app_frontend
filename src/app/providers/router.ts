@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, RouteRecordName } from 'vue-router'
 import { routes } from '@/pages'
 import { useUIStateStore } from '@/shared/store/ui-state'
 import { issetTokens } from '@/entities/auth/helpers/cookies'
-import { useUserStore } from '@/entities/user/model/store'
+import { useUserStore } from '@/entities/user'
 import { useUserApi } from '@/entities/user'
 import { setPermissions } from '@/entities/auth/helpers/roles'
 
