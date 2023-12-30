@@ -32,8 +32,8 @@
 </script>
 
 <template>
-  <div class="panel">
-    <h3>{{ global.i18n?.t('routes.stats') }}</h3>
+  <!-- Обновить данные -->
+  <div class="action">
     <el-button
       @click="loadData"
       :icon="RefreshRight"
@@ -73,10 +73,7 @@
 </template>
 
 <style lang="scss" scoped>
-  .panel {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    @include mixins.mb(20px);
+  .action {
+    @include mixins.py(20px);
   }
 </style>
