@@ -47,7 +47,7 @@
         />
       </div>
       <!-- Логаут -->
-      <el-button @click="authService.logout">Выйти</el-button>
+      <el-button @click="authService.logout">{{ $t('aside.buttonLogout') }}</el-button>
     </div>
   </el-aside>
 </template>
