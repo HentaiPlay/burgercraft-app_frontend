@@ -22,13 +22,8 @@
 
   const loadData = async () => {
     loading.value = true
-    await statsService
-      .getStats()
-      .then((res) => statsStore.setStats(res.data))
-      .catch((e) => console.log(e))
-      .finally(() => {
-        loading.value = false
-      })
+    await statsService.getStats()
+    loading.value = false
   }
 
   onMounted(async () => {
