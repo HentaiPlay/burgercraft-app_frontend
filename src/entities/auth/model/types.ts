@@ -1,6 +1,10 @@
-export interface IAuthData {
+export interface ILoginDTO {
   name: string
   password: string
+}
+
+export interface IRegisterDTO extends ILoginDTO {
+  roleId: number
 }
 
 export interface ITokens {
