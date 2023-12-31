@@ -1,0 +1,14 @@
+@use '@assets/styles/_colors.scss' as colors;
+
+// Dialog
+$dialog: (
+  // 'width': 50%,
+  // 'margin-top': 15vh,
+  // 'bg-color': getCssVar('bg-color'),
+  // 'box-shadow': getCssVar('box-shadow'),
+  // 'title-font-size': getCssVar('font-size-large'),
+  // 'content-font-size': 14px,
+  // 'font-line-height': getCssVar('font-line-height-primary'),
+  // 'padding-primary': 20px,
+  'border-radius': 10px
+);
