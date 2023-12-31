@@ -1,5 +1,5 @@
 import { useAuthApi } from '..'
-import { IAuthData } from '../model/types'
+import { ILoginDTO, IRegisterDTO } from '../model/types'
 import { getTokens, setTokens, removeTokens } from '../helpers/cookies'
 import { useUserStore } from '@/entities/user'
 import useMyNotification from '@/shared/ui-kit/composables/my-notification'
@@ -11,11 +11,11 @@ export default function useAuthService() {
 
   return {
     // Авторизация
-    login: async (authData: IAuthData): Promise<boolean> => {
+    login: async (dto: ILoginDTO): Promise<boolean> => {
       const userStore = useUserStore()
       let status: boolean = false
       await authApi
-        .login(authData)
+        .login(dto)
         .then((res) => {
           // записываем информацию о пользователе
           userStore.setUserInfo(res.data.user)
@@ -30,8 +30,36 @@ export default function useAuthService() {
           // вывод уведомления об ошибке
           myNotify({
             type: 'error',
-            title: 'Ошибка',
+            title: global.i18n?.t('notify.error') ?? 'Ошибка',
             message: err.response.data.message ?? 'Ошибка сервера'
+          })
+        })
+      return status
+    },
+
+    // Регистрация
+    register: async (dto: IRegisterDTO) => {
+      let status: boolean = false
+      await authApi
+        .register(dto)
+        .then(() => {
+          status = true
+          // вывод уведомления об ошибке
+          myNotify({
+            type: 'success',
+            title: global.i18n?.t('notify.success') ?? 'Успех',
+            message: global.i18n?.t('registerForm.status.success', { nickname: dto.name }) ?? 'Ошибка сервера'
+          })
+        })
+        .catch((err) => {
+          // вывод уведомления об ошибке
+          myNotify({
+            type: 'error',
+            title: global.i18n?.t('notify.error') ?? 'Ошибка',
+            message:
+              `${global.i18n?.t('registerForm.status.error', {
+                nickname: dto.name
+              })} (${err.response.data.message})` ?? 'Ошибка сервера'
           })
         })
       return status
