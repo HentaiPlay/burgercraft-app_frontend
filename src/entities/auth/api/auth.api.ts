@@ -1,14 +1,14 @@
 import axios from 'axios'
 const baseURL: string = import.meta.env.VITE_API_URL
-import { IAuthData, ITokenRefresh } from '../model/types'
+import { ILoginDTO, IRegisterDTO, ITokenRefresh } from '../model/types'
 
 export default function useAuthApi() {
   return {
-    login: async (authData: IAuthData) => {
+    login: async (authData: ILoginDTO) => {
       return await axios.post(`${baseURL}auth/login`, authData)
     },
 
-    register: async (authData: IAuthData) => {
+    register: async (authData: IRegisterDTO) => {
       return await axios.post(`${baseURL}auth/register`, authData)
     },
 
