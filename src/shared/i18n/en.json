@@ -12,6 +12,10 @@
     "min": "Minimum {min}",
     "min_max": "Minimum {min} - maximum {max}"
   },
+  "notify": {
+    "success": "Success",
+    "error": "Error"
+  },
   "authForm": {
     "namePlaceholder": "Type nickname",
     "passwordPlaceholder": "Type password",
@@ -19,6 +23,20 @@
     "info": {
       "line1": "Registration is only available to administrators",
       "line2": "An account is created in its profile interface"
+    }
+  },
+  "registerForm": {
+    "title": "Registration",
+    "button": "Register",
+    "info": "The user adds an avatar himself when editing his profile",
+    "rolePlaceholder": "Choose role",
+    "roleItems": {
+      "admin": "Admin",
+      "crafter": "Crafter"
+    },
+    "status": {
+      "success": "User \"{nickname}\" has been successfully registered",
+      "error": "Failed to register user \"{nickname}\""
     }
   },
   "aside": {
@@ -30,6 +48,10 @@
   },
   "userCard": {
     "position": "Position"
+  },
+  "profile": {
+    "buttonRegister": "Add new user",
+    "buttonEdit": "Edit profile"
   },
   "stats": {
     "buttonLoad": "Update data",

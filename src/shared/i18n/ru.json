@@ -12,6 +12,10 @@
     "min": "Минимум {min} {name}",
     "min_max": "Минимум {min} - максиумм {max} {name}"
   },
+  "notify": {
+    "success": "Успех",
+    "error": "Ошибка"
+  },
   "authForm": {
     "namePlaceholder": "Введите никнейм",
     "passwordPlaceholder": "Введите пароль",
@@ -19,6 +23,20 @@
     "info": {
       "line1": "Регистрация доступна только администратору",
       "line2": "Аккаунт создается в интерфейсе его профиля"
+    }
+  },
+  "registerForm": {
+    "title": "Регистрация",
+    "button": "Зарегистрировать",
+    "info": "Аватар пользователь добавляет сам при редактировании своего профиля",
+    "rolePlaceholder": "Выберите роль",
+    "roleItems": {
+      "admin": "Admin",
+      "crafter": "Crafter"
+    },
+    "status": {
+      "success": "Пользователь \"{nickname}\" успешно зарегистрирован",
+      "error": "Не удалось зарегистировать пользователя \"{nickname}\""
     }
   },
   "aside": {
@@ -30,6 +48,10 @@
   },
   "userCard": {
     "position": "Должность"
+  },
+  "profile": {
+    "buttonRegister": "Добавить нового пользователя",
+    "buttonEdit": "Редактировать профиль"
   },
   "stats": {
     "buttonLoad": "Обновить данные",
