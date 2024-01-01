@@ -44,7 +44,7 @@ export default function useAuthService() {
         .register(dto)
         .then(() => {
           status = true
-          // вывод уведомления об ошибке
+          // вывод уведомления об успехе
           myNotify({
             type: 'success',
             title: global.i18n?.t('notify.success') ?? 'Успех',
