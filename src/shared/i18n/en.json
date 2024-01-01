@@ -39,6 +39,16 @@
       "error": "Failed to register user \"{nickname}\""
     }
   },
+  "editForm": {
+    "title": "Edit profile",
+    "namePlaceholder": "Type new nickname",
+    "passwordPlaceholder": "Type new password",
+    "button": "Save",
+    "status": {
+      "success": "Your profile has been successfully updated",
+      "error": "Failed to update profile"
+    }
+  },
   "aside": {
     "info": {
       "line1": "There is no multi language on the server yet",
@@ -50,7 +60,8 @@
     "position": "Position"
   },
   "profile": {
-    "buttonRegister": "Add new user",
+    "action": "Actions",
+    "buttonRegister": "Add user",
     "buttonEdit": "Edit profile"
   },
   "stats": {
