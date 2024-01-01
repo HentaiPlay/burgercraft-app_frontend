@@ -11,6 +11,12 @@ export const useUserStore = defineStore('user', () => {
 
   const hasInfo = computed(() => !!user.value && !!role.value)
 
+  function setName(name: string) {
+    if (user.value?.name) {
+      user.value.name = name
+    }
+  }
+
   function setUserInfo(dto: IUserInfo) {
     user.value = {
       id: dto.id,
@@ -20,5 +26,5 @@ export const useUserStore = defineStore('user', () => {
     role.value = dto.role
   }
 
-  return { user, role, hasInfo, setUserInfo }
+  return { user, role, hasInfo, setName, setUserInfo }
 })
