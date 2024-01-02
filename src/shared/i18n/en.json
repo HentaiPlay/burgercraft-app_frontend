@@ -57,12 +57,15 @@
     "buttonLogout": "Logout"
   },
   "userCard": {
-    "position": "Position"
+    "position": "Position",
+    "alt": "User avatar",
+    "unknown": "unknown"
   },
   "profile": {
     "action": "Actions",
     "buttonRegister": "Add user",
-    "buttonEdit": "Edit profile"
+    "buttonEdit": "Edit",
+    "buttonRemove": "Remove"
   },
   "stats": {
     "buttonLoad": "Update data",

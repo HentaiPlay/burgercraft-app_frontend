@@ -57,12 +57,15 @@
     "buttonLogout": "Выйти"
   },
   "userCard": {
-    "position": "Должность"
+    "position": "Должность",
+    "alt": "Аватар пользователя",
+    "unknown": "Неизвестно"
   },
   "profile": {
     "action": "Действия",
     "buttonRegister": "Добавить пользователя",
-    "buttonEdit": "Редактировать профиль"
+    "buttonEdit": "Редактировать",
+    "buttonRemove": "Удалить"
   },
   "stats": {
     "buttonLoad": "Обновить данные",
