@@ -1,21 +1,22 @@
 <script lang="ts" setup>
   import { ref, reactive, computed } from 'vue'
-  import { UserFilled, Lock } from '@element-plus/icons-vue'
-  import type { FormInstance } from 'element-plus'
+  import type { FormInstance, FormRules } from 'element-plus'
+  import { UserFilled, Lock, CirclePlusFilled } from '@element-plus/icons-vue'
   import { global } from '@/shared/composables'
   import { Roles } from '@/entities/user/model/types'
   import { useAuthService } from '@/entities/auth'
-  import { useAuthComposable } from '@/entities/auth'
 
   const authService = useAuthService()
-  const authComposable = useAuthComposable()
 
   // Модальное окно
   const dialog = ref(false)
-  const open = () => {
-    dialog.value = true
-  }
+  const open = () => (dialog.value = true)
   const close = () => {
+    // Очищаем поля формы, сбрасываем валидацию и закрываем модалку
+    if (registerFormRef.value) {
+      registerFormRef.value.resetFields()
+      registerFormRef.value.clearValidate()
+    }
     dialog.value = false
   }
 
@@ -25,18 +26,31 @@
     { label: global.i18n?.t('registerForm.roleItems.crafter'), value: Roles.CRAFTER }
   ])
 
-  // Ссылка шаблона на форму
-  const registerFormRef = ref<FormInstance>()
-
   // Форма
+  const registerFormRef = ref<FormInstance>()
   const form = reactive({
     roleId: 2,
     name: '',
     password: ''
   })
 
+  // Установка текстовок через глобалный композабл i18n
+  const setMessage = (key: string, args?: Record<string, string | number>): string => {
+    return global.i18n ? global.i18n.t(key, args || {}) : ''
+  }
+
   // Правила валидации
-  const rules = authComposable.getRules()
+  const rules = computed<FormRules>(() => ({
+    name: [
+      { required: true, message: setMessage('rules.required'), trigger: 'blur' },
+      { min: 3, message: setMessage('rules.min', { min: 3 }), trigger: 'blur' }
+    ],
+    password: [
+      { required: true, message: setMessage('rules.required'), trigger: 'blur' },
+      { min: 8, max: 20, message: setMessage('rules.min_max', { min: 8, max: 20 }), trigger: 'blur' }
+    ],
+    roleId: [{ required: true, message: setMessage('rules.required'), trigger: 'blur' }]
+  }))
 
   // Сабмит формы
   const submit = async (formEl: FormInstance | undefined) => {
@@ -63,7 +77,7 @@
 <template>
   <el-button
     @click="open"
-    :icon="UserFilled"
+    :icon="CirclePlusFilled"
   >
     {{ $t('profile.buttonRegister') }}
   </el-button>
@@ -74,7 +88,7 @@
     :title="$t('registerForm.title')"
     width="500"
     draggable
-    @keyup.esc="close"
+    @close="close"
   >
     <!-- Информация -->
     <div class="info">
