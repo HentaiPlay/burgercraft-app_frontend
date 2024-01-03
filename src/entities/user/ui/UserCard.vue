@@ -1,30 +1,37 @@
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue'
-  import { useUserApi } from '@/entities/user'
+  import { useUserStore } from '../model/store'
+  import { useUserService } from '..'
   import { global } from '@/shared/composables'
+  import { ref, computed, watch, onMounted } from 'vue'
+
+  const userStore = useUserStore()
 
   defineProps({
     name: {
       type: String,
       required: true,
-      default: 'Неизвестно'
+      default: global.i18n?.t('userCard.unknown') ?? 'Неизвестно'
     },
     role: {
       type: String,
       required: true,
-      default: 'Неизвестно'
+      default: global.i18n?.t('userCard.unknown') ?? 'Неизвестно'
     }
   })
 
-  const userApi = useUserApi()
+  const userService = useUserService()
 
-  const avatar = ref('')
+  const avatar = ref<string>('')
+  const getAvatar = async () => {
+    avatar.value = (await userService.getAvatar()) ?? ''
+  }
 
-  onMounted(async () => {
-    await userApi.getAvatar().then((res) => {
-      avatar.value = URL.createObjectURL(res.data)
-    })
-  })
+  watch(
+    computed(() => userStore.user?.avatar),
+    async () => await getAvatar()
+  )
+
+  onMounted(async () => await getAvatar())
 </script>
 
 <template>
@@ -34,7 +41,7 @@
       <img
         id="avatar"
         :src="avatar"
-        alt="аватар пользователя"
+        :alt="$t('userCard.alt')"
       />
     </div>
     <!-- Описание -->
