@@ -9,7 +9,7 @@ export const useUserStore = defineStore('user', () => {
   // Роль
   const role = ref<IRole>()
 
-  const hasInfo = computed(() => !!user.value && !!role.value)
+  const hasInfo = computed((): boolean => !!user.value && !!role.value)
 
   function setName(name: string) {
     if (user.value?.name) {
