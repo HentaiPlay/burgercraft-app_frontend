@@ -7,6 +7,13 @@ export default function useUserApi() {
 
     getAvatar: async () => await apiClient.get('users/avatar', { responseType: 'blob' }),
 
-    updateProfile: async (dto: Partial<ILoginDTO>) => await apiClient.patch('users', dto)
+    updateProfile: async (dto: Partial<ILoginDTO>) => await apiClient.patch('users', dto),
+
+    updateAvatar: async (dto: FormData) =>
+      apiClient.put('/users/avatar', dto, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      }),
+
+    removeAccount: async () => await apiClient.delete('/users')
   }
 }
