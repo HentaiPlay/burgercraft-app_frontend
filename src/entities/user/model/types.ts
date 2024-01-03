@@ -1,3 +1,9 @@
+// Роль
+export const enum Roles {
+  ADMIN = 1,
+  CRAFTER = 2
+}
+
 export interface IRole {
   id: number
   name: string
@@ -7,6 +13,7 @@ export interface IRole {
   }
 }
 
+// Пользователь
 export interface IUser {
   id: number
   name: string
@@ -17,7 +24,8 @@ export interface IUserInfo extends IUser {
   role: IRole
 }
 
-export const enum Roles {
-  ADMIN = 1,
-  CRAFTER = 2
+export interface IUserUpdateDTO {
+  name: string
+  password: string
+  file: File
 }
