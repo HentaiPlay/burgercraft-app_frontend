@@ -4,33 +4,54 @@
   import type { FormInstance, FormRules } from 'element-plus'
   import { useUserService } from '@/entities/user'
   import { useUserStore } from '@/entities/user'
-  import { ILoginDTO } from '@/entities/auth/model/types'
+  import { IUserUpdateDTO } from '@/entities/user/model/types'
   import { global } from '@/shared/composables'
+  import { isEqual } from 'lodash'
 
   const userStore = useUserStore()
   const userService = useUserService()
 
   // Модальное окно
   const dialog = ref(false)
-  const open = () => {
-    dialog.value = true
-  }
+  const open = () => (dialog.value = true)
+  // TODO: добавить очистку формы и на событие повесить
   const close = () => {
+    // Очищаем поля формы, сбрасываем валидацию и закрываем модалку
+    if (editFormRef.value) {
+      editFormRef.value.resetFields()
+      editFormRef.value.clearValidate()
+      newAvatar.value = undefined
+    }
     dialog.value = false
   }
 
-  let loading = ref(false)
+  // Во vue3 какая та проблема с макросами, причем только с defineModel
+  // https://github.com/eslint/eslint/discussions/15015
+  // https://www.reddit.com/r/vuejs/comments/1383stf/has_anyone_used_definemodel_yet/
+  // const avatar = defineModel<File | undefined>()
 
-  // Ссылка шаблона на форму
-  const registerFormRef = ref<FormInstance>()
+  // Аватар
+  const newAvatar = ref<File | undefined>()
+  const currentAvatar = ref<string>('')
+  const getData = async () => {
+    newAvatar.value = undefined
+    form.name = userStore.user?.name ?? ''
+    currentAvatar.value = (await userService.getAvatar()) ?? ''
+  }
 
   // Форма
+  const editFormRef = ref<FormInstance>()
   const form = reactive<Record<string, string>>({
     name: '',
     password: ''
   })
+  let loading = ref(false)
 
-  const disabled = computed<boolean>(() => form.name === userStore.user?.name)
+  // Если данные не изменились то дизейблим
+  let initialData = reactive({})
+  const disabled = computed<boolean>(() => {
+    return isEqual(initialData, { ...form, avatar: newAvatar.value })
+  })
 
   // Установка текстовок для rules
   const setMessage = (key: string, args?: Record<string, string | number>): string => {
@@ -53,20 +74,34 @@
     if (!formEl) return
     loading.value = true
     // Валидация
-    formEl.validate(async (valid) => {
+    await formEl.validate(async (valid) => {
       if (valid) {
-        const dto: Partial<ILoginDTO> = Object.keys(form).reduce((reducer: Record<string, string>, key: string) => {
-          if (form[key] !== '') {
-            reducer[key] = form[key]
-          }
-          return reducer
-        }, {})
-
+        // Запись никнейма и пароля если они есть
+        const dto: Partial<IUserUpdateDTO> = Object.keys(form).reduce(
+          (reducer: Record<string, string>, key: string) => {
+            if (form[key] !== '') {
+              const isUnchangedName = key === 'name' && form.name === userStore.user?.name
+              if (!isUnchangedName) {
+                reducer[key] = form[key]
+              }
+            }
+            return reducer
+          },
+          {}
+        )
+        // Если есть новая аватарка
+        if (newAvatar.value) {
+          dto.file = newAvatar.value
+        }
+        // Если данных нет прерываем
+        if (!Object.keys(dto).length) return false
+        // Установка статуса
         const successUpdate = await userService.updateProfile(dto)
         if (successUpdate) {
           // Очищаем поля формы, сбрасываем валидацию и закрываем модалку
           formEl.resetFields()
           formEl.clearValidate()
+          await getData()
           close()
         }
       } else {
@@ -77,7 +112,8 @@
   }
 
   onMounted(async () => {
-    form.name = userStore.user?.name ?? ''
+    await getData()
+    initialData = { ...form, avatar: newAvatar.value }
   })
 </script>
 
@@ -95,12 +131,20 @@
     :title="$t('editForm.title')"
     width="500"
     draggable
-    @keyup.esc="close"
+    @close="close"
   >
+    <!-- Редактор аватара -->
+    <div class="avatar">
+      <MyImageUploader
+        v-model="newAvatar"
+        :defaultPreview="currentAvatar"
+      />
+    </div>
+
     <!-- Форма -->
     <el-form
-      ref="registerFormRef"
-      @keyup.enter="submit(registerFormRef)"
+      ref="editFormRef"
+      @keyup.enter="submit(editFormRef)"
       :model="form"
       :rules="rules"
       :validate-on-rule-change="false"
@@ -131,8 +175,9 @@
 
       <div class="action">
         <el-button
-          @click="submit(registerFormRef)"
+          @click="submit(editFormRef)"
           :disabled="disabled"
+          :loading="loading"
         >
           {{ $t('editForm.button') }}
         </el-button>
@@ -142,6 +187,11 @@
 </template>
 
 <style lang="scss" scoped>
+  .avatar {
+    @include mixins.mb(20px);
+    border-top: 1px solid colors.$bg-color-overlay;
+    border-bottom: 1px solid colors.$bg-color-overlay;
+  }
   .info {
     @include mixins.mb(20px);
     @include mixins.py(20px);
