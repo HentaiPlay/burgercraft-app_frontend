@@ -24,6 +24,7 @@ router.beforeEach(async (to, from, next) => {
     await userApi
       .getUserInfo()
       .then((res) => userStore.setUserInfo(res.data))
+      .catch((err) => console.log(err))
       .finally(() => {
         router.options.routes = setPermissions(router.getRoutes(), userStore.role?.accessList?.pages)
         // При переопредлении meta роутов для пермишенов,
