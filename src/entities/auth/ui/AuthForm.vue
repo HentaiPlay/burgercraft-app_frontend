@@ -1,31 +1,42 @@
 <script lang="ts" setup>
   import { ref, reactive, computed, watch } from 'vue'
-  import type { FormInstance } from 'element-plus'
+  import type { FormInstance, FormRules } from 'element-plus'
+  import { UserFilled, Lock, InfoFilled } from '@element-plus/icons-vue'
   import { useAuthService } from '@/entities/auth'
   import { useRouter } from 'vue-router'
   import { setPermissions } from '@/entities/auth/helpers/roles'
   import { useUserStore } from '@/entities/user'
-  import { UserFilled, Lock, InfoFilled } from '@element-plus/icons-vue'
   import { global } from '@/shared/composables'
   import { SwitchLocale } from '@/features/switch-locale'
-  import { useAuthComposable } from '@/entities/auth'
 
   const router = useRouter()
   const authService = useAuthService()
   const userStore = useUserStore()
   const locale = computed(() => global.i18n?.locale.value)
-  const authComposable = useAuthComposable()
 
+  // Форма
+  const authFormRef = ref<FormInstance>()
   const form = reactive({
     name: '',
     password: ''
   })
 
-  // Ссылка шаблона на форму
-  const authFormRef = ref<FormInstance>()
+  // Установка текстовок через глобалный композабл i18n
+  const setMessage = (key: string, args?: Record<string, string | number>): string => {
+    return global.i18n ? global.i18n.t(key, args || {}) : ''
+  }
 
   // Правила валидации
-  let rules = authComposable.getRules()
+  const rules = computed<FormRules>(() => ({
+    name: [
+      { required: true, message: setMessage('rules.required'), trigger: 'blur' },
+      { min: 3, message: setMessage('rules.min', { min: 3 }), trigger: 'blur' }
+    ],
+    password: [
+      { required: true, message: setMessage('rules.required'), trigger: 'blur' },
+      { min: 8, max: 20, message: setMessage('rules.min_max', { min: 8, max: 20 }), trigger: 'blur' }
+    ]
+  }))
 
   let loading = ref(false)
 
