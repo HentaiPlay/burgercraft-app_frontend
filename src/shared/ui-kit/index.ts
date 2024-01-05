@@ -5,6 +5,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import MyLogo from './components/MyLogo.vue'
 import MyNotification from './components/MyNotification.vue'
 import MyImageUploader from './components/MyImageUploader.vue'
+import MyConfirmDialog from './components/MyConfirmDialog.vue'
 
 export default {
   install: (app: App) => {
@@ -17,5 +18,6 @@ export default {
     app.component('MyLogo', MyLogo)
     app.component('MyNotification', MyNotification)
     app.component('MyImageUploader', MyImageUploader)
+    app.component('MyConfirmDialog', MyConfirmDialog)
   }
 }
