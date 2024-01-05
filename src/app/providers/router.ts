@@ -24,7 +24,7 @@ router.beforeEach(async (to, from, next) => {
     await userApi
       .getUserInfo()
       .then((res) => userStore.setUserInfo(res.data))
-      .catch((err) => console.log(err))
+      .catch(() => {})
       .finally(() => {
         router.options.routes = setPermissions(router.getRoutes(), userStore.role?.accessList?.pages)
         // При переопредлении meta роутов для пермишенов,
@@ -42,7 +42,7 @@ router.beforeEach(async (to, from, next) => {
   // Сценарии валидации роутинга
   switch (true) {
     // Если нет токенов и переход не в /auth, то отправляем именно туда
-    case !hasTokens:
+    case !hasTokens || !userStore.hasInfo:
       redirectRouteName = isAuthPath ? to.name : 'auth'
       break
     // Если несуществующий роут (404) или переход на /auth (будучи авторизованным)
