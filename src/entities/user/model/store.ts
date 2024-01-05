@@ -4,10 +4,10 @@ import { IUserInfo, IUser, IRole } from './types'
 
 export const useUserStore = defineStore('user', () => {
   // Пользователь
-  const user = ref<IUser>()
+  const user = ref<IUser | null>(null)
 
   // Роль
-  const role = ref<IRole>()
+  const role = ref<IRole | null>(null)
 
   const hasInfo = computed((): boolean => !!user.value && !!role.value)
 
@@ -26,5 +26,10 @@ export const useUserStore = defineStore('user', () => {
     role.value = dto.role
   }
 
-  return { user, role, hasInfo, setName, setUserInfo }
+  function clearState() {
+    user.value = null
+    role.value = null
+  }
+
+  return { user, role, hasInfo, setName, setUserInfo, clearState }
 })
