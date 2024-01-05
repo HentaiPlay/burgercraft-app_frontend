@@ -16,6 +16,11 @@
     "success": "Success",
     "error": "Error"
   },
+  "confirm": {
+    "title": "Сonfirm the action",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  },
   "authForm": {
     "namePlaceholder": "Type nickname",
     "passwordPlaceholder": "Type password",
@@ -62,10 +67,10 @@
     "unknown": "unknown"
   },
   "profile": {
-    "action": "Actions",
     "buttonRegister": "Add user",
     "buttonEdit": "Edit",
-    "buttonRemove": "Remove"
+    "buttonRemove": "Remove",
+    "confirmRemove": "Are you sure you want to delete your profile"
   },
   "stats": {
     "buttonLoad": "Update data",

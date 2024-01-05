@@ -16,6 +16,11 @@
     "success": "Успех",
     "error": "Ошибка"
   },
+  "confirm": {
+    "title": "Подтвердите действие",
+    "confirm": "Подтвердить",
+    "cancel": "Отменить"
+  },
   "authForm": {
     "namePlaceholder": "Введите никнейм",
     "passwordPlaceholder": "Введите пароль",
@@ -62,10 +67,10 @@
     "unknown": "Неизвестно"
   },
   "profile": {
-    "action": "Действия",
     "buttonRegister": "Добавить пользователя",
     "buttonEdit": "Редактировать",
-    "buttonRemove": "Удалить"
+    "buttonRemove": "Удалить",
+    "confirmRemove": "Вы точно хотите удалить профиль"
   },
   "stats": {
     "buttonLoad": "Обновить данные",
