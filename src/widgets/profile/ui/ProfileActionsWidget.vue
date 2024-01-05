@@ -1,33 +1,26 @@
 <script lang="ts" setup>
   import { AuthRegister } from '@/features/auth-register'
+  import { RemoveProfile } from '@/features/remove-profile'
   import { useUserStore } from '@/entities/user'
   import { Roles } from '@/entities/user/model/types'
   import { EditProfile } from '@/features/edit-profile'
-  import { useAuthService } from '@/entities/auth'
-  import { useUserService } from '@/entities/user'
 
   const userStore = useUserStore()
-  const userService = useUserService()
-  const authService = useAuthService()
-
-  console.log(userService)
-  console.log(authService)
 </script>
 
 <template>
   <div class="actions">
     <div class="actions__list">
-      <span>{{ $t('profile.action') }}</span>
+      <EditProfile />
 
-      <!-- Редактировать профиль -->
       <div class="delimiter">
-        <EditProfile />
+        <RemoveProfile />
       </div>
 
       <!-- Регистариция нового пользователя -->
       <div
         v-if="userStore.role?.id === Roles.ADMIN"
-        class="delimiter"
+        class="list__add-user"
       >
         <AuthRegister />
       </div>
@@ -49,6 +42,9 @@
       @include mixins.pl(20px);
       @include mixins.ml(20px);
       border-left: 1px solid colors.$bg-color-overlay;
+    }
+    .list__add-user {
+      @include mixins.ml(auto);
     }
   }
 </style>
