@@ -2,7 +2,7 @@ import { useAuthApi } from '..'
 import { ILoginDTO, IRegisterDTO } from '../model/types'
 import { getTokens, setTokens, removeTokens } from '../helpers/cookies'
 import { useUserStore } from '@/entities/user'
-import useMyNotification from '@/shared/ui-kit/composables/my-notification'
+import { useMyNotification } from '@/shared/composables'
 import { global } from '@/shared/composables'
 
 export default function useAuthService() {

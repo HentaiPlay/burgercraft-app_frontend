@@ -7,7 +7,7 @@
   import { useUserApi } from '@/entities/user'
   const userApi = useUserApi()
 
-  import useMyNotification from '@/shared/ui-kit/composables/my-notification'
+  import { useMyNotification } from '@/shared/composables'
   const myNotify = useMyNotification()
 
   import { useAudioPlayer } from '@/shared/composables'

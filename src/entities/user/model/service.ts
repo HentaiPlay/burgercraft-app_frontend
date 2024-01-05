@@ -1,6 +1,6 @@
 import { useUserApi, useUserStore } from '..'
 import { IUserUpdateDTO } from './types'
-import useMyNotification from '@/shared/ui-kit/composables/my-notification'
+import { useMyNotification } from '@/shared/composables'
 import { global } from '@/shared/composables'
 
 export default function useUserService() {
