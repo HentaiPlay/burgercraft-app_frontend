@@ -73,7 +73,9 @@ export default function useAuthService() {
 
     // Логаут
     logout: () => {
+      const userStore = useUserStore()
       removeTokens()
+      userStore.clearState()
       global.router?.push({ name: 'auth' })
       console.clear()
     }
