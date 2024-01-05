@@ -43,10 +43,14 @@
 <template>
   <!-- Уведомления -->
   <MyNotification :maxCount="5" />
+
+  <!-- Окно подтверждений -->
+  <MyConfirmDialog />
+
   <!-- Шаблон страницы -->
   <component
-    :is="layout"
     v-if="global.isReady()"
+    :is="layout"
   >
     <!-- Прелоадер -->
     <Preloader v-if="uiStore.isActivePreloader" />
