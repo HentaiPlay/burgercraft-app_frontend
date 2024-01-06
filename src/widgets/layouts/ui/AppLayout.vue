@@ -44,6 +44,7 @@
       @include mixins.pa(10px);
       top: -20px;
       position: sticky;
+      z-index: 2;
       background-color: colors.$bg-color;
       border-bottom: 1px solid colors.$bg-color-overlay;
     }
