@@ -1,7 +1,10 @@
 <script setup lang="ts">
   import { ref, computed } from 'vue'
-  import { CirclePlus } from '@element-plus/icons-vue'
+  import { ProductForm } from '@/entities/products'
   import { global } from '@/shared/composables'
+  import { useUserStore } from '@/entities/user'
+
+  const userStore = useUserStore()
 
   // Типы продуктов
   const select = ref(global.router?.currentRoute.value.params.type ?? 'all')
@@ -44,6 +47,7 @@
       v-model="select"
       :placeholder="$t('products.select.placeholder')"
       @change="onChangeType"
+      class="filter"
     >
       <el-option
         v-for="item in options"
@@ -53,9 +57,11 @@
       />
     </el-select>
 
-    <!-- TODO: Заменить компонентом формы -->
     <!-- Создать продукт -->
-    <el-button :icon="CirclePlus">{{ $t('products.buttonCreate') }}</el-button>
+    <ProductForm
+      v-if="userStore.isAdmin"
+      mode="create"
+    />
   </div>
 </template>
 
@@ -67,5 +73,9 @@
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid colors.$bg-color-overlay;
+    .filter {
+      max-width: 400px;
+      @include mixins.mr(20px);
+    }
   }
 </style>
