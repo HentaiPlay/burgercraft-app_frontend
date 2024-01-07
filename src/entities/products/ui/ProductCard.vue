@@ -1,6 +1,9 @@
 <script setup lang="ts">
-  import { Edit } from '@element-plus/icons-vue'
+  import { ProductForm } from '@/entities/products'
+  import { useUserStore } from '@/entities/user'
   import { IProductDTO } from '../model/types'
+
+  const productStore = useUserStore()
 
   const props = defineProps<{ product: IProductDTO }>()
   const baseURL: string = import.meta.env.VITE_API_URL
@@ -14,9 +17,12 @@
         :src="`${baseURL}images/${product.photoPath}`"
         :alt="$t('products.productCard.alt')"
       />
-      <div class="actions">
+      <div
+        v-if="productStore.isAdmin"
+        class="actions"
+      >
         <div class="actions__list">
-          <el-icon><Edit /></el-icon>
+          <ProductForm mode="edit" />
         </div>
       </div>
     </div>
