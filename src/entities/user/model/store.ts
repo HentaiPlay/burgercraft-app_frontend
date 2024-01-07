@@ -10,6 +10,7 @@ export const useUserStore = defineStore('user', () => {
   const role = ref<IRole | null>(null)
 
   const hasInfo = computed((): boolean => !!user.value && !!role.value)
+  const isAdmin = computed<boolean>(() => (role.value?.name ? role.value.name === 'admin' : false))
 
   function setName(name: string) {
     if (user.value?.name) {
@@ -31,5 +32,5 @@ export const useUserStore = defineStore('user', () => {
     role.value = null
   }
 
-  return { user, role, hasInfo, setName, setUserInfo, clearState }
+  return { user, role, hasInfo, isAdmin, setName, setUserInfo, clearState }
 })
