@@ -81,6 +81,7 @@
       v-show="false"
       type="file"
       name="fields[fileUploader][]"
+      accept=".jpg, .jpeg, .png"
       id="fileUploader"
       @input="onChange"
     />
@@ -125,6 +126,8 @@
       > img {
         height: 200px;
         width: 200px;
+        object-fit: contain;
+        object-position: center;
       }
       .preview__actions {
         position: absolute;
@@ -162,8 +165,11 @@
     height: 200px !important;
     width: 600px !important;
     > img {
-      height: 200px !important;
-      width: 600px !important;
+      height: 100% !important;
+      width: 100% !important;
+      background-color: white;
+      object-fit: contain;
+      object-position: center;
     }
   }
 </style>
