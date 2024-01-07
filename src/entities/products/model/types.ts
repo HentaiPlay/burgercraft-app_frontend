@@ -17,3 +17,11 @@ export interface IProductDTO {
 }
 
 export type Products = Record<string, IProductDTO[]>
+
+// TODO: сделать type: ProductType, нада разобраться как форма хавает типы (если это вообще возможно)
+export interface ICreateProductDTO {
+  name: string
+  type: string
+  price: number
+  file?: File
+}
