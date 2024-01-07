@@ -10,6 +10,8 @@ export const useProductsStore = defineStore('products', () => {
   const hasData = computed(() => Object.keys(products.value).length === numberOfProductTypes)
 
   function setAllProducts(dto: IProductDTO[]) {
+    types.value = []
+    products.value = {}
     dto.forEach((product: IProductDTO) => {
       // Разбиваем по типам
       if (!types.value.includes(product.type)) {
