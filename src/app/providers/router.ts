@@ -16,6 +16,7 @@ router.beforeEach(async (to, from, next) => {
   const hasTokens = issetTokens()
   const isAuthPath = to.name === 'auth'
   const issetRoute = routes.some((route) => to.name === route.name)
+  const changedNameRoute = from.name ? from.name !== to.name : true
 
   // Если есть токены но нет данных о пользователе в сторе,
   // делаем запрос на их получение
@@ -29,9 +30,11 @@ router.beforeEach(async (to, from, next) => {
         router.options.routes = setPermissions(router.getRoutes(), userStore.role?.accessList?.pages)
         // При переопредлении meta роутов для пермишенов,
         // актульное состояние роутов доступно только в matches,
-        // поэтому для текущего роута нужно перезаписывать meta
-        to.meta = to.matched[0].meta
-        to.meta.getInfo = true
+        // поэтому для текущего роута нужно перезаписывать meta (если роут корректный)
+        if (to && issetRoute) {
+          to.meta = to.matched[0].meta
+          to.meta.getInfo = true
+        }
       })
   }
 
@@ -56,7 +59,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // Включение прелоадера
-  if (hasPermission) {
+  if (hasPermission && changedNameRoute) {
     const uiStore = useUIStateStore()
     uiStore.showPreloader()
   }
