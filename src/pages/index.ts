@@ -5,7 +5,10 @@ declare module 'vue-router' {
     title: string
     layout?: 'app' | 'default'
     isMenuItem?: boolean
-    icon?: string
+    menuOptions?: {
+      icon: string
+      orderNumber: number
+    }
     hasPermission: boolean
   }
 }
@@ -19,7 +22,10 @@ export const routes: Array<RouteRecordRaw> = [
       title: 'routes.home',
       layout: 'app',
       isMenuItem: true,
-      icon: 'avatar',
+      menuOptions: {
+        icon: 'avatar',
+        orderNumber: 1
+      },
       hasPermission: true
     }
   },
@@ -50,20 +56,35 @@ export const routes: Array<RouteRecordRaw> = [
       title: 'routes.orders',
       layout: 'app',
       isMenuItem: true,
-      icon: 'list',
+      menuOptions: {
+        icon: 'list',
+        orderNumber: 2
+      },
       hasPermission: false
     }
   },
   {
-    path: '/products',
+    path: '/products/:type?',
     name: 'products',
-    component: () => import('./test/TestPage.vue'),
+    component: () => import('./products/ProductsPage.vue'),
     meta: {
       title: 'routes.products',
       layout: 'app',
       isMenuItem: true,
-      icon: 'fries',
+      menuOptions: {
+        icon: 'fries',
+        orderNumber: 3
+      },
       hasPermission: false
+    },
+    beforeEnter: (to, from, next) => {
+      // Проверка на соответствие типа в параметре роута
+      const type = to.params.type ? to.params.type.toString() : ''
+      const param: string | string[] = from.name === 'products' ? from.params.type.toString() : ''
+      // Редирект
+      type && !['burger_ingredient', 'snack', 'sauce', 'drink'].includes(type)
+        ? next({ name: 'products', params: { param: param } })
+        : next()
     }
   },
   {
@@ -74,7 +95,10 @@ export const routes: Array<RouteRecordRaw> = [
       title: 'routes.stats',
       layout: 'app',
       isMenuItem: true,
-      icon: 'histogram',
+      menuOptions: {
+        icon: 'histogram',
+        orderNumber: 4
+      },
       hasPermission: false
     }
   }
