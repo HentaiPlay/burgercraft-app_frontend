@@ -16,7 +16,7 @@
 
   onMounted(async () => {
     if (!productsStore.hasData) {
-      await productsService.getProducts()
+      await productsService.setProducts()
     }
   })
 </script>
