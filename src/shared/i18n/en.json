@@ -82,6 +82,22 @@
       "loading": "Data loading in progress ..."
     }
   },
+  "products": {
+    "select": {
+      "placeholder": "Choose product type"
+    },
+    "buttonCreate": "Create",
+    "types": {
+      "all": "All product types",
+      "burger_ingredient": "Burger ingredients",
+      "snack": "Snacks",
+      "sauce": "Sauces",
+      "drink": "Drinks"
+    },
+    "productCard": {
+      "price": "Price"
+    }
+  },
   "footer": {
     "line1": "This is my educational demonstration project",
     "line2": "All media files are taken from the Internet, all rights belong to their owners"
