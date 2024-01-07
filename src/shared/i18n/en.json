@@ -97,6 +97,21 @@
     "productCard": {
       "price": "Price",
       "alt": "Product image"
+    },
+    "form": {
+      "create": {
+        "title": "Creating product",
+        "button": "Create",
+        "success": "Product successfully created"
+      },
+      "edit": {
+        "title": "Edit product",
+        "button": "Save",
+        "infoMesssage": "Editing is temporarily unavailable"
+      },
+      "namePlaceholder": "Type name",
+      "typePlaceholder": "Choose product type",
+      "pricePlaceholder": "Type price"
     }
   },
   "footer": {
