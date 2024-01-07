@@ -95,7 +95,8 @@
       "drink": "Drinks"
     },
     "productCard": {
-      "price": "Price"
+      "price": "Price",
+      "alt": "Product image"
     }
   },
   "footer": {
