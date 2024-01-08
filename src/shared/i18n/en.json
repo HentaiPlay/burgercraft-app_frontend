@@ -107,7 +107,7 @@
       "edit": {
         "title": "Edit product",
         "button": "Save",
-        "infoMesssage": "Editing is temporarily unavailable"
+        "success": "Product successfully updated"
       },
       "namePlaceholder": "Type name",
       "typePlaceholder": "Choose product type",
