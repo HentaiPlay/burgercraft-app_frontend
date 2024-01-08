@@ -16,13 +16,17 @@
       <img
         :src="`${baseURL}images/${product.photoPath}`"
         :alt="$t('products.productCard.alt')"
+        :key="`${product.photoPath}?timestamp=${Date.now()}`"
       />
       <div
         v-if="productStore.isAdmin"
         class="actions"
       >
         <div class="actions__list">
-          <ProductForm mode="edit" />
+          <ProductForm
+            mode="edit"
+            :product="props.product"
+          />
         </div>
       </div>
     </div>
