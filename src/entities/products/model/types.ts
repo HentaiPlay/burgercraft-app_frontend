@@ -23,5 +23,13 @@ export interface ICreateProductDTO {
   name: string
   type: string
   price: number
+  file?: File | undefined
+}
+
+export interface IUpdateProductDTO {
+  id: number
+  name: string
+  type?: string
+  price: number
   file?: File
 }
