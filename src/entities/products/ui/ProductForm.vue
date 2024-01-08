@@ -2,27 +2,47 @@
   import { ref, reactive, computed } from 'vue'
   import type { FormInstance, FormRules } from 'element-plus'
   import { CirclePlus } from '@element-plus/icons-vue'
+  import { isEqual } from 'lodash'
   import { global } from '@/shared/composables'
   import { useProductsService } from '@/entities/products'
-  import { useMyNotification } from '@/shared/composables'
+  import { IProductDTO } from '../model/types'
 
+  const props = defineProps<{ mode: 'create' | 'edit'; product?: IProductDTO }>()
   const productsService = useProductsService()
-  const myNotify = useMyNotification()
+  const baseURL: string = import.meta.env.VITE_API_URL
+  const picture = ref<File | undefined>(undefined)
+  const oldPicture = ref<string>('')
 
-  const props = defineProps<{ mode: 'create' | 'edit' }>()
-
-  const picture = ref<File | undefined>()
-  const info = () => {
-    myNotify({
-      type: 'error',
-      title: global.i18n?.t('notify.error') ?? 'Ошибка',
-      message: global.i18n?.t('products.form.edit.infoMesssage') ?? 'Редактирование временно недоступно'
-    })
-  }
+  // Условие для дизейбла кнопки сабмита (при редактировании)
+  const disabled = computed<boolean>(() => {
+    if (props.mode === 'edit') {
+      const oldProductData = {
+        name: props.product?.name,
+        price: props.product?.price
+      }
+      const currentProductData = {
+        name: form.name,
+        price: form.price
+      }
+      return isEqual(oldProductData, currentProductData) && !picture.value
+    } else {
+      return false
+    }
+  })
 
   // Модальное окно
   const dialog = ref(false)
-  const open = () => (dialog.value = true)
+  const open = () => {
+    dialog.value = true
+    // Если это редактирование то вставляем данные
+    if (props.mode === 'edit' && props.product) {
+      form.name = props.product.name
+      form.price = props.product.price
+      oldPicture.value = `${baseURL}images/${props.product.photoPath}`
+      // Для правильного опредленеия типа картинки в аплодере
+      form.type = props.product.type
+    }
+  }
   const close = () => {
     // Очищаем поля формы, сбрасываем валидацию и закрываем модалку
     if (productFormRef.value) {
@@ -90,8 +110,12 @@
           case 'create':
             status = await productsService.createProduct({ file: picture.value, ...form })
             break
+          case 'edit':
+            status = await productsService.updateProduct({ id: props.product?.id ?? 0, file: picture.value, ...form })
+            break
         }
 
+        await productsService.setProducts()
         if (status) {
           // Обновляем список продуктов
           await productsService.setProducts()
@@ -121,78 +145,91 @@
   <!-- Режим редактирования -->
   <el-icon
     v-if="props.mode === 'edit'"
-    @click="info"
+    @click="open"
     class="edit-icon"
   >
     <Edit />
   </el-icon>
 
   <!-- Модальное окно -->
-  <el-dialog
-    v-model="dialog"
-    :title="$t(`products.form.${$props.mode}.title`)"
-    width="500"
-    draggable
-    @close="close"
+  <teleport
+    v-if="dialog"
+    to="body"
   >
-    <!-- Редактор картинки -->
-    <div class="pucture">
-      <MyImageUploader
-        v-model="picture"
-        :horizontal="form.type === 'burger_ingredient'"
-      />
-    </div>
-
-    <!-- Форма -->
-    <el-form
-      ref="productFormRef"
-      @keyup.enter="submit(productFormRef)"
-      :model="form"
-      :rules="rules"
-      :validate-on-rule-change="false"
+    <el-dialog
+      v-model="dialog"
+      :title="$t(`products.form.${$props.mode}.title`)"
+      width="500"
+      draggable
+      @close="close"
     >
-      <div class="content">
-        <!-- Название -->
-        <el-form-item prop="name">
-          <el-input
-            v-model="form.name"
-            :placeholder="$t('products.form.namePlaceholder')"
-            :validate-event="false"
-          />
-        </el-form-item>
+      <!-- Редактор картинки -->
+      <div class="pucture">
+        <MyImageUploader
+          v-model="picture"
+          :horizontal="form.type === 'burger_ingredient'"
+          :defaultPreview="oldPicture"
+        />
+      </div>
 
-        <!-- Тип продукта -->
-        <el-form-item prop="type">
-          <el-select
-            collapse-tags
-            v-model="form.type"
-            :placeholder="$t('products.form.typePlaceholder')"
-          >
-            <el-option
-              v-for="item in typeItems"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+      <!-- Форма -->
+      <el-form
+        ref="productFormRef"
+        @keyup.enter="submit(productFormRef)"
+        :model="form"
+        :rules="rules"
+        :validate-on-rule-change="false"
+      >
+        <div class="content">
+          <!-- Название -->
+          <el-form-item prop="name">
+            <el-input
+              v-model="form.name"
+              :placeholder="$t('products.form.namePlaceholder')"
+              :validate-event="false"
             />
-          </el-select>
-        </el-form-item>
+          </el-form-item>
 
-        <!-- Цена -->
-        <el-form-item prop="price">
-          <el-input
-            v-model.number="form.price"
-            :placeholder="$t('products.form.pricePlaceholder')"
-            :validate-event="false"
-          />
-        </el-form-item>
-      </div>
+          <!-- Тип продукта -->
+          <el-form-item
+            v-if="props.mode === 'create'"
+            prop="type"
+          >
+            <el-select
+              collapse-tags
+              v-model="form.type"
+              :placeholder="$t('products.form.typePlaceholder')"
+            >
+              <el-option
+                v-for="item in typeItems"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
 
-      <div class="action">
-        <!-- TODO: при редактировании добавить disabled если ничего не изменилось -->
-        <el-button @click="submit(productFormRef)">{{ $t(`products.form.${props.mode}.button`) }}</el-button>
-      </div>
-    </el-form>
-  </el-dialog>
+          <!-- Цена -->
+          <el-form-item prop="price">
+            <el-input
+              v-model.number="form.price"
+              :placeholder="$t('products.form.pricePlaceholder')"
+              :validate-event="false"
+            />
+          </el-form-item>
+        </div>
+
+        <div class="action">
+          <el-button
+            @click="submit(productFormRef)"
+            :disabled="disabled"
+          >
+            {{ $t(`products.form.${props.mode}.button`) }}
+          </el-button>
+        </div>
+      </el-form>
+    </el-dialog>
+  </teleport>
 </template>
 
 <style lang="scss" scoped>
