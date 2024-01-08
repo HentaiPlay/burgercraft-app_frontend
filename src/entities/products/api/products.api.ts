@@ -7,7 +7,7 @@ export default function useProductsApi() {
 
     createProduct: async (dto: ICreateProductDTO) => await apiClient.post('products', dto),
 
-    updateProduct: async (dto: Omit<ICreateProductDTO, 'type'>) => await apiClient.patch('prosucts', dto),
+    updateProduct: async (dto: Omit<ICreateProductDTO, 'type'>) => await apiClient.patch('products', dto),
 
     uploadPicture: async (dto: FormData) =>
       await apiClient.put('products/photo', dto, {
