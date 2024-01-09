@@ -51,7 +51,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/orders',
     name: 'orders',
-    component: () => import('./test/TestPage.vue'),
+    component: () => import('./orders/OrdersPage.vue'),
     meta: {
       title: 'routes.orders',
       layout: 'app',
@@ -77,6 +77,7 @@ export const routes: Array<RouteRecordRaw> = [
       },
       hasPermission: false
     },
+    // TODO: вынести на уровень роутера, так как тут логики не должно быть
     beforeEnter: (to, from, next) => {
       // Проверка на соответствие типа в параметре роута
       const type = to.params.type ? to.params.type.toString() : ''
