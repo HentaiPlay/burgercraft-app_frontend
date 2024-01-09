@@ -114,6 +114,14 @@
       "pricePlaceholder": "Type price"
     }
   },
+  "orders": {
+    "status": {
+      "accepted": "Accepted",
+      "cooking": "Cooking",
+      "ready": "Ready",
+      "canceled": "Canceled"
+    }
+  },
   "footer": {
     "line1": "This is my educational demonstration project",
     "line2": "All media files are taken from the Internet, all rights belong to their owners"
