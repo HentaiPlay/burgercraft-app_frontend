@@ -1,4 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
+import { ProductsMiddleware } from '@/app/router'
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -77,16 +78,7 @@ export const routes: Array<RouteRecordRaw> = [
       },
       hasPermission: false
     },
-    // TODO: вынести на уровень роутера, так как тут логики не должно быть
-    beforeEnter: (to, from, next) => {
-      // Проверка на соответствие типа в параметре роута
-      const type = to.params.type ? to.params.type.toString() : ''
-      const param: string | string[] = from.name === 'products' ? from.params.type.toString() : ''
-      // Редирект
-      type && !['burger_ingredient', 'snack', 'sauce', 'drink'].includes(type)
-        ? next({ name: 'products', params: { param: param } })
-        : next()
-    }
+    beforeEnter: [ProductsMiddleware]
   },
   {
     path: '/stats',
