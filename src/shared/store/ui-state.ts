@@ -7,14 +7,14 @@ export const useUIStateStore = defineStore('uiState', () => {
   const isActivePreloader = ref<boolean>(false)
   function showPreloader() {
     isActivePreloader.value = true
-    setTimeout(() => {
-      isActivePreloader.value = false
-    }, 500)
+  }
+  function hidePreloader() {
+    isActivePreloader.value = false
   }
 
   function changeTitle(title: string) {
     document.title = global.i18n ? global.i18n.t(title) : 'BurgerCraft'
   }
 
-  return { isActivePreloader, showPreloader, changeTitle }
+  return { isActivePreloader, showPreloader, hidePreloader, changeTitle }
 })
