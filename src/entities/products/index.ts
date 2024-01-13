@@ -2,6 +2,7 @@ import ProductCard from './ui/ProductCard.vue'
 import ProductTypeCard from './ui/ProductTypeCard.vue'
 import ProductTypeFilter from './ui/ProductTypeFilter.vue'
 import ProductForm from './ui/ProductForm.vue'
+import IngredientList from './ui/IngredientList.vue'
 import useProductsApi from './api/products.api'
 import { useProductsStore } from './model/store'
 import useProductsService from './model/service'
@@ -10,6 +11,7 @@ export {
   ProductTypeCard,
   ProductTypeFilter,
   ProductForm,
+  IngredientList,
   useProductsStore,
   useProductsApi,
   useProductsService
