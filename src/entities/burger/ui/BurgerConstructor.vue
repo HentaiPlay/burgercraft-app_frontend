@@ -1,8 +1,9 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { onUnmounted } from 'vue'
   import { useProductsStore } from '@/entities/products'
-  import { IProductDTO } from '@/entities/products/model/types'
+  import { useBurgerStore } from '@/entities/burger'
 
+  const burgerStore = useBurgerStore()
   const productsStore = useProductsStore()
 
   const baseURL: string = import.meta.env.VITE_API_URL
@@ -20,7 +21,6 @@
   }
 
   // Ингредиенты
-  const ingredients = ref<IProductDTO[]>([])
   // При перемещении устанавливаем активный класс для ингредиента
   const onDragStartIngredient = (event: DragEvent) => {
     const el = event.target as HTMLElement
@@ -48,8 +48,7 @@
     parent.insertBefore(activeElement, nextElement)
   }
   const removeIngredient = (index: number) => {
-    delete ingredients.value[index]
-    ingredients.value = ingredients.value.filter(Boolean)
+    burgerStore.removeIngredient(index)
   }
 
   // При сбрасывании либо добавляем новый ингредиент, либо меняем порядоак внутри
@@ -57,17 +56,19 @@
     // если это добавление нового ингредиента
     if (event.dataTransfer?.getData('ingredient')) {
       const ingredient = JSON.parse(event.dataTransfer?.getData('ingredient'))
-      ingredients.value.push(ingredient)
+      burgerStore.addIngredient(ingredient)
     }
     onDragLeaveList()
   }
+
+  onUnmounted(() => burgerStore.clearState())
 </script>
 
 <template>
   <div class="burger-constructor">
     <!-- Заголовок -->
     <div class="burger-constructor__title">
-      <span>Бургер</span>
+      <span>{{ $t('burger.form.constructor.title') }}</span>
     </div>
 
     <!-- Конструктор -->
@@ -83,7 +84,7 @@
 
         <!-- Инфо блок при перетаскивании -->
         <div
-          v-if="!ingredients.length"
+          v-if="!burgerStore.ingredients.length"
           class="body__info"
           @dragenter.prevent="onDragOverList"
           @dragover.prevent="onDragLeaveList"
@@ -104,7 +105,7 @@
           @drop.prevent="onDrop"
         >
           <div
-            v-for="(ingredient, i) in ingredients"
+            v-for="(ingredient, i) in burgerStore.ingredients"
             :key="i"
             class="burger-ingredient"
             @click="removeIngredient(i)"
@@ -152,7 +153,8 @@
     height: 585px;
     overflow-y: scroll;
     max-width: 350px;
-    @include mixins.pa(10px);
+    @include mixins.pt(10px);
+    @include mixins.px(10px);
     border-radius: 0 0 10px 10px;
     border: 1px solid colors.$bg-color-overlay;
     // стили для ползунка скрола
@@ -174,6 +176,7 @@
     border-radius: 10px;
     overflow: hidden;
     @include mixins.pa(10px);
+    @include mixins.mb(10px);
     display: flex;
     flex-direction: column;
     align-items: center;
