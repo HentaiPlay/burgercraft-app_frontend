@@ -31,16 +31,6 @@ export const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/test',
-    name: 'test',
-    component: () => import('./test/TestPage.vue'),
-    meta: {
-      title: 'routes.test',
-      layout: 'app',
-      hasPermission: false
-    }
-  },
-  {
     path: '/auth',
     name: 'auth',
     component: () => import('./auth/AuthPage.vue'),
