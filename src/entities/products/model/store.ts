@@ -8,7 +8,8 @@ export const useProductsStore = defineStore('products', () => {
   const numberOfProductTypes = Object.values(ProductTypeEnum).length
 
   const hasData = computed(() => Object.keys(products.value).length === numberOfProductTypes)
-  const burgerIngredients = computed(() => products.value.burger_ingredient)
+  const brioches = computed(() => products.value.burger_ingredient?.filter((e) => [1, 2].includes(e.id)))
+  const burgerIngredients = computed(() => products.value.burger_ingredient?.filter((e) => ![1, 2].includes(e.id)))
 
   function setAllProducts(dto: IProductDTO[]) {
     types.value = []
@@ -23,5 +24,5 @@ export const useProductsStore = defineStore('products', () => {
     })
   }
 
-  return { products, burgerIngredients, hasData, setAllProducts }
+  return { products, brioches, burgerIngredients, hasData, setAllProducts }
 })
