@@ -31,7 +31,7 @@
   <div class="ingredients-list">
     <!-- Заголовок -->
     <div class="ingredients-list__title">
-      <span>Ингредиенты</span>
+      <span>{{ $t('products.ingredientList.title') }}</span>
     </div>
 
     <div class="ingredients-list__body">
