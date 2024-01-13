@@ -1,4 +1,5 @@
 import { ProductTypeEnum } from '@/entities/products/model/types'
+import { IBurger } from '@/entities/burger/model/types'
 
 // Заказы
 export enum StatusOrderEnum {
@@ -28,28 +29,6 @@ export interface IOrderListElement {
 export interface IOrderProduct {
   id: number
   type: ProductTypeEnum
-  slug: string
-  photoPath: string
-  price: number
-}
-
-// Бургер (как подсущность)
-export interface IBurger {
-  price: number
-  ingredients: Array<IBurgerIngredientOptions>
-  orderId: number
-}
-
-export interface IBurgerIngredient {
-  id: number
-  burgerId: number
-  ingredientId: number
-}
-
-export interface IBurgerIngredientOptions {
-  id: number
-  name: string
-  type: ProductTypeEnum.INGREDIENT
   slug: string
   photoPath: string
   price: number
