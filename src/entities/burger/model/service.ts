@@ -1,6 +1,6 @@
 import { useBurgerApi } from '@/entities/burger'
 
-export default function useOrdersService() {
+export default function useBurgerService() {
   const ordersApi = useBurgerApi()
 
   return {
