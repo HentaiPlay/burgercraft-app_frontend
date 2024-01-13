@@ -112,6 +112,27 @@
       "namePlaceholder": "Введите название",
       "typePlaceholder": "Выберите тип продукта",
       "pricePlaceholder": "Введите цену"
+    },
+    "ingredientList": {
+      "title": "Ингредиенты"
+    }
+  },
+  "burger": {
+    "form": {
+      "create": {
+        "title": "Создание бургера",
+        "button": "Создать бургер",
+        "saveButton": "Создать"
+      },
+      "edit": {
+        "title": "Редактирование бургера",
+        "button": "Редактировать бургер",
+        "saveButton": "Сохранить"
+      },
+      "constructor": {
+        "title": "Бургер"
+      },
+      "price": "Стоимость"
     }
   },
   "orders": {

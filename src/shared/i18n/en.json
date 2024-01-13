@@ -112,6 +112,27 @@
       "namePlaceholder": "Type name",
       "typePlaceholder": "Choose product type",
       "pricePlaceholder": "Type price"
+    },
+    "ingredientList": {
+      "title": "Ingredients"
+    }
+  },
+  "burger": {
+    "form": {
+      "create": {
+        "title": "Create burger",
+        "button": "Create burger",
+        "saveButton": "Create"
+      },
+      "edit": {
+        "title": "Edit burger",
+        "button": "Edit burger",
+        "saveButton": "Save"
+      },
+      "constructor": {
+        "title": "Burger"
+      },
+      "price": "Price"
     }
   },
   "orders": {
