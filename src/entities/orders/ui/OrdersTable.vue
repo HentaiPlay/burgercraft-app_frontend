@@ -1,87 +1,91 @@
 <script setup lang="ts">
   import { computed } from 'vue'
-  import { IOrderListElement, StatusOrderEnum } from '@/entities/orders/model/types'
+  import { Select, Timer, Dish, CloseBold } from '@element-plus/icons-vue'
+  import { OrderForm, useOrdersStore } from '@/entities/orders'
+  import { StatusOrderEnum } from '@/entities/orders/model/types'
 
-  const props = defineProps<{ orders: IOrderListElement[] }>()
+  const ordersStore = useOrdersStore()
 
-  const getOrders = computed(() => (status: StatusOrderEnum) => {
-    return props.orders.filter((order) => order.status === status)
-  })
-  const getColor = computed(() => (status: StatusOrderEnum) => {
+  const icon = computed(() => (status: StatusOrderEnum) => {
     switch (status) {
       case StatusOrderEnum.ACCEPTED:
-        return 'primary'
+        return Select
+      case StatusOrderEnum.COOKING:
+        return Timer
+      case StatusOrderEnum.READY:
+        return Dish
+      case StatusOrderEnum.CANCELED:
+        return CloseBold
+      default:
+        return ''
+    }
+  })
+
+  const color = computed(() => (status: StatusOrderEnum) => {
+    switch (status) {
+      case StatusOrderEnum.ACCEPTED:
+        return 'info'
       case StatusOrderEnum.COOKING:
         return 'warning'
       case StatusOrderEnum.READY:
         return 'success'
       case StatusOrderEnum.CANCELED:
         return 'danger'
+      default:
+        return ''
     }
   })
 </script>
 
 <template>
-  <div class="orders-table">
-    <div
-      v-for="status in StatusOrderEnum"
-      :key="status"
-      class="order-table__column"
-    >
-      <!-- Список заказов -->
-      <div class="column__item">
-        <!-- Заголовок -->
-        <div class="item__title">
-          <el-text :type="getColor(status)">
-            <b>{{ $t(`orders.status.${status}`) }}</b>
-          </el-text>
-        </div>
-        <!-- Номер заказа -->
-        <div
-          v-for="order in getOrders(status)"
-          :key="order.id"
-          class="item"
+  <el-table
+    :data="ordersStore.orderList"
+    table-layout="fixed"
+  >
+    <!-- Статус -->
+    <el-table-column :label="$t('orders.table.status')">
+      <template #default="scope">
+        <el-tag
+          :type="color(scope.row.status)"
+          disable-transitions
         >
-          <span>{{ order.code }}</span>
+          <el-icon><component :is="icon(scope.row.status)" /></el-icon>
+          {{ $t(`orders.status.${scope.row.status}`) }}
+        </el-tag>
+      </template>
+    </el-table-column>
+
+    <!-- Код заказа -->
+    <el-table-column
+      :label="$t('orders.table.code')"
+      prop="code"
+    />
+
+    <!-- Дата последнего обновления -->
+    <el-table-column :label="$t('orders.table.updatedAt')">
+      <template #default="scope">
+        <div style="display: flex; align-items: center">
+          <el-icon><timer /></el-icon>
+          <span style="margin-left: 10px">
+            {{ new Date(scope.row.updatedAt).toLocaleString() }}
+          </span>
         </div>
-      </div>
-    </div>
-  </div>
+      </template>
+    </el-table-column>
+
+    <!-- Редактировать -->
+    <el-table-column
+      :label="$t('orders.table.actions')"
+      prop="id"
+    >
+      <template #default="scope">
+        <OrderForm
+          mode="edit"
+          :order-id="scope.row.id"
+        />
+      </template>
+    </el-table-column>
+  </el-table>
 </template>
 
-<style lang="scss" scoped>
-  .orders-table {
-    width: 460px;
-    height: 250px;
-    max-height: 250px;
-    display: grid;
-    align-items: start;
-    justify-items: center;
-    grid-template-columns: repeat(4, 1fr);
-    border: 2px solid colors.$bg-color-page;
-    overflow: hidden;
-    border-radius: 10px;
-    @include mixins.no__copy();
-  }
-  .order-table__column {
-    width: 100%;
-    height: 100%;
-    &:not(:last-child) {
-      border-right: 2px solid colors.$bg-color-page;
-    }
-  }
-  .item__title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    @include mixins.py(1em);
-    @include mixins.mb(10px);
-    background-color: colors.$bg-color-page;
-  }
-  .item {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    @include mixins.pb(10px);
-  }
-</style>
+<style lang="scss"></style>
