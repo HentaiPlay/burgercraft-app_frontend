@@ -136,11 +136,30 @@
     }
   },
   "orders": {
+    "info": "The interface is still under development, deletion is not available",
     "status": {
       "accepted": "Accepted",
       "cooking": "Cooking",
       "ready": "Ready",
       "canceled": "Canceled"
+    },
+    "table": {
+      "status": "Status",
+      "code": "Code",
+      "updatedAt": "Date of change",
+      "actions": "Actions"
+    },
+    "form": {
+      "create": {
+        "title": "Create order",
+        "button": "Create order",
+        "saveButton": "Create"
+      },
+      "edit": {
+        "title": "Edit order",
+        "button": "Edit",
+        "saveButton": "Save"
+      }
     }
   },
   "footer": {
