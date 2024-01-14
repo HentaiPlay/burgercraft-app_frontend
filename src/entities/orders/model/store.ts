@@ -1,15 +1,29 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { IOrderListElement } from './types'
+import { IOrderDTO, IOrderListElement } from './types'
 
 export const useOrdersStore = defineStore('orders', () => {
-  const orders = ref<IOrderListElement[]>([])
+  const orderList = ref<IOrderListElement[]>([])
+  const activeOrder = ref<IOrderDTO>()
 
-  const hasData = computed(() => !!orders.value.length)
+  const hasOrderListData = computed(() => !!orderList.value.length)
 
-  function setOrders(dto: IOrderListElement[]) {
-    orders.value = dto
+  function setOrderList(dto: IOrderListElement[]) {
+    orderList.value = dto
   }
 
-  return { orders, hasData, setOrders }
+  function setActiveOrder(dto: IOrderDTO) {
+    activeOrder.value = dto
+  }
+
+  function clearActiveOrder() {
+    activeOrder.value = undefined
+  }
+
+  function clearState() {
+    orderList.value = []
+    clearActiveOrder()
+  }
+
+  return { orderList, activeOrder, hasOrderListData, setOrderList, setActiveOrder, clearActiveOrder, clearState }
 })
