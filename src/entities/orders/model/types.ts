@@ -9,6 +9,7 @@ export enum StatusOrderEnum {
   CANCELED = 'canceled'
 }
 
+// Типы получаемых данных
 export interface IOrderDTO {
   id: number
   price: number
@@ -32,4 +33,20 @@ export interface IOrderProduct {
   slug: string
   photoPath: string
   price: number
+}
+
+// Типы передаваемых данных
+export interface ICreateOrderDTO {
+  burgers: Pick<IOrderProduct, 'id' | 'slug' | 'type'>[]
+  ordersProducts: Pick<IOrderProduct, 'id' | 'slug' | 'type'>[]
+}
+
+export interface IUpdateOrderDTO {
+  id: number
+  ordersProducts: Pick<IOrderProduct, 'id' | 'slug' | 'type'>[]
+}
+
+export interface IChangeStatusDTO {
+  id: number
+  status: StatusOrderEnum
 }
