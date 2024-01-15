@@ -48,18 +48,6 @@
       background-color: colors.$bg-color;
       border-bottom: 1px solid colors.$bg-color-overlay;
     }
-    // стили для ползунка скрола
-    &::-webkit-scrollbar {
-      width: 6px;
-    }
-    &::-webkit-scrollbar-track {
-      background: colors.$bg-color;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: colors.$primary;
-      border-radius: 20px;
-      border: 6px solid colors.$primary;
-    }
   }
   .footer {
     display: flex;
