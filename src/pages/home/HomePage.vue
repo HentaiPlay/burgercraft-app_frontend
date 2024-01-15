@@ -1,10 +1,10 @@
 <script setup lang="ts">
-  import { ProfileActionsWidgets } from '@/widgets/profile'
+  import { ProfileActionsWidget } from '@/widgets/profile'
 </script>
 
 <template>
   <!-- Блок действий -->
-  <ProfileActionsWidgets />
+  <ProfileActionsWidget />
 
   <!-- Описание должности -->
   <div>Тут описание должности</div>

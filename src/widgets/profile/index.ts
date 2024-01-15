@@ -1,2 +1,2 @@
-import ProfileActionsWidgets from './ui/ProfileActionsWidget.vue'
-export { ProfileActionsWidgets }
+import ProfileActionsWidget from './ui/ProfileActionsWidget.vue'
+export { ProfileActionsWidget }
