@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { onUnmounted } from 'vue'
+  import { DropZoneWidget } from '@/widgets/orders'
   import { useProductsStore } from '@/entities/products'
   import { useBurgerStore } from '@/entities/burger'
 
@@ -83,17 +84,12 @@
         </div>
 
         <!-- Инфо блок при перетаскивании -->
-        <div
+        <DropZoneWidget
           v-if="!burgerStore.ingredients.length"
-          class="body__info"
           @dragenter.prevent="onDragOverList"
           @dragover.prevent="onDragLeaveList"
           @drop="onDrop"
-        >
-          <div class="info__icon">
-            <el-icon :size="30"><Plus /></el-icon>
-          </div>
-        </div>
+        />
 
         <!-- Ингредиенты -->
         <div
@@ -157,25 +153,13 @@
     @include mixins.px(10px);
     border-radius: 0 0 10px 10px;
     border: 1px solid colors.$bg-color-overlay;
-    // стили для ползунка скрола
-    &::-webkit-scrollbar {
-      width: 6px;
-    }
-    &::-webkit-scrollbar-track {
-      @include mixins.mb(10px);
-      background: colors.$bg-color;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: colors.$primary;
-      border-radius: 20px;
-      border: 6px solid colors.$primary;
-    }
   }
   .constructor {
+    width: 220px;
     background-color: white;
     border-radius: 10px;
     overflow: hidden;
-    @include mixins.pa(10px);
+    @include mixins.pa(15px);
     @include mixins.mb(10px);
     display: flex;
     flex-direction: column;
@@ -185,7 +169,7 @@
     height: 70px;
     width: 210px;
     border-radius: 10px;
-    @include mixins.mb(10px);
+    @include mixins.mb(5px);
     @include mixins.no__copy();
     img {
       height: 70px;
@@ -193,46 +177,13 @@
     }
   }
 
-  // Информационный блок для перетаскивания
-  .body__info {
-    height: 100%;
-    width: calc(210px - (5px * 2));
-    @include mixins.ma(10px);
-    border: 2px dashed colors.$bg-color-page;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: colors.$bg-color-page;
-    @keyframes pulse {
-      0% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.1);
-      }
-      100% {
-        transform: scale(1);
-      }
-    }
-    .info__icon {
-      height: 50px;
-      width: 50px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 50%;
-      border: 2px dashed colors.$bg-color-page;
-      animation: pulse 1.5s infinite;
-      @include mixins.my(30px);
-    }
-  }
-
   // Список ингредиентов
   .burger-ingredient-list {
-    @include mixins.pt(5px);
-    @include mixins.px(5px);
-    width: calc(210px + 4px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @include mixins.py(5px);
+    width: 214px;
   }
 
   // Ингредиент
@@ -242,14 +193,13 @@
     border-radius: 10px;
     overflow: hidden;
     @include mixins.mb(5px);
+    border: 2px dashed white;
     img {
       height: 70px;
       width: 210px;
     }
     &:hover {
       cursor: pointer;
-      width: calc(210px - 4px);
-      height: calc(70px - 4px);
       border: 2px dashed colors.$danger;
       img {
         opacity: 30%;
@@ -262,7 +212,7 @@
   // Активная зона в которую перетаскивают ингредиенты
   .active-drop-zone {
     .burger-ingredient-list {
-      width: 210px;
+      width: 218px;
       border-radius: 10px;
       border: 2px dashed colors.$bg-color-page;
     }
