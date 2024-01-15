@@ -44,12 +44,13 @@
         @dragstart="onDragStart($event, ingredient)"
         @dragend="onDragEnd($event, ingredient)"
       >
-        <!-- Название и ценник -->
+        <!-- Картинка -->
         <img
           :src="`${baseURL}images/${ingredient.photoPath}`"
           alt="ingredient photo"
           draggable="false"
         />
+        <!-- Название -->
         <div
           class="ingredient__info"
           draggable="false"
@@ -82,19 +83,6 @@
     @include mixins.pt(10px);
     border-radius: 0 0 10px 10px;
     border: 1px solid colors.$bg-color-overlay;
-    // стили для ползунка скрола
-    &::-webkit-scrollbar {
-      width: 6px;
-    }
-    &::-webkit-scrollbar-track {
-      @include mixins.mb(10px);
-      background: colors.$bg-color;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: colors.$primary;
-      border-radius: 20px;
-      border: 6px solid colors.$primary;
-    }
   }
   .ingredient {
     height: auto;
