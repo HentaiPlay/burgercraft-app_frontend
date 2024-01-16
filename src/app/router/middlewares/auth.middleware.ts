@@ -1,17 +1,15 @@
-import { RouteLocationNormalized, RouteRecordName } from 'vue-router'
-import { useRouter } from 'vue-router'
+import { useRouter, RouteLocationNormalized, RouteRecordName } from 'vue-router'
 import { routes } from '@/pages'
 import { issetTokens } from '@/entities/auth/helpers/cookies'
 import { useUserStore } from '@/entities/user'
 import { useUserApi } from '@/entities/user'
-import { setPermissions } from '@/entities/auth/helpers/roles'
+import { updatePagesPermissions } from '@/entities/auth/helpers/roles'
 
 export default async function AuthMiddleware(
   to: RouteLocationNormalized,
   from: RouteLocationNormalized
 ): Promise<void> {
   const router = useRouter()
-
   const userStore = useUserStore()
   const hasTokens = issetTokens()
   const isAuthPath = to.name === 'auth'
@@ -25,16 +23,7 @@ export default async function AuthMiddleware(
       .getUserInfo()
       .then((res) => userStore.setUserInfo(res.data))
       .catch(() => {})
-      .finally(() => {
-        router.options.routes = setPermissions(router.getRoutes(), userStore.role?.accessList?.pages)
-        // При переопредлении meta роутов для пермишенов,
-        // актульное состояние роутов доступно только в matches,
-        // поэтому для текущего роута нужно перезаписывать meta (если роут корректный)
-        if (to && issetRoute) {
-          to.meta = to.matched[0].meta
-          to.meta.getInfo = true
-        }
-      })
+      .finally(() => updatePagesPermissions(router.options.routes, to))
   }
 
   let redirectRouteName: RouteRecordName | null | undefined
@@ -52,6 +41,11 @@ export default async function AuthMiddleware(
       break
     default:
       redirectRouteName = to.name
+  }
+
+  // После успешной авторизации устанавливаем доступы на страницы
+  if (from.name === 'auth') {
+    updatePagesPermissions(router.options.routes, to)
   }
 
   return new Promise((resolve, reject) => {
