@@ -106,9 +106,10 @@
 
   .orders-products-list {
     height: auto;
-    width: 100%;
+    width: auto;
     display: grid;
-    gap: 5px;
+    gap: 10px;
+    @include mixins.pa(10px);
     justify-content: start !important;
     justify-items: center;
     grid-template-columns: repeat(auto-fill, minmax(180px, 3fr));
@@ -120,7 +121,6 @@
     border: 2px solid colors.$bg-color-overlay;
     border-radius: 10px;
     overflow: hidden;
-    @include mixins.mb(10px);
     img {
       height: 140px;
       width: 180px;
@@ -151,7 +151,7 @@
 
   .active-drop-zone {
     .orders-products-list {
-      width: calc(100% - 4px);
+      width: calc(auto - 4px);
       border-radius: 10px;
       border: 2px dashed colors.$bg-color-page;
     }
