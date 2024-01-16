@@ -1,5 +1,5 @@
 import { ProductTypeEnum } from '@/entities/products/model/types'
-import { IBurger } from '@/entities/burger/model/types'
+import { IBurgerDTO } from '@/entities/burger/model/types'
 
 // Заказы
 export enum StatusOrderEnum {
@@ -16,8 +16,8 @@ export interface IOrderDTO {
   code: string
   status: StatusOrderEnum
   isSaled: boolean
-  burgers: Array<IBurger>
-  products: Array<IOrderProduct>
+  burgers: IBurgerDTO[]
+  ordersProducts: Array<IOrderProduct>
 }
 
 export interface IOrderListElement {
@@ -29,6 +29,7 @@ export interface IOrderListElement {
 
 export interface IOrderProduct {
   id: number
+  name: string
   type: ProductTypeEnum
   slug: string
   photoPath: string
@@ -37,7 +38,7 @@ export interface IOrderProduct {
 
 // Типы передаваемых данных
 export interface ICreateOrderDTO {
-  burgers: Pick<IOrderProduct, 'id' | 'slug' | 'type'>[]
+  burgers: IBurgerDTO[]
   ordersProducts: Pick<IOrderProduct, 'id' | 'slug' | 'type'>[]
 }
 
@@ -49,4 +50,11 @@ export interface IUpdateOrderDTO {
 export interface IChangeStatusDTO {
   id: number
   status: StatusOrderEnum
+}
+
+// Тип для формы
+export interface IActiveOrderDTO {
+  id?: number | null
+  burgers: IBurgerDTO[]
+  ordersProducts: IOrderProduct[]
 }
