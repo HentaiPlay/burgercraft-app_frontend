@@ -1,13 +1,24 @@
-import { RouteRecordRaw } from 'vue-router'
+import { RouteRecordRaw, RouteLocationNormalized } from 'vue-router'
+import { useUserStore } from '@/entities/user'
 
-export const setPermissions = (routes: Array<RouteRecordRaw>, permissions: Record<string, boolean> | undefined) => {
-  const result = routes.map((route) => {
-    if (route.meta && permissions) {
-      if (typeof route.name === 'string' && permissions[route.name]) {
-        route.meta.hasPermission = permissions[route.name]
+export function updatePagesPermissions(routes: readonly RouteRecordRaw[], to: RouteLocationNormalized) {
+  const userStore = useUserStore()
+  const permissions = userStore.role?.accessList?.pages
+
+  // Обновляем meta во всех роутах
+  for (const routeNumber in routes) {
+    // Получаем название роута
+    const routeName = routes[routeNumber].name
+    // Перезаписываем meta тех страниц, которым на бэке задан доступ
+    if (typeof routeName === 'string' && permissions && permissions[routeName] !== undefined) {
+      routes[routeNumber].meta!.hasPermission = permissions[routeName]
+
+      // При переопредлении meta роутов для пермишенов,
+      // актульное состояние роутов доступно только в matches,
+      // поэтому для текущего роута нужно перезаписывать meta (если роут корректный)
+      if (to && to.name === routeName) {
+        to.meta = to.matched[0].meta
       }
     }
-    return route
-  })
-  return result
+  }
 }
