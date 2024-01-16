@@ -1,17 +1,14 @@
 <script lang="ts" setup>
   import { ref, reactive, computed, watch } from 'vue'
+  import { useRouter } from 'vue-router'
   import type { FormInstance, FormRules } from 'element-plus'
   import { UserFilled, Lock, InfoFilled } from '@element-plus/icons-vue'
-  import { useAuthService } from '@/entities/auth'
-  import { useRouter } from 'vue-router'
-  import { setPermissions } from '@/entities/auth/helpers/roles'
-  import { useUserStore } from '@/entities/user'
   import { global } from '@/shared/composables'
+  import { useAuthService } from '@/entities/auth'
   import { SwitchLocale } from '@/features/switch-locale'
 
   const router = useRouter()
   const authService = useAuthService()
-  const userStore = useUserStore()
   const locale = computed(() => global.i18n?.locale.value)
 
   // Форма
@@ -48,8 +45,7 @@
       if (valid) {
         const successLogin = await authService.login(form)
         if (successLogin) {
-          // Устанавливаем пермишены для роутов и редиректим на главную
-          router.options.routes = setPermissions(router.getRoutes(), userStore.role?.accessList.pages)
+          // Редиректим на главную
           router.push({ name: 'home' })
         } else {
           form.password = ''
