@@ -1,12 +1,18 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { IOrderDTO, IOrderListElement } from './types'
+import { cloneDeep } from 'lodash'
+import { IActiveOrderDTO, IOrderDTO, IOrderListElement, IOrderProduct } from './types'
 
 export const useOrdersStore = defineStore('orders', () => {
+  const temaplteActiveOrder: IActiveOrderDTO = {
+    burgers: [],
+    ordersProducts: []
+  }
   const orderList = ref<IOrderListElement[]>([])
-  const activeOrder = ref<IOrderDTO>()
+  const activeOrder = ref<IActiveOrderDTO>(cloneDeep(temaplteActiveOrder))
 
   const hasOrderListData = computed(() => !!orderList.value.length)
+  const hasActiveOrderData = computed(() => activeOrder.value.burgers.length || activeOrder.value.ordersProducts.length)
 
   function setOrderList(dto: IOrderListElement[]) {
     orderList.value = dto
@@ -16,8 +22,17 @@ export const useOrdersStore = defineStore('orders', () => {
     activeOrder.value = dto
   }
 
+  function addProduct(dto: IOrderProduct) {
+    activeOrder.value?.ordersProducts.push(dto)
+  }
+
+  function removeOrderProduct(index: number) {
+    delete activeOrder.value.ordersProducts[index]
+    activeOrder.value.ordersProducts = activeOrder.value.ordersProducts.filter(Boolean)
+  }
+
   function clearActiveOrder() {
-    activeOrder.value = undefined
+    activeOrder.value = cloneDeep(temaplteActiveOrder)
   }
 
   function clearState() {
@@ -25,5 +40,16 @@ export const useOrdersStore = defineStore('orders', () => {
     clearActiveOrder()
   }
 
-  return { orderList, activeOrder, hasOrderListData, setOrderList, setActiveOrder, clearActiveOrder, clearState }
+  return {
+    orderList,
+    activeOrder,
+    hasOrderListData,
+    hasActiveOrderData,
+    setOrderList,
+    setActiveOrder,
+    addProduct,
+    removeOrderProduct,
+    clearActiveOrder,
+    clearState
+  }
 })
