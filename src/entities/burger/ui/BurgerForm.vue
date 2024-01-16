@@ -5,7 +5,7 @@
   import { IngredientList } from '@/entities/products'
   import { useProductsStore, useProductsService } from '@/entities/products'
   import { useBurgerStore } from '@/entities/burger'
-  import { IBurger } from '../model/types'
+  import { IBurgerDTO } from '../model/types'
 
   const productsStore = useProductsStore()
   const productsService = useProductsService()
@@ -13,7 +13,7 @@
 
   const props = defineProps<{
     mode: 'create' | 'edit'
-    burger?: IBurger
+    burger?: IBurgerDTO
   }>()
 
   const dialog = ref<boolean>(false)
