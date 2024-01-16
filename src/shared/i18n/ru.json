@@ -115,6 +115,9 @@
     },
     "ingredientList": {
       "title": "Ингредиенты"
+    },
+    "ordersProducts": {
+      "title": "Продукты заказа"
     }
   },
   "burger": {
@@ -159,6 +162,9 @@
         "title": "Редактировать заказ",
         "button": "Редактировать",
         "saveButton": "Сохранить"
+      },
+      "constructor": {
+        "title": "Товары к заказу"
       }
     }
   },

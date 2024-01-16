@@ -115,6 +115,9 @@
     },
     "ingredientList": {
       "title": "Ingredients"
+    },
+    "ordersProducts": {
+      "title": "Order's products"
     }
   },
   "burger": {
@@ -159,6 +162,9 @@
         "title": "Edit order",
         "button": "Edit",
         "saveButton": "Save"
+      },
+      "constructor": {
+        "title": "Products to order"
       }
     }
   },
