@@ -1,7 +1,8 @@
 <script setup lang="ts">
-  import { ref, computed } from 'vue'
+  import { ref, computed, onUnmounted } from 'vue'
   import { CirclePlus, Edit } from '@element-plus/icons-vue'
-  import { useOrdersStore, useOrdersService } from '@/entities/orders'
+  import { useOrdersStore, useOrdersService, OrdersProductsConstructor } from '@/entities/orders'
+  import { OrdersProductsList } from '@/entities/products'
 
   const ordersStore = useOrdersStore()
   const ordersService = useOrdersService()
@@ -24,7 +25,6 @@
 
   // Модальное окно
   const dialog = ref<boolean>(false)
-
   const open = async () => {
     if (props.mode === 'edit') {
       if (!props.orderId) return
@@ -32,11 +32,12 @@
     }
     dialog.value = true
   }
-
   const close = () => {
     ordersStore.clearActiveOrder()
     dialog.value = false
   }
+
+  onUnmounted(() => ordersStore.clearActiveOrder())
 </script>
 
 <template>
@@ -60,12 +61,16 @@
     <div
       v-if="dialog"
       class="order-form"
-    ></div>
+    >
+      <OrdersProductsConstructor />
+      <OrdersProductsList />
+    </div>
   </el-dialog>
 </template>
 
 <style lang="scss" scoped>
   .order-form {
-    border: 1px solid red;
+    display: flex;
+    justify-content: space-between;
   }
 </style>
