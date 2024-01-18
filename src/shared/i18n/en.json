@@ -117,7 +117,7 @@
       "title": "Ingredients"
     },
     "ordersProducts": {
-      "title": "Order's products"
+      "title": "Available products"
     }
   },
   "burger": {
@@ -129,13 +129,23 @@
       },
       "edit": {
         "title": "Edit burger",
-        "button": "Edit burger",
         "saveButton": "Save"
       },
       "constructor": {
         "title": "Burger"
       },
       "price": "Price"
+    },
+    "list": {
+      "title": "Burgers",
+      "card": {
+        "count": "In-ds {number}pc",
+        "price": "Price {number}"
+      },
+      "info": {
+        "title": "Empty list",
+        "subtitle": "To create an order you need at least {number}"
+      }
     }
   },
   "orders": {
@@ -164,7 +174,7 @@
         "saveButton": "Save"
       },
       "constructor": {
-        "title": "Products to order"
+        "title": "Order's products"
       }
     }
   },
