@@ -83,6 +83,8 @@
     border-top: 1px solid colors.$bg-color-overlay;
     border-left: 1px solid colors.$bg-color-overlay;
     border-right: 1px solid colors.$bg-color-overlay;
+    font-size: 1.1em;
+    color: colors.$primary;
   }
   .orders-products-list__body {
     height: 585px;
