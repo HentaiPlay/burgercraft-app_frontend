@@ -3,7 +3,7 @@ import { ProductTypeEnum } from '@/entities/products/model/types'
 export interface IBurgerDTO {
   price: number
   ingredients: IBurgerIngredientOptions[]
-  orderId: number
+  orderId?: number
 }
 
 export interface IBurgerIngredient {
