@@ -20,10 +20,3 @@ export interface IBurgerIngredientOptions {
   photoPath: string
   price: number
 }
-
-// Тип для формы
-export interface IActiveBurgerDTO {
-  id?: number
-  price: number
-  ingredients: IBurgerIngredientOptions[]
-}

@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { cloneDeep } from 'lodash'
-import { IBurgerDTO, IActiveBurgerDTO, IBurgerIngredientOptions } from './types'
+import { IBurgerDTO, IBurgerIngredientOptions } from './types'
 
 export const useBurgerStore = defineStore('burger', () => {
-  const templateBurger: IActiveBurgerDTO = {
+  const templateBurger: IBurgerDTO = {
     price: 0,
     ingredients: []
   }
-  const burger = ref<IActiveBurgerDTO>(cloneDeep(templateBurger))
+  const burger = ref<IBurgerDTO>(cloneDeep(templateBurger))
 
   const ingredients = computed(() => burger.value.ingredients)
 
