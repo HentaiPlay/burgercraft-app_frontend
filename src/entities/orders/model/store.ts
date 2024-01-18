@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { cloneDeep } from 'lodash'
 import { IActiveOrderDTO, IOrderDTO, IOrderListElement, IOrderProduct } from './types'
+import { IBurgerDTO } from '@/entities/burger/model/types'
 
 export const useOrdersStore = defineStore('orders', () => {
   const temaplteActiveOrder: IActiveOrderDTO = {
@@ -22,11 +23,20 @@ export const useOrdersStore = defineStore('orders', () => {
     activeOrder.value = dto
   }
 
-  function addProduct(dto: IOrderProduct) {
-    activeOrder.value?.ordersProducts.push(dto)
+  // Бургер
+  function addBurger(dto: IBurgerDTO) {
+    activeOrder.value.burgers.push(dto)
+  }
+  function removeBurger(index: number) {
+    delete activeOrder.value.burgers[index]
+    activeOrder.value.burgers = activeOrder.value.burgers.filter(Boolean)
   }
 
-  function removeOrderProduct(index: number) {
+  // Продукты к заказу
+  function addOrdersProduct(dto: IOrderProduct) {
+    activeOrder.value?.ordersProducts.push(dto)
+  }
+  function removeOrdersProduct(index: number) {
     delete activeOrder.value.ordersProducts[index]
     activeOrder.value.ordersProducts = activeOrder.value.ordersProducts.filter(Boolean)
   }
@@ -47,8 +57,10 @@ export const useOrdersStore = defineStore('orders', () => {
     hasActiveOrderData,
     setOrderList,
     setActiveOrder,
-    addProduct,
-    removeOrderProduct,
+    addBurger,
+    removeBurger,
+    addOrdersProduct,
+    removeOrdersProduct,
     clearActiveOrder,
     clearState
   }
