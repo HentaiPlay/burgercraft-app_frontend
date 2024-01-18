@@ -129,7 +129,11 @@
       },
       "edit": {
         "title": "Edit burger",
-        "saveButton": "Save"
+        "saveButton": "Save",
+        "status": {
+          "success": "Success updated burger",
+          "error": "Error updating burger"
+        }
       },
       "constructor": {
         "title": "Burger"
