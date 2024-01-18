@@ -22,7 +22,7 @@
     // если это добавление нового ингредиента
     if (event.dataTransfer?.getData('orders-product')) {
       const ingredient = JSON.parse(event.dataTransfer?.getData('orders-product'))
-      ordersStore.addProduct(ingredient)
+      ordersStore.addOrdersProduct(ingredient)
     }
     onDragLeaveList()
   }
@@ -57,7 +57,7 @@
         <div
           v-for="(product, i) in ordersStore.activeOrder?.ordersProducts"
           :key="i"
-          @click="ordersStore.removeOrderProduct(i)"
+          @click="ordersStore.removeOrdersProduct(i)"
           class="orders-product"
         >
           <img
@@ -92,6 +92,8 @@
     border-top: 1px solid colors.$bg-color-overlay;
     border-left: 1px solid colors.$bg-color-overlay;
     border-right: 1px solid colors.$bg-color-overlay;
+    font-size: 1.1em;
+    color: colors.$primary;
     @include mixins.no__copy();
   }
   .constructor__body {
@@ -110,10 +112,10 @@
     display: grid;
     gap: 10px;
     @include mixins.pa(10px);
-    justify-content: start !important;
+    justify-content: start;
     justify-items: center;
     grid-template-columns: repeat(auto-fill, minmax(180px, 3fr));
-    overflow-y: scroll !important;
+    overflow-y: scroll;
   }
   .orders-product {
     height: auto;
