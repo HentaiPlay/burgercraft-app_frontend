@@ -16,6 +16,10 @@ export const useBurgerStore = defineStore('burger', () => {
     burger.value = dto
   }
 
+  function setOrderId(id: number) {
+    burger.value.orderId = id
+  }
+
   function setIngredients(dto: IBurgerIngredientOptions[]) {
     burger.value.ingredients = dto
     countPrice()
@@ -43,5 +47,5 @@ export const useBurgerStore = defineStore('burger', () => {
     burger.value = cloneDeep(templateBurger)
   }
 
-  return { burger, ingredients, setBurger, setIngredients, addIngredient, removeIngredient, clearState }
+  return { burger, ingredients, setBurger, setOrderId, setIngredients, addIngredient, removeIngredient, clearState }
 })
