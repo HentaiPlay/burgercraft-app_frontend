@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { onUnmounted } from 'vue'
+  import { onMounted, onUnmounted } from 'vue'
   import { DropZoneWidget } from '@/widgets/orders'
   import { useProductsStore } from '@/entities/products'
   import { useBurgerStore } from '@/entities/burger'
@@ -62,6 +62,7 @@
     onDragLeaveList()
   }
 
+  onMounted(() => burgerStore.setBrioches())
   onUnmounted(() => burgerStore.clearState())
 </script>
 
