@@ -38,10 +38,7 @@
 </script>
 
 <template>
-  <el-table
-    :data="ordersStore.orderList"
-    table-layout="fixed"
-  >
+  <el-table :data="ordersStore.orderList">
     <!-- Статус -->
     <el-table-column :label="$t('orders.table.status')">
       <template #default="scope">
@@ -62,7 +59,10 @@
     />
 
     <!-- Дата последнего обновления -->
-    <el-table-column :label="$t('orders.table.updatedAt')">
+    <el-table-column
+      :label="$t('orders.table.updatedAt')"
+      width="300"
+    >
       <template #default="scope">
         <div style="display: flex; align-items: center">
           <el-icon><timer /></el-icon>
@@ -77,6 +77,7 @@
     <el-table-column
       :label="$t('orders.table.actions')"
       prop="id"
+      align="right"
     >
       <template #default="scope">
         <OrderForm
