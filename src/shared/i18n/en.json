@@ -125,7 +125,11 @@
       "create": {
         "title": "Create burger",
         "button": "Create burger",
-        "saveButton": "Create"
+        "saveButton": "Create",
+        "status": {
+          "success": "Burger added successfully",
+          "error": "Error adding burger"
+        }
       },
       "edit": {
         "title": "Edit burger",
@@ -133,6 +137,12 @@
         "status": {
           "success": "Success updated burger",
           "error": "Error updating burger"
+        }
+      },
+      "remove": {
+        "status": {
+          "success": "Success removed burger",
+          "error": "Error removing burger"
         }
       },
       "constructor": {
