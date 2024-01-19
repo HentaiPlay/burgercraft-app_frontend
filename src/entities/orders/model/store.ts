@@ -27,6 +27,9 @@ export const useOrdersStore = defineStore('orders', () => {
   function addBurger(dto: IBurgerDTO) {
     activeOrder.value.burgers.push(dto)
   }
+  function editBurger(dto: IBurgerDTO, index: number) {
+    activeOrder.value.burgers[index] = dto
+  }
   function removeBurger(index: number) {
     delete activeOrder.value.burgers[index]
     activeOrder.value.burgers = activeOrder.value.burgers.filter(Boolean)
@@ -58,6 +61,7 @@ export const useOrdersStore = defineStore('orders', () => {
     setOrderList,
     setActiveOrder,
     addBurger,
+    editBurger,
     removeBurger,
     addOrdersProduct,
     removeOrdersProduct,
