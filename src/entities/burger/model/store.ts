@@ -2,15 +2,21 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { cloneDeep } from 'lodash'
 import { IBurgerDTO, IBurgerIngredientOptions } from './types'
+import { useProductsStore } from '@/entities/products'
+import { isBrioche, hasBrioches } from '../helpers/brioches'
 
 export const useBurgerStore = defineStore('burger', () => {
+  const productsStore = useProductsStore()
   const templateBurger: IBurgerDTO = {
     price: 0,
     ingredients: []
   }
   const burger = ref<IBurgerDTO>(cloneDeep(templateBurger))
 
-  const ingredients = computed(() => burger.value.ingredients)
+  const allIngredients = computed(() => burger.value.ingredients)
+  const ingredients = computed(() => {
+    return burger.value.ingredients.filter((ingredient: IBurgerIngredientOptions) => !isBrioche(ingredient.slug))
+  })
 
   function setBurger(dto: IBurgerDTO) {
     burger.value = dto
@@ -18,6 +24,13 @@ export const useBurgerStore = defineStore('burger', () => {
 
   function setOrderId(id: number) {
     burger.value.orderId = id
+  }
+
+  function setBrioches() {
+    if (!hasBrioches(allIngredients.value)) {
+      burger.value.ingredients.push(...(productsStore.brioches as IBurgerIngredientOptions[]))
+      countPrice()
+    }
   }
 
   function setIngredients(dto: IBurgerIngredientOptions[]) {
@@ -31,7 +44,8 @@ export const useBurgerStore = defineStore('burger', () => {
   }
 
   function removeIngredient(index: number) {
-    delete burger.value.ingredients[index]
+    // Так как первыми идут булочки и они неудаляемы, индекс опускаеца на две позиции
+    delete burger.value.ingredients[index + 2]
     burger.value.ingredients = burger.value.ingredients.filter(Boolean)
     countPrice()
   }
@@ -47,5 +61,16 @@ export const useBurgerStore = defineStore('burger', () => {
     burger.value = cloneDeep(templateBurger)
   }
 
-  return { burger, ingredients, setBurger, setOrderId, setIngredients, addIngredient, removeIngredient, clearState }
+  return {
+    burger,
+    ingredients,
+    allIngredients,
+    setBurger,
+    setOrderId,
+    setBrioches,
+    setIngredients,
+    addIngredient,
+    removeIngredient,
+    clearState
+  }
 })
