@@ -3,6 +3,7 @@
   import { CirclePlus, Edit } from '@element-plus/icons-vue'
   import { useOrdersStore, useOrdersService, OrdersProductsConstructor } from '@/entities/orders'
   import { OrdersProductsList } from '@/entities/products'
+  import { BurgerList, BurgerForm } from '@/entities/burger'
 
   const ordersStore = useOrdersStore()
   const ordersService = useOrdersService()
@@ -50,27 +51,48 @@
   </el-button>
 
   <!-- Модальное окно формы -->
-  <el-dialog
-    v-model="dialog"
-    :title="$t(`orders.form.${props.mode}.title`)"
-    width="900px"
-    draggable
-    @close="close"
-  >
-    <!-- Форма -->
-    <div
-      v-if="dialog"
-      class="order-form"
+  <teleport to="body">
+    <el-dialog
+      v-model="dialog"
+      :title="$t(`orders.form.${props.mode}.title`)"
+      width="900px"
+      top="8vh"
+      @close="close"
     >
-      <OrdersProductsConstructor />
-      <OrdersProductsList />
-    </div>
-  </el-dialog>
+      <!-- Форма -->
+      <div
+        v-if="dialog"
+        class="order-form"
+      >
+        <div class="order-form__lists">
+          <BurgerList />
+          <div class="lists__burger-action">
+            <BurgerForm mode="create" />
+          </div>
+          <OrdersProductsConstructor />
+        </div>
+        <OrdersProductsList />
+      </div>
+    </el-dialog>
+  </teleport>
 </template>
 
 <style lang="scss" scoped>
   .order-form {
     display: flex;
     justify-content: space-between;
+  }
+  .order-form__lists {
+    @include mixins.mr(20px);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: space-between;
+  }
+  .lists__burger-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include mixins.py(10px);
   }
 </style>
