@@ -5,6 +5,11 @@ export enum ProductTypeEnum {
   DRINK = 'drink'
 }
 
+export enum BriochesTypeEnum {
+  UP = 'verhnyaya_bulochka',
+  DOWN = 'nizhnyaya_bulochka'
+}
+
 export type ProductType = 'burger_ingredient' | 'snack' | 'sauce' | 'drink'
 
 export interface IProductDTO {
