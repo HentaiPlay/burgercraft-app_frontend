@@ -3,7 +3,10 @@
 <template>
   <div class="preview-dropzone">
     <div class="preview-dropzone__icon">
-      <el-icon :size="30"><Plus /></el-icon>
+      <el-icon :size="30"><CopyDocument /></el-icon>
+    </div>
+    <div class="preview-drop-zone__info">
+      <span>{{ $t('dropZone.info') }}</span>
     </div>
   </div>
 </template>
@@ -17,6 +20,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     color: colors.$bg-color-page;
     @keyframes pulse {
       0% {
@@ -39,6 +43,12 @@
       border: 2px dashed colors.$bg-color-page;
       animation: pulse 1.5s infinite;
       @include mixins.my(30px);
+    }
+    .preview-drop-zone__info {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @include mixins.mb(30px);
     }
   }
 </style>
