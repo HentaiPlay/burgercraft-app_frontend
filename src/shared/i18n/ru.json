@@ -21,6 +21,9 @@
     "confirm": "Подтвердить",
     "cancel": "Отменить"
   },
+  "dropZone": {
+    "info": "Перетащите сюда"
+  },
   "authForm": {
     "namePlaceholder": "Введите никнейм",
     "passwordPlaceholder": "Введите пароль",

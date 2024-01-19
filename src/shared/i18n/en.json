@@ -21,6 +21,9 @@
     "confirm": "Confirm",
     "cancel": "Cancel"
   },
+  "dropZone": {
+    "info": "Drag here"
+  },
   "authForm": {
     "namePlaceholder": "Type nickname",
     "passwordPlaceholder": "Type password",
