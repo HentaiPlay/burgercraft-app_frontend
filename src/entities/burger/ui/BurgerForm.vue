@@ -28,7 +28,7 @@
     dialog.value = false
   }
 
-  const disabled = computed(() => burgerStore.ingredients.length < 6 || burgerStore.ingredients.length > 15)
+  const disabled = computed(() => burgerStore.allIngredients.length < 6 || burgerStore.allIngredients.length > 15)
   const save = async () => {
     switch (props.mode) {
       case 'create':
@@ -124,5 +124,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    @include mixins.mt(10px);
+    @include mixins.pt(10px);
+    border-top: 1px solid colors.$bg-color-overlay;
   }
 </style>
