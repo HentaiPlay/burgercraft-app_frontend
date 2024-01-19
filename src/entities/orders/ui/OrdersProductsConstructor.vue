@@ -9,13 +9,13 @@
   // Обертка продуктов заказа
   // Добавление активного класса для обертки ингредиентов при перетаскивании
   const onDragOverList = () => {
-    const element = document.getElementsByClassName('constructor')[0]
-    element.classList.add('active-drop-zone')
+    const element = document.getElementById('orders-products-constructor')
+    if (element) element.classList.add('active-drop-zone')
   }
   // Удаление активного класса для обертки ингредиентов при перетаскивании
   const onDragLeaveList = () => {
-    const element = document.getElementsByClassName('constructor')[0]
-    element.classList.remove('active-drop-zone')
+    const element = document.getElementById('orders-products-constructor')
+    if (element) element.classList.remove('active-drop-zone')
   }
   // При сбрасывании либо добавляем новый ингредиент, либо меняем порядоак внутри
   const onDrop = (event: DragEvent) => {
@@ -29,7 +29,7 @@
 </script>
 
 <template>
-  <div class="constructor">
+  <div id="orders-products-constructor">
     <!-- Заголовок -->
     <div class="constructor__title">
       {{ $t('orders.form.constructor.title') }}
@@ -78,7 +78,7 @@
 </template>
 
 <style lang="scss" scoped>
-  .constructor {
+  #orders-products-constructor {
     width: 100%;
     @include mixins.mr(20px);
   }

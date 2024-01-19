@@ -12,13 +12,13 @@
   // Обертка ингредиентов
   // Добавление активного класса для обертки ингредиентов при перетаскивании
   const onDragOverList = () => {
-    const element = document.getElementsByClassName('constructor')[0]
-    element.classList.add('active-drop-zone')
+    const element = document.getElementById('ingredients-constructor')
+    if (element) element.classList.add('active-drop-zone')
   }
   // Удаление активного класса для обертки ингредиентов при перетаскивании
   const onDragLeaveList = () => {
-    const element = document.getElementsByClassName('constructor')[0]
-    element.classList.remove('active-drop-zone')
+    const element = document.getElementById('ingredients-constructor')
+    if (element) element.classList.remove('active-drop-zone')
   }
 
   // Ингредиенты
@@ -74,7 +74,7 @@
 
     <!-- Конструктор -->
     <div class="burger-constructor__body">
-      <div class="constructor">
+      <div id="ingredients-constructor">
         <!-- Верхняя булочка -->
         <div class="brioche">
           <img
@@ -154,7 +154,7 @@
     border-radius: 0 0 10px 10px;
     border: 1px solid colors.$bg-color-overlay;
   }
-  .constructor {
+  #ingredients-constructor {
     width: 220px;
     background-color: white;
     border-radius: 10px;
