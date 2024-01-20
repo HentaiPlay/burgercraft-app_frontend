@@ -1,8 +1,21 @@
 <script setup lang="ts">
-  import { BurgerForm } from '@/entities/burger'
+  import { BurgerForm, useBurgerService } from '@/entities/burger'
   import { useOrdersStore } from '@/entities/orders'
+  import { global, useMyConfirmDialog } from '@/shared/composables'
 
   const ordersStore = useOrdersStore()
+  const burgerService = useBurgerService()
+  const confirmDialog = useMyConfirmDialog()
+
+  const removeBurger = (index: number) => {
+    const message = global.i18n?.t('burger.list.confirm.remove') ?? ''
+    confirmDialog({
+      message: message,
+      onConfirm: async () => {
+        await burgerService.removeBurger(index)
+      }
+    })
+  }
 </script>
 
 <template>
@@ -31,7 +44,7 @@
                 mode="edit"
                 :burger="burger"
               />
-              <el-icon @click="ordersStore.removeBurger(i)"><Delete /></el-icon>
+              <el-icon @click="removeBurger(i)"><Delete /></el-icon>
             </div>
           </div>
 
