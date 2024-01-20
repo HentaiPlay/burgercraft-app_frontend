@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { ref, computed, onMounted, onUnmounted } from 'vue'
+  import { isEqual } from 'lodash'
   import { Burger } from '@element-plus/icons-vue'
   import { useBurgerStore, useBurgerService, BurgerConstructor } from '@/entities/burger'
   import { useProductsStore, useProductsService, IngredientList } from '@/entities/products'
@@ -28,7 +29,11 @@
     dialog.value = false
   }
 
-  const disabled = computed(() => burgerStore.allIngredients.length < 6 || burgerStore.allIngredients.length > 15)
+  const disabled = computed(() => {
+    const hasCorrectLength: boolean = burgerStore.allIngredients.length >= 6 && burgerStore.allIngredients.length <= 15
+    const hasChanges = !isEqual(burgerStore.oldBurger, burgerStore.burger)
+    return !hasCorrectLength || (!hasChanges && props.mode === 'edit')
+  })
   const save = async () => {
     switch (props.mode) {
       case 'create':
