@@ -24,7 +24,7 @@ export interface IBurgerIngredientOptions {
 
 // Для передачи данных
 export interface ICreateBurgerDTO {
-  price: number
+  price?: number
   ingredients: IBurgerIngredientOptions[]
   orderId: number
 }
