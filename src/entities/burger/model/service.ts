@@ -24,15 +24,19 @@ export default function useBurgerService() {
         // Устанавливаем ID заказа в активный бургер
         burgerStore.setOrderId(ordersStore.activeOrder.id)
         const dto = burgerStore.burger as ICreateBurgerDTO
+        delete dto.price
 
-        await burgerApi.createBurger(dto).catch((err) => {
-          success = false
-          myNotify({
-            title: global.i18n?.t('burger.form.create.status.error') ?? 'Ошибка',
-            type: 'error',
-            message: err.response.data.message
+        await burgerApi
+          .createBurger(dto)
+          .then(() => (success = true))
+          .catch((err) => {
+            success = false
+            myNotify({
+              title: global.i18n?.t('burger.form.create.status.error') ?? 'Ошибка',
+              type: 'error',
+              message: err.response.data.message
+            })
           })
-        })
 
         // Обновляем состояние активного заказа
         if (success) {
@@ -59,14 +63,17 @@ export default function useBurgerService() {
       if (ordersStore.activeOrder.id && burgerStore.burger.id) {
         const dto = burgerStore.burger as IUpdateBurgerDTO
 
-        await burgerApi.editBurger(dto).catch((err) => {
-          success = false
-          myNotify({
-            title: global.i18n?.t('burger.form.edit.status.error') ?? 'Ошибка',
-            type: 'error',
-            message: err.response.data.message
+        await burgerApi
+          .editBurger(dto)
+          .then(() => (success = true))
+          .catch((err) => {
+            success = false
+            myNotify({
+              title: global.i18n?.t('burger.form.edit.status.error') ?? 'Ошибка',
+              type: 'error',
+              message: err.response.data.message
+            })
           })
-        })
 
         // Обновляем состояние активного заказа
         if (success) {
@@ -91,16 +98,20 @@ export default function useBurgerService() {
     // Удаление бургера
     removeBurger: async (index: number) => {
       let success: boolean = false
+      const burgerId: number | null = ordersStore.activeOrder.burgers[index].id ?? null
       // Если заказ уже был создан то бургеры изменяются отдельными запросами
-      if (ordersStore.activeOrder.id && burgerStore.burger.id) {
-        await burgerApi.removeBurger(burgerStore.burger.id).catch((err) => {
-          success = false
-          myNotify({
-            title: global.i18n?.t('burger.form.remove.status.error') ?? 'Ошибка',
-            type: 'error',
-            message: err.response.data.message
+      if (ordersStore.activeOrder.id && burgerId) {
+        await burgerApi
+          .removeBurger(burgerId)
+          .then(() => (success = true))
+          .catch((err) => {
+            success = false
+            myNotify({
+              title: global.i18n?.t('burger.form.remove.status.error') ?? 'Ошибка',
+              type: 'error',
+              message: err.response.data.message
+            })
           })
-        })
 
         // Обновляем состояние активного заказа
         if (success) {
