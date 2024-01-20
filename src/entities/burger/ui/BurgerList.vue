@@ -164,7 +164,7 @@
     .flap__subtitle {
       @include mixins.mt(10px);
       font-size: 0.9em;
-      color: colors.$info;
+      color: colors.$warning;
     }
   }
 </style>
