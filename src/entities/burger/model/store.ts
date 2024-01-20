@@ -12,6 +12,8 @@ export const useBurgerStore = defineStore('burger', () => {
     ingredients: []
   }
   const burger = ref<IBurgerDTO>(cloneDeep(templateBurger))
+  // Первоначальная версия бургера
+  const oldBurger = ref<IBurgerDTO>(cloneDeep(templateBurger))
 
   const allIngredients = computed(() => burger.value.ingredients)
   const ingredients = computed(() => {
@@ -19,7 +21,8 @@ export const useBurgerStore = defineStore('burger', () => {
   })
 
   function setBurger(dto: IBurgerDTO) {
-    burger.value = dto
+    burger.value = cloneDeep(dto)
+    oldBurger.value = cloneDeep(dto)
   }
 
   function setOrderId(id: number) {
@@ -63,6 +66,7 @@ export const useBurgerStore = defineStore('burger', () => {
 
   return {
     burger,
+    oldBurger,
     ingredients,
     allIngredients,
     setBurger,
