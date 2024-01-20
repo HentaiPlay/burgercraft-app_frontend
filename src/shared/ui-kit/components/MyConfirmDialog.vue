@@ -1,9 +1,8 @@
 <script setup lang="ts">
   import { ref } from 'vue'
-  import { useEventBus, onClickOutside } from '@vueuse/core'
+  import { useEventBus } from '@vueuse/core'
   import { IMyConfirmDialogOptions } from '../types'
 
-  const confirmDialogRef = ref<HTMLDivElement | null>(null)
   const showDialog = ref<boolean>(false)
   const message = ref<string>('')
   const onConfirm = ref<(() => void) | null>(null)
@@ -16,15 +15,13 @@
     if (options.onConfirm) {
       onConfirm.value = options.onConfirm
     }
-    setTimeout(() => confirmDialogRef.value?.focus(), 0)
   }
   const close = () => {
     message.value = ''
     onConfirm.value = null
     showDialog.value = false
-    ;(onConfirm.value = null), (onCancel.value = null)
+    onCancel.value = null
   }
-  onClickOutside(confirmDialogRef, () => close())
 
   // Действия
   const agree = async () => {
@@ -52,34 +49,21 @@
         break
     }
   })
-
-  const test = () => console.log('test')
 </script>
 
 <template>
   <teleport
     v-if="showDialog"
-    to="main"
+    to="body"
   >
-    <div class="overlay"></div>
     <!-- Окно подтверждения -->
-    <div
-      ref="confirmDialogRef"
-      class="confirm-dialog"
-      tabindex="0"
-      @keyup.esc="close"
+    <el-dialog
+      v-model="showDialog"
+      :title="$t('confirm.title')"
+      width="500"
+      @close="close"
+      top="35vh"
     >
-      <!-- Заголовок -->
-      <div class="confirm-dialog__header">
-        <p>{{ $t('confirm.title') }}</p>
-        <div
-          @click="close"
-          class="header__close-icon"
-        >
-          <el-icon @keyup="test"><CloseBold /></el-icon>
-        </div>
-      </div>
-
       <div class="confirm-dialog__body">
         <div>{{ message }}?</div>
       </div>
@@ -101,61 +85,22 @@
           {{ $t('confirm.confirm') }}
         </el-button>
       </div>
-    </div>
+    </el-dialog>
   </teleport>
 </template>
 
 <style lang="scss" scoped>
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
+  .confirm-dialog__body {
+    display: flex;
+    justify-content: center;
+    @include mixins.mb(20px);
+    @include mixins.py(30px);
+    border-top: 1px solid colors.$bg-color-overlay;
+    border-bottom: 1px solid colors.$bg-color-overlay;
   }
-  .confirm-dialog {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 400px;
-    @include mixins.pa(20px);
-    border-radius: 10px;
-    border: 2px solid colors.$bg-color-page;
-    background-color: colors.$bg-color;
-    z-index: 1000;
-    .confirm-dialog__header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      @include mixins.mb(10px);
-      .header__close-icon {
-        width: 2em;
-        display: flex;
-        justify-content: center;
-        align-items: start;
-        @include mixins.ml(10px);
-        &:hover {
-          cursor: pointer;
-          color: colors.$primary;
-        }
-      }
-    }
-    .confirm-dialog__body {
-      display: flex;
-      justify-content: center;
-      font-size: 0.9em;
-      @include mixins.my(20px);
-      @include mixins.py(30px);
-      border-top: 1px solid colors.$bg-color-overlay;
-      border-bottom: 1px solid colors.$bg-color-overlay;
-    }
-    .confirm-dialog__actions {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+  .confirm-dialog__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 </style>
