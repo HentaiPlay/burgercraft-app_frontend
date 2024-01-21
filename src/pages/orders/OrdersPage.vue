@@ -1,9 +1,11 @@
 <script setup lang="ts">
   import { onMounted } from 'vue'
+  import { useUserStore } from '@/entities/user'
   import { OrdersTable, OrderForm, useOrdersStore, useOrdersService } from '@/entities/orders'
 
   const ordersStore = useOrdersStore()
   const ordersService = useOrdersService()
+  const userStore = useUserStore()
 
   onMounted(async () => {
     if (!ordersStore.hasOrderListData) {
@@ -14,12 +16,15 @@
 
 <template>
   <div class="panel">
-    <!-- Предупреждение -->
-    <div class="panel__warning">
-      <el-icon><WarnTriangleFilled /></el-icon>
-      <span>{{ $t('orders.info') }}</span>
+    <!-- Справочная информация -->
+    <div class="panel__info">
+      <el-icon><InfoFilled /></el-icon>
+      <span v-html="$t('orders.info')"></span>
     </div>
-    <OrderForm mode="create" />
+    <OrderForm
+      v-if="userStore.role?.accessList.interfaces.orders.create"
+      mode="create"
+    />
   </div>
 
   <!-- Таблица заказов -->
@@ -32,20 +37,21 @@
     @include mixins.pb(20px);
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    height: 40px;
+    align-items: start;
     border-bottom: solid 1px colors.$bg-color-overlay;
   }
-  .panel__warning {
+  .panel__info {
     display: flex;
-    align-items: center;
+    align-items: start;
+    @include mixins.mr(20px);
     i {
-      font-size: 1.4em;
       @include mixins.mr(10px);
     }
     span,
     i {
-      color: colors.$warning !important;
+      font-size: 0.9rem;
+      color: colors.$primary !important;
+      line-height: 1.2rem;
     }
   }
   .order-list {
