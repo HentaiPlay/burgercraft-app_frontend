@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { ref, unref, computed } from 'vue'
   import { ClickOutside as vClickOutside } from 'element-plus'
-  import { List, Timer, Dish, CloseBold } from '@element-plus/icons-vue'
+  import { Bell, Timer, Dish, CloseBold } from '@element-plus/icons-vue'
   import { global, useMyConfirmDialog } from '@/shared/composables'
   import { useOrdersService } from '@/entities/orders'
   import { StatusOrderEnum } from '../model/types'
@@ -79,7 +79,7 @@
     v-click-outside="onClickOutside"
     :disabled="disabled"
     v-popover="popoverRef"
-    :icon="List"
+    :icon="Bell"
     size="small"
   >
     {{ $t(`orders.switchStatus.button`) }}
