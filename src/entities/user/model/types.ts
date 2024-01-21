@@ -9,7 +9,7 @@ export interface IRole {
   name: string
   accessList: {
     pages: Record<string, boolean>
-    interfaces: Record<string, boolean>
+    interfaces: Record<string, Record<string, boolean>>
   }
 }
 
