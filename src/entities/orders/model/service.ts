@@ -1,9 +1,12 @@
+import { global, useMyNotification, useAudioPlayer } from '@/shared/composables'
 import { useOrdersApi, useOrdersStore } from '@/entities/orders'
-import { IChangeStatusDTO, ICreateOrderDTO, IUpdateOrderDTO } from './types'
+import { IChangeStatusDTO, ICreateOrderDTO, IUpdateOrderDTO, StatusOrderEnum } from './types'
 
 export default function useOrdersService() {
   const ordersApi = useOrdersApi()
   const ordersStore = useOrdersStore()
+  const myNotify = useMyNotification()
+  const audioPlayer = useAudioPlayer()
 
   return {
     setOrderList: async () => {
@@ -21,15 +24,69 @@ export default function useOrdersService() {
     },
 
     createOrder: async (dto: ICreateOrderDTO) => {
-      await ordersApi.createOrder(dto).catch((err) => console.log(err))
+      await ordersApi
+        .createOrder(dto)
+        .then(() =>
+          myNotify({
+            title: global.i18n?.t('orders.form.create.status.success') ?? 'Заказ успешно создан',
+            type: 'success',
+            message: ''
+          })
+        )
+        .catch((err) =>
+          myNotify({
+            title: global.i18n?.t('orders.form.create.status.error') ?? 'Ошибка при создании заказа',
+            type: 'error',
+            message: err.response.data.message
+          })
+        )
     },
 
     editOrder: async (dto: IUpdateOrderDTO) => {
-      await ordersApi.updateOrder(dto).catch((err) => console.log(err))
+      await ordersApi
+        .updateOrder(dto)
+        .then(() =>
+          myNotify({
+            title: global.i18n?.t('orders.form.edit.status.success') ?? 'Заказ успешно обновлен',
+            type: 'success',
+            message: ''
+          })
+        )
+        .catch((err) =>
+          myNotify({
+            title: global.i18n?.t('orders.form.edit.status.error') ?? 'Ошибка при обновлении заказа',
+            type: 'error',
+            message: err.response.data.message
+          })
+        )
     },
 
     changeStatus: async (dto: IChangeStatusDTO) => {
-      await ordersApi.changeStatus(dto).catch((err) => console.log(err))
+      await ordersApi
+        .changeStatus(dto)
+        .then(() => {
+          myNotify({
+            title: global.i18n?.t('orders.form.edit.status.success') ?? 'Заказ успешно обновлен',
+            type: 'success',
+            message: ''
+          })
+          // Звук при готовом заказе и при отмене
+          switch (dto.status) {
+            case StatusOrderEnum.READY:
+              audioPlayer('readyOrder')
+              break
+            case StatusOrderEnum.CANCELED:
+              audioPlayer('deleted')
+              break
+          }
+        })
+        .catch((err) =>
+          myNotify({
+            title: global.i18n?.t('orders.form.edit.status.error') ?? 'Ошибка при обновлении заказа',
+            type: 'error',
+            message: err.response.data.message
+          })
+        )
     }
   }
 }
