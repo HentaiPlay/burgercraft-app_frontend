@@ -171,6 +171,7 @@
   },
   "orders": {
     "info": "<b>Directory</b> <br> You can cancel an order only while it is in the \"Accepted\" status. <br> Orders are deleted at the end of the working day. <br> When editing an existing order, the burgers are changed immediately.<br> When changing the order condition to \"Ready\", a bell sound is made (for the client) when canceling, there is also a characteristic sound.",
+    "counterSum": "Sold today: {number}",
     "status": {
       "accepted": "Accepted",
       "cooking": "Cooking",
