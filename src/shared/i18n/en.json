@@ -177,6 +177,11 @@
       "ready": "Ready",
       "canceled": "Canceled"
     },
+    "switchStatus": {
+      "title": "Сhange of status",
+      "button": "Сhange status",
+      "confirm": "Сhange status on \"{status}\""
+    },
     "table": {
       "status": "Status",
       "code": "Code",

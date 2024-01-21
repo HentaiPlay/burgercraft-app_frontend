@@ -177,6 +177,11 @@
       "ready": "Готов",
       "canceled": "Отменен"
     },
+    "switchStatus": {
+      "title": "Смена статуса",
+      "button": "Сменить статус",
+      "confirm": "Сменить статус на \"{status}\""
+    },
     "table": {
       "status": "Статус",
       "code": "Код",
