@@ -1,7 +1,6 @@
 <script setup lang="ts">
   import { Delete } from '@element-plus/icons-vue'
-  import { global } from '@/shared/composables'
-  import { useMyConfirmDialog } from '@/shared/composables'
+  import { global, useMyConfirmDialog } from '@/shared/composables'
   import { useUserService } from '@/entities/user'
   import { useAuthService } from '@/entities/auth'
 
