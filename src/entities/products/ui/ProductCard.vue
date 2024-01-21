@@ -48,8 +48,8 @@
 
 <style lang="scss" scoped>
   .product-card {
-    width: 246px;
-    height: 246px;
+    width: 196px;
+    height: 196px;
     border-radius: 10px;
     border: 2px solid colors.$bg-color-overlay;
     background-color: colors.$bg-color;
@@ -57,7 +57,7 @@
     overflow: hidden;
   }
   .product-card__image {
-    height: 160px;
+    height: 140px;
     overflow: hidden;
     position: relative;
     border-bottom: 2px solid colors.$bg-color-overlay;
@@ -101,7 +101,7 @@
     display: flex;
     justify-content: start;
     align-items: center;
-    height: calc(246px - (160px + 2px));
+    height: calc(196px - (140px + 2px));
     width: 100%;
   }
   .info-block {
