@@ -1,5 +1,6 @@
 import { global, useMyNotification, useAudioPlayer } from '@/shared/composables'
 import { useOrdersApi, useOrdersStore } from '@/entities/orders'
+import { useStatsService } from '@/entities/stats'
 import { IChangeStatusDTO, ICreateOrderDTO, IUpdateOrderDTO, StatusOrderEnum } from './types'
 
 export default function useOrdersService() {
@@ -62,18 +63,21 @@ export default function useOrdersService() {
     },
 
     changeStatus: async (dto: IChangeStatusDTO) => {
+      const statsService = useStatsService()
       await ordersApi
         .changeStatus(dto)
-        .then(() => {
+        .then(async () => {
           myNotify({
             title: global.i18n?.t('orders.form.edit.status.success') ?? 'Заказ успешно обновлен',
             type: 'success',
             message: ''
           })
-          // Звук при готовом заказе и при отмене
+          // Воспроизводим звук при готовом заказе и при отмене
           switch (dto.status) {
             case StatusOrderEnum.READY:
               audioPlayer('readyOrder')
+              // Обновляем сумму заработка если заказ выполнен
+              await statsService.getStatsByUser()
               break
             case StatusOrderEnum.CANCELED:
               audioPlayer('deleted')
