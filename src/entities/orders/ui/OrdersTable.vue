@@ -2,9 +2,11 @@
   import { computed } from 'vue'
   import { Select, Timer, Dish, CloseBold } from '@element-plus/icons-vue'
   import { OrderForm, OrderStatusSwitcher, useOrdersStore } from '@/entities/orders'
+  import { useUserStore } from '@/entities/user'
   import { StatusOrderEnum } from '@/entities/orders/model/types'
 
   const ordersStore = useOrdersStore()
+  const userStore = useUserStore()
 
   const icon = computed(() => (status: StatusOrderEnum) => {
     switch (status) {
@@ -86,11 +88,13 @@
       <template #default="scope">
         <!-- Смена статуса -->
         <OrderStatusSwitcher
+          v-if="userStore.role?.accessList.interfaces.orders.edit"
           :id="scope.row.id"
           :status="scope.row.status"
         />
         <!-- Редактировать -->
         <OrderForm
+          v-if="userStore.role?.accessList.interfaces.orders.edit"
           mode="edit"
           :order-id="scope.row.id"
           :status="scope.row.status"
