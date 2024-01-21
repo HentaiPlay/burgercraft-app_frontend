@@ -1,10 +1,13 @@
 <script setup lang="ts">
   import { ref, computed, onUnmounted } from 'vue'
+  import { differenceWith, isEqual } from 'lodash'
   import { CirclePlus, Edit } from '@element-plus/icons-vue'
+  import { global, useMyConfirmDialog } from '@/shared/composables'
   import { useOrdersStore, useOrdersService, OrdersProductsConstructor } from '@/entities/orders'
   import { OrdersProductsList } from '@/entities/products'
   import { BurgerList, BurgerForm } from '@/entities/burger'
 
+  const confirmDialog = useMyConfirmDialog()
   const ordersStore = useOrdersStore()
   const ordersService = useOrdersService()
 
@@ -38,6 +41,45 @@
     dialog.value = false
   }
 
+  // Кнопка сохранения
+  const hasChanges = computed(() => {
+    if (ordersStore.oldOrder.ordersProducts.length === ordersStore.activeOrder.ordersProducts.length) {
+      return differenceWith(ordersStore.oldOrder.ordersProducts, ordersStore.activeOrder.ordersProducts, isEqual).length
+    }
+    return ordersStore.activeOrder.ordersProducts.length !== ordersStore.oldOrder.ordersProducts.length
+  })
+  const disabled = computed(() => {
+    const correctBurgersLength: boolean = ordersStore.activeOrder.burgers.length >= 1
+    return !correctBurgersLength || (!hasChanges.value && props.mode === 'edit')
+  })
+
+  const save = async () => {
+    const message = global.i18n?.t('orders.form.edit.confirm') ?? ''
+    switch (props.mode) {
+      // Создать заказ
+      case 'create':
+        await ordersService.createOrder(ordersStore.activeOrder)
+        await ordersService.setOrderList()
+        close()
+        break
+      // Изменить заказ
+      case 'edit':
+        confirmDialog({
+          message: message,
+          onConfirm: async () => {
+            if (props.orderId)
+              await ordersService.editOrder({
+                id: props.orderId,
+                ordersProducts: ordersStore.activeOrder.ordersProducts
+              })
+            await ordersService.setOrderList()
+            close()
+          }
+        })
+        break
+    }
+  }
+
   onUnmounted(() => ordersStore.clearActiveOrder())
 </script>
 
@@ -64,14 +106,33 @@
         v-if="dialog"
         class="order-form"
       >
-        <div class="order-form__lists">
-          <BurgerList />
-          <div class="lists__burger-action">
-            <BurgerForm mode="create" />
+        <div class="order-form__body">
+          <div class="order-form__lists">
+            <!-- Список бургеров и кнпока создания -->
+            <BurgerList />
+            <div class="lists__burger-action">
+              <BurgerForm mode="create" />
+            </div>
+            <!-- Конструктор продуктов -->
+            <OrdersProductsConstructor />
           </div>
-          <OrdersProductsConstructor />
+          <!-- Список продуктов -->
+          <OrdersProductsList />
         </div>
-        <OrdersProductsList />
+
+        <!-- Стоимость и сохранить -->
+        <div class="order-form__action">
+          <div>
+            <span>{{ $t('orders.form.price', { number: ordersStore.activeOrder.price }) }}</span>
+          </div>
+          <el-button
+            type="success"
+            :disabled="disabled"
+            @click="save"
+          >
+            {{ $t(`orders.form.${props.mode}.saveButton`) }}
+          </el-button>
+        </div>
       </div>
     </el-dialog>
   </teleport>
@@ -80,7 +141,19 @@
 <style lang="scss" scoped>
   .order-form {
     display: flex;
+    flex-direction: column;
+    @include mixins.no__copy();
+  }
+  .order-form__body {
+    display: flex;
     justify-content: space-between;
+  }
+  .order-form__action {
+    @include mixins.pt(10px);
+    @include mixins.mt(10px);
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid colors.$bg-color-overlay;
   }
   .order-form__lists {
     @include mixins.mr(20px);
