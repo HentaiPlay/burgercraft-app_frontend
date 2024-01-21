@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { computed } from 'vue'
   import { Select, Timer, Dish, CloseBold } from '@element-plus/icons-vue'
-  import { OrderForm, useOrdersStore } from '@/entities/orders'
+  import { OrderForm, OrderStatusSwitcher, useOrdersStore } from '@/entities/orders'
   import { StatusOrderEnum } from '@/entities/orders/model/types'
 
   const ordersStore = useOrdersStore()
@@ -39,8 +39,18 @@
 
 <template>
   <el-table :data="ordersStore.orderList">
+    <!-- Код заказа -->
+    <el-table-column
+      :label="$t('orders.table.code')"
+      prop="code"
+      width="100"
+    />
+
     <!-- Статус -->
-    <el-table-column :label="$t('orders.table.status')">
+    <el-table-column
+      :label="$t('orders.table.status')"
+      width="200"
+    >
       <template #default="scope">
         <el-tag
           :type="color(scope.row.status)"
@@ -51,12 +61,6 @@
         </el-tag>
       </template>
     </el-table-column>
-
-    <!-- Код заказа -->
-    <el-table-column
-      :label="$t('orders.table.code')"
-      prop="code"
-    />
 
     <!-- Дата последнего обновления -->
     <el-table-column
@@ -73,16 +77,23 @@
       </template>
     </el-table-column>
 
-    <!-- Редактировать -->
+    <!-- Действия -->
     <el-table-column
       :label="$t('orders.table.actions')"
       prop="id"
       align="right"
     >
       <template #default="scope">
+        <!-- Смена статуса -->
+        <OrderStatusSwitcher
+          :id="scope.row.id"
+          :status="scope.row.status"
+        />
+        <!-- Редактировать -->
         <OrderForm
           mode="edit"
           :order-id="scope.row.id"
+          :status="scope.row.status"
         />
       </template>
     </el-table-column>
