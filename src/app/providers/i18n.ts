@@ -11,6 +11,7 @@ export const i18n = createI18n<[MessageSchema], LanguageList>({
   fallbackLocale: 'en',
   legacy: false,
   globalInjection: true,
+  warnHtmlMessage: false,
   messages: {
     ru: ru,
     en: en
