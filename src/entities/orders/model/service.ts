@@ -1,4 +1,5 @@
 import { useOrdersApi, useOrdersStore } from '@/entities/orders'
+import { ICreateOrderDTO, IUpdateOrderDTO } from './types'
 
 export default function useOrdersService() {
   const ordersApi = useOrdersApi()
@@ -17,6 +18,14 @@ export default function useOrdersService() {
         .getOrder(id)
         .then((res) => ordersStore.setActiveOrder(res.data))
         .catch((err) => console.log(err))
+    },
+
+    createOrder: async (dto: ICreateOrderDTO) => {
+      await ordersApi.createOrder(dto).catch((err) => console.log(err))
+    },
+
+    editOrder: async (dto: IUpdateOrderDTO) => {
+      await ordersApi.updateOrder(dto).catch((err) => console.log(err))
     }
   }
 }
