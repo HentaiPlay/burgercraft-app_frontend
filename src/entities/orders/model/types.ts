@@ -12,10 +12,10 @@ export enum StatusOrderEnum {
 // Типы получаемых данных
 export interface IOrderDTO {
   id: number
-  price: number
-  code: string
+  price?: number
+  code?: string
   status: StatusOrderEnum
-  isSaled: boolean
+  isSaled?: boolean
   burgers: IBurgerDTO[]
   ordersProducts: Array<IOrderProduct>
 }
@@ -55,6 +55,7 @@ export interface IChangeStatusDTO {
 // Тип для формы
 export interface IActiveOrderDTO {
   id?: number | null
+  price?: number
   burgers: IBurgerDTO[]
   ordersProducts: IOrderProduct[]
 }
