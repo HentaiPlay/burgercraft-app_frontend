@@ -137,6 +137,7 @@
       "edit": {
         "title": "Edit burger",
         "saveButton": "Save",
+        "confirm": "Are you sure you want to save the changes",
         "status": {
           "success": "Success updated burger",
           "error": "Error updating burger"
@@ -164,7 +165,7 @@
         "subtitle": "To create an order you need at least {number}"
       },
       "confirm": {
-        "remove": "Are you sure you want to remove the burger from the current order"
+        "remove": "Are you sure you want to remove the burger"
       }
     }
   },
@@ -191,11 +192,13 @@
       "edit": {
         "title": "Edit order",
         "button": "Edit",
+        "confirm": "Are you sure you want to save the changes",
         "saveButton": "Save"
       },
       "constructor": {
         "title": "Order's products"
-      }
+      },
+      "price": "Price: {number}"
     }
   },
   "footer": {
