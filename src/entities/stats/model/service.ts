@@ -1,6 +1,6 @@
-import { AxiosResponse } from 'axios'
 import { useStatsApi } from '@/entities/stats'
 import { useStatsStore } from '@/entities/stats'
+
 const statsApi = useStatsApi()
 const statsStore = useStatsStore()
 
@@ -12,6 +12,11 @@ export default function useStatsService() {
         .then((res) => statsStore.setStats(res.data))
         .catch((e) => console.log(e))
     },
-    getStatsByUser: async (id: number): Promise<AxiosResponse<number>> => await statsApi.getStatsByUser(id)
+    getStatsByUser: async () => {
+      await statsApi
+        .getStatsByUser()
+        .then((res) => statsStore.setSum(res.data))
+        .catch((err) => console.log(err))
+    }
   }
 }
