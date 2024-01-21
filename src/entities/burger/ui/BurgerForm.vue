@@ -112,7 +112,10 @@
         <div class="burger-form__action">
           <!-- Стоимость и сообщение о правилах валидации -->
           <div>
-            <p>{{ $t('burger.form.price') }}: {{ burgerStore.burger.price }}</p>
+            <div class="action__price">
+              <span>{{ $t('burger.form.price') }}: {{ burgerStore.burger.price }}</span>
+              <el-icon><Coin /></el-icon>
+            </div>
             <el-text
               v-if="!hasCorrectLength"
               type="warning"
@@ -156,5 +159,13 @@
     @include mixins.mt(10px);
     @include mixins.pt(10px);
     border-top: 1px solid colors.$bg-color-overlay;
+  }
+  .action__price {
+    display: flex;
+    align-items: center;
+    @include mixins.my(10px);
+    i {
+      @include mixins.ml(10px);
+    }
   }
 </style>
