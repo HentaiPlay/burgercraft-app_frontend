@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { watch } from 'vue'
   import { useDark, useToggle } from '@vueuse/core'
-  import { Moon, Sunny } from '@element-plus/icons-vue'
+  import { Moon, Sunny, SwitchButton } from '@element-plus/icons-vue'
   import { MenuWidget } from '@/widgets/menu'
   import { UserCard } from '@/entities/user'
   import { useAuthService } from '@/entities/auth'
@@ -59,7 +59,12 @@
         />
       </div>
       <!-- Логаут -->
-      <el-button @click="authService.logout">{{ $t('aside.buttonLogout') }}</el-button>
+      <el-button
+        :icon="SwitchButton"
+        @click="authService.logout"
+      >
+        {{ $t('aside.buttonLogout') }}
+      </el-button>
     </div>
   </el-aside>
 </template>
