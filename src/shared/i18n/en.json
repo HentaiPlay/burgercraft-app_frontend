@@ -180,7 +180,11 @@
     "switchStatus": {
       "title": "Сhange of status",
       "button": "Сhange status",
-      "confirm": "Сhange status on \"{status}\""
+      "confirm": "Сhange status on \"{status}\"",
+      "status": {
+        "success": "Status updated successfully",
+        "error": "Error updating order"
+      }
     },
     "table": {
       "status": "Status",
@@ -192,13 +196,21 @@
       "create": {
         "title": "Create order",
         "button": "Create order",
-        "saveButton": "Create"
+        "saveButton": "Create",
+        "status": {
+          "success": "Order created successfully",
+          "error": "Error when creating an order"
+        }
       },
       "edit": {
         "title": "Edit order",
         "button": "Edit",
         "confirm": "Are you sure you want to save the changes",
-        "saveButton": "Save"
+        "saveButton": "Save",
+        "status": {
+          "success": "The order was successfully updated",
+          "error": "Error updating order"
+        }
       },
       "constructor": {
         "title": "Order's products"
