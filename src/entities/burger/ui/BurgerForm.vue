@@ -1,11 +1,13 @@
 <script setup lang="ts">
   import { ref, computed, onMounted, onUnmounted } from 'vue'
-  import { isEqual } from 'lodash'
+  import { differenceWith, isEqual } from 'lodash'
+  import { global, useMyConfirmDialog } from '@/shared/composables'
   import { Burger } from '@element-plus/icons-vue'
   import { useBurgerStore, useBurgerService, BurgerConstructor } from '@/entities/burger'
   import { useProductsStore, useProductsService, IngredientList } from '@/entities/products'
   import { IBurgerDTO } from '@/entities/burger/model/types'
 
+  const confirmDialog = useMyConfirmDialog()
   const productsStore = useProductsStore()
   const productsService = useProductsService()
   const burgerStore = useBurgerStore()
@@ -29,21 +31,38 @@
     dialog.value = false
   }
 
+  // Правила валидации
+  const hasChanges = computed(() => {
+    if (burgerStore.oldBurger.ingredients.length === burgerStore.burger.ingredients.length) {
+      return differenceWith(burgerStore.oldBurger.ingredients, burgerStore.burger.ingredients, isEqual).length
+    }
+    return burgerStore.oldBurger.ingredients.length !== burgerStore.burger.ingredients.length
+  })
+  const hasCorrectLength = computed(
+    () => burgerStore.allIngredients.length >= 6 && burgerStore.allIngredients.length <= 15
+  )
+
+  // Кнопка сохранения
   const disabled = computed(() => {
-    const hasCorrectLength: boolean = burgerStore.allIngredients.length >= 6 && burgerStore.allIngredients.length <= 15
-    const hasChanges = !isEqual(burgerStore.oldBurger, burgerStore.burger)
-    return !hasCorrectLength || (!hasChanges && props.mode === 'edit')
+    return !hasCorrectLength.value || (!hasChanges.value && props.mode === 'edit')
   })
   const save = async () => {
+    const message = global.i18n?.t('burger.form.edit.confirm') ?? ''
     switch (props.mode) {
       case 'create':
         await burgerService.createBurger()
+        close()
         break
       case 'edit':
-        await burgerService.editBurger(props.index)
+        confirmDialog({
+          message: message,
+          onConfirm: async () => {
+            await burgerService.editBurger(props.index)
+            close()
+          }
+        })
         break
     }
-    close()
   }
 
   onMounted(async () => {
@@ -94,7 +113,12 @@
           <!-- Стоимость и сообщение о правилах валидации -->
           <div>
             <p>{{ $t('burger.form.price') }}: {{ burgerStore.burger.price }}</p>
-            <p v-if="disabled">{{ $t('rules.min_max', { min: 6, max: 15 }) }}</p>
+            <el-text
+              v-if="!hasCorrectLength"
+              type="warning"
+            >
+              {{ $t('rules.min_max', { min: 6, max: 15 }) }}
+            </el-text>
           </div>
           <!-- Сохранить -->
           <el-button
