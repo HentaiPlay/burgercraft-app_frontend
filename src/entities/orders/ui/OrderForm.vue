@@ -1,11 +1,12 @@
 <script setup lang="ts">
   import { ref, computed, onUnmounted } from 'vue'
   import { differenceWith, isEqual } from 'lodash'
-  import { CirclePlus, Edit } from '@element-plus/icons-vue'
+  import { CirclePlus, EditPen } from '@element-plus/icons-vue'
   import { global, useMyConfirmDialog } from '@/shared/composables'
   import { useOrdersStore, useOrdersService, OrdersProductsConstructor } from '@/entities/orders'
   import { OrdersProductsList } from '@/entities/products'
   import { BurgerList, BurgerForm } from '@/entities/burger'
+  import { StatusOrderEnum } from '../model/types'
 
   const confirmDialog = useMyConfirmDialog()
   const ordersStore = useOrdersStore()
@@ -14,16 +15,33 @@
   const props = defineProps<{
     mode: 'create' | 'edit'
     orderId?: number
+    status?: StatusOrderEnum
   }>()
+
+  // Кнопка модалки формы
+  const disabledForm = computed(() => {
+    const isUneditStatus = props.status
+      ? [StatusOrderEnum.READY, StatusOrderEnum.CANCELED].includes(props.status)
+      : false
+    return props.mode === 'edit' && isUneditStatus
+  })
 
   const icon = computed(() => {
     switch (props.mode) {
       case 'create':
         return CirclePlus
       case 'edit':
-        return Edit
+        return EditPen
       default:
         return CirclePlus
+    }
+  })
+  const size = computed(() => {
+    switch (props.mode) {
+      case 'edit':
+        return 'small'
+      default:
+        return 'default'
     }
   })
 
@@ -88,6 +106,8 @@
   <el-button
     @click="open"
     :icon="icon"
+    :size="size"
+    :disabled="disabledForm"
   >
     {{ $t(`orders.form.${props.mode}.button`) }}
   </el-button>
@@ -97,7 +117,7 @@
     <el-dialog
       v-model="dialog"
       :title="$t(`orders.form.${props.mode}.title`)"
-      width="900px"
+      width="900"
       top="8vh"
       @close="close"
     >
@@ -122,8 +142,9 @@
 
         <!-- Стоимость и сохранить -->
         <div class="order-form__action">
-          <div>
+          <div class="actions__price">
             <span>{{ $t('orders.form.price', { number: ordersStore.activeOrder.price }) }}</span>
+            <el-icon><Coin /></el-icon>
           </div>
           <el-button
             type="success"
@@ -154,6 +175,13 @@
     display: flex;
     justify-content: space-between;
     border-top: 1px solid colors.$bg-color-overlay;
+    .actions__price {
+      display: flex;
+      align-items: center;
+      i {
+        @include mixins.ml(10px);
+      }
+    }
   }
   .order-form__lists {
     @include mixins.mr(20px);
