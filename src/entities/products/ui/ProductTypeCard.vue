@@ -60,10 +60,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    @include mixins.pa(15px);
+    @include mixins.pa(10px);
     @include mixins.no__copy();
     color: white !important;
-    background-color: colors.$bg-color-page;
+    font-size: 0.9em;
     border-bottom: 1px solid colors.$bg-color-overlay;
     transition: 0.3s;
     &:hover {
@@ -80,12 +80,12 @@
   }
   // TODO: вынести в общие стили с переменными высоту и паддинги тела
   .product-type-card__body {
-    height: 250px;
+    height: 200px;
     display: grid;
     gap: 20px;
     justify-content: start !important;
     justify-items: center;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 2fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 2fr));
     @include mixins.pa(20px);
     transition: max-height 3s ease;
     overflow: hidden;
