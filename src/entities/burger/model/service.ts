@@ -1,7 +1,6 @@
 import { useBurgerApi, useBurgerStore } from '@/entities/burger'
 import { useOrdersStore, useOrdersService } from '@/entities/orders'
-import { useMyNotification } from '@/shared/composables'
-import { global } from '@/shared/composables'
+import { global, useMyNotification } from '@/shared/composables'
 import { ICreateBurgerDTO, IUpdateBurgerDTO } from './types'
 
 export default function useBurgerService() {
