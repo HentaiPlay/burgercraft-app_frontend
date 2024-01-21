@@ -4,6 +4,6 @@ export default function useStatsApi() {
   return {
     getStats: async () => await apiClient.get('stats'),
 
-    getStatsByUser: async (id: number) => await apiClient.get(`stats/${id}`)
+    getStatsByUser: async () => await apiClient.get('stats/sum')
   }
 }
