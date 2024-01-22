@@ -1,8 +1,12 @@
 {
   "name": "burgercraft-app_frontend",
-  "private": false,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "description": "This is my demo pet project =)",
+  "author": "https://github.com/HentaiPlay",
+  "homepage": "https://github.com/HentaiPlay/burgercraft-app_frontend",
+  "private": true,
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "vite --host",
     "build": "vue-tsc && vite build",
