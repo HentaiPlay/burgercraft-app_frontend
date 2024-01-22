@@ -70,6 +70,12 @@
     "unknown": "unknown"
   },
   "profile": {
+    "info": {
+      "warning": "Attention, the project is still in development, there is no adaptation, optimization or serious business logic, refactoring is needed in some places =)",
+      "welcome": "Welcome!",
+      "admin": "<b>You are an - Administrator</b>, your task is to regulate prices for products and their assortment, as well as monitor the statistics of \"Crafters\".<br>You can also add new users, including administrators.<br> You can add new products and edit existing ones, but you cannot create or interact with crafter orders in any way.",
+      "crafter": "<b>You are a - Crafter</b>, your task is to accept customer orders, creating them in the system. There is a guide to creating an order on the orders page.<br>You create burgers and accompanying products for the order, edit them if necessary, and change order statuses so that customers can track their orders.<br>You have access to the product interface for reference information, but you can't influence the price or create a new product."
+    },
     "buttonRegister": "Add user",
     "buttonEdit": "Edit",
     "buttonRemove": "Remove",
