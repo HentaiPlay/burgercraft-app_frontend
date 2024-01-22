@@ -39,6 +39,12 @@ export default function useBurgerService() {
 
         // Обновляем состояние активного заказа
         if (success) {
+          // Выводим уведомление
+          myNotify({
+            title: global.i18n?.t('notify.success') ?? 'Успех',
+            type: 'success',
+            message: global.i18n?.t('burger.form.create.status.success') ?? ''
+          })
           await ordersService.setOrder(ordersStore.activeOrder.id)
         } else {
           return
@@ -46,13 +52,6 @@ export default function useBurgerService() {
       } else {
         ordersStore.addBurger(burgerStore.burger)
       }
-
-      // Выводим уведомление
-      myNotify({
-        title: global.i18n?.t('notify.success') ?? 'Успех',
-        type: 'success',
-        message: global.i18n?.t('burger.form.create.status.success') ?? ''
-      })
     },
 
     // Обновление бургера
@@ -76,6 +75,12 @@ export default function useBurgerService() {
 
         // Обновляем состояние активного заказа
         if (success) {
+          // Выводим уведомление
+          myNotify({
+            title: global.i18n?.t('notify.success') ?? 'Успех',
+            type: 'success',
+            message: global.i18n?.t('burger.form.edit.status.success') ?? ''
+          })
           await ordersService.setOrder(ordersStore.activeOrder.id)
         } else {
           return
@@ -85,13 +90,6 @@ export default function useBurgerService() {
           ordersStore.editBurger(burgerStore.burger, index)
         }
       }
-
-      // Выводим уведомление
-      myNotify({
-        title: global.i18n?.t('notify.success') ?? 'Успех',
-        type: 'success',
-        message: global.i18n?.t('burger.form.edit.status.success') ?? ''
-      })
     },
 
     // Удаление бургера
@@ -114,6 +112,12 @@ export default function useBurgerService() {
 
         // Обновляем состояние активного заказа
         if (success) {
+          // Выводим уведомление
+          myNotify({
+            title: global.i18n?.t('notify.success') ?? 'Успех',
+            type: 'success',
+            message: global.i18n?.t('burger.form.remove.status.success') ?? ''
+          })
           await ordersService.setOrder(ordersStore.activeOrder.id)
         } else {
           return
@@ -121,13 +125,6 @@ export default function useBurgerService() {
       } else {
         ordersStore.removeBurger(index)
       }
-
-      // Выводим уведомление
-      myNotify({
-        title: global.i18n?.t('notify.success') ?? 'Успех',
-        type: 'success',
-        message: global.i18n?.t('burger.form.remove.status.success') ?? ''
-      })
     }
   }
 }
