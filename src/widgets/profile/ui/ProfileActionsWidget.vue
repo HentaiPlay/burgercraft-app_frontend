@@ -40,7 +40,7 @@
     border-bottom: solid 1px colors.$bg-color-overlay;
     .delimiter {
       @include mixins.pl(20px);
-      @include mixins.ml(20px);
+      @include mixins.mx(20px);
       border-left: 1px solid colors.$bg-color-overlay;
     }
     .list__add-user {
