@@ -1,0 +1,10 @@
+// ### App Widgets
+
+// Header
+$header-height: 60px;
+
+// Footer
+$footer-height: 60px;
+
+// Main
+$main-height: calc(100vh - ($header-height + $footer-height));

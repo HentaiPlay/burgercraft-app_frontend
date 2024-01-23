@@ -1,0 +1,34 @@
+@use '@assets/styles/_colors.scss' as colors;
+
+// Input
+$input: (
+  'text-color': colors.$primary,
+  'hover-border': colors.$primary,
+  'focus-border': colors.$primary,
+  'transparent-border': 0 0 0 4px transparent inset,
+  'border-color': colors.$primary,
+  'border-radius': 0.4rem,
+  'bg-color': colors.$bg-color,
+  'icon-color': colors.$primary,
+  'placeholder-color': colors.$info,
+  'hover-border-color': colors.$bg-color-page,
+  'clear-hover-color': colors.$primary,
+  'focus-border-color': colors.$primary,
+  'width': 100%
+);
+$input-disabled: (
+  'fill': getCssVar('disabled-bg-color'),
+  'border': colors.$bg-color-overlay,
+  'text-color': colors.$bg-color-overlay,
+  'placeholder-color': colors.$bg-color-overlay
+);
+$input-font-size: (
+  'large': 16px,
+  'default': 16px,
+  'small': 14px
+);
+$input-padding-horizontal: (
+  'large': 36px,
+  'default': 28px,
+  'small': 18px
+);

@@ -1,0 +1,7 @@
+// @use "../colors-themes";
+@use './colors/dark.colors' as colors;
+
+@forward 'element-plus/theme-chalk/src/dark/var.scss' with (
+  $colors: colors.$colors,
+  $bg-color: colors.$bg-color
+);

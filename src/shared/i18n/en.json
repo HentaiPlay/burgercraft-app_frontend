@@ -1,0 +1,232 @@
+{
+  "routes": {
+    "home": "Profile",
+    "test": "Test",
+    "auth": "Authorization",
+    "orders": "Orders",
+    "products": "Products",
+    "stats": "Stats"
+  },
+  "rules": {
+    "required": "Required field",
+    "min": "Minimum {min}",
+    "min_max": "Minimum {min} - maximum {max}"
+  },
+  "notify": {
+    "success": "Success",
+    "error": "Error"
+  },
+  "confirm": {
+    "title": "Сonfirm the action",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  },
+  "dropZone": {
+    "info": "Drag here"
+  },
+  "authForm": {
+    "namePlaceholder": "Type nickname",
+    "passwordPlaceholder": "Type password",
+    "button": "Sign in",
+    "info": {
+      "line1": "Registration is only available to administrators",
+      "line2": "An account is created in its profile interface"
+    }
+  },
+  "registerForm": {
+    "title": "Registration",
+    "button": "Register",
+    "info": "The user adds an avatar himself when editing his profile",
+    "rolePlaceholder": "Choose role",
+    "roleItems": {
+      "admin": "Admin",
+      "crafter": "Crafter"
+    },
+    "status": {
+      "success": "User \"{nickname}\" has been successfully registered",
+      "error": "Failed to register user \"{nickname}\""
+    }
+  },
+  "editForm": {
+    "title": "Edit profile",
+    "namePlaceholder": "Type new nickname",
+    "passwordPlaceholder": "Type new password",
+    "button": "Save",
+    "status": {
+      "success": "Your profile has been successfully updated",
+      "error": "Failed to update profile"
+    }
+  },
+  "aside": {
+    "info": {
+      "line1": "There is no multi language on the server yet",
+      "line2": "Therefore the content is not fully translated"
+    },
+    "buttonLogout": "Logout"
+  },
+  "userCard": {
+    "position": "Position",
+    "alt": "User avatar",
+    "unknown": "unknown"
+  },
+  "profile": {
+    "info": {
+      "warning": "Attention, the project is still in development, there is no adaptation, optimization or serious business logic, refactoring is needed in some places =)",
+      "welcome": "Welcome!",
+      "admin": "<b>You are an - Administrator</b>, your task is to regulate prices for products and their assortment, as well as monitor the statistics of \"Crafters\".<br>You can also add new users, including administrators.<br> You can add new products and edit existing ones, but you cannot create or interact with crafter orders in any way.",
+      "crafter": "<b>You are a - Crafter</b>, your task is to accept customer orders, creating them in the system. There is a guide to creating an order on the orders page.<br>You create burgers and accompanying products for the order, edit them if necessary, and change order statuses so that customers can track their orders.<br>You have access to the product interface for reference information, but you can't influence the price or create a new product."
+    },
+    "buttonRegister": "Add user",
+    "buttonEdit": "Edit",
+    "buttonRemove": "Remove",
+    "confirmRemove": "Are you sure you want to delete your profile"
+  },
+  "stats": {
+    "buttonLoad": "Update data",
+    "table": {
+      "crafterId": "ID crafter",
+      "crafterName": "Nickname crafter",
+      "amountOrders": "Amount oreders",
+      "sum": "Sum",
+      "loading": "Data loading in progress ..."
+    }
+  },
+  "products": {
+    "select": {
+      "placeholder": "Choose product type"
+    },
+    "buttonCreate": "Create",
+    "types": {
+      "all": "All product types",
+      "burger_ingredient": "Burger ingredients",
+      "snack": "Snacks",
+      "sauce": "Sauces",
+      "drink": "Drinks"
+    },
+    "productCard": {
+      "price": "Price",
+      "alt": "Product image"
+    },
+    "form": {
+      "create": {
+        "title": "Creating product",
+        "button": "Create",
+        "success": "Product successfully created"
+      },
+      "edit": {
+        "title": "Edit product",
+        "button": "Save",
+        "success": "Product successfully updated"
+      },
+      "namePlaceholder": "Type name",
+      "typePlaceholder": "Choose product type",
+      "pricePlaceholder": "Type price"
+    },
+    "ingredientList": {
+      "title": "Ingredients"
+    },
+    "ordersProducts": {
+      "title": "Available products"
+    }
+  },
+  "burger": {
+    "form": {
+      "create": {
+        "title": "Create burger",
+        "button": "Create burger",
+        "saveButton": "Create",
+        "status": {
+          "success": "Burger added successfully",
+          "error": "Error adding burger"
+        }
+      },
+      "edit": {
+        "title": "Edit burger",
+        "saveButton": "Save",
+        "confirm": "Are you sure you want to save the changes",
+        "status": {
+          "success": "Success updated burger",
+          "error": "Error updating burger"
+        }
+      },
+      "remove": {
+        "status": {
+          "success": "Success removed burger",
+          "error": "Error removing burger"
+        }
+      },
+      "constructor": {
+        "title": "Burger"
+      },
+      "price": "Price"
+    },
+    "list": {
+      "title": "Burgers",
+      "card": {
+        "count": "In-ds {number}pc",
+        "price": "Price {number}"
+      },
+      "info": {
+        "title": "Empty list",
+        "subtitle": "To create an order you need at least {number}"
+      },
+      "confirm": {
+        "remove": "Are you sure you want to remove the burger"
+      }
+    }
+  },
+  "orders": {
+    "info": "<b>Directory</b> <br> You can cancel an order only while it is in the \"Accepted\" status. <br> Orders are deleted at the end of the working day. <br> When editing an existing order, the burgers are changed immediately.<br> When changing the order condition to \"Ready\", a bell sound is made (for the client) when canceling, there is also a characteristic sound.",
+    "counterSum": "Sold today: {number}",
+    "status": {
+      "accepted": "Accepted",
+      "cooking": "Cooking",
+      "ready": "Ready",
+      "canceled": "Canceled"
+    },
+    "switchStatus": {
+      "title": "Сhange of status",
+      "button": "Сhange status",
+      "confirm": "Сhange status on \"{status}\"",
+      "status": {
+        "success": "Status updated successfully",
+        "error": "Error updating order"
+      }
+    },
+    "table": {
+      "status": "Status",
+      "code": "Code",
+      "updatedAt": "Date of change",
+      "actions": "Actions"
+    },
+    "form": {
+      "create": {
+        "title": "Create order",
+        "button": "Create order",
+        "saveButton": "Create",
+        "status": {
+          "success": "Order created successfully",
+          "error": "Error when creating an order"
+        }
+      },
+      "edit": {
+        "title": "Edit order",
+        "button": "Edit",
+        "confirm": "Are you sure you want to save the changes",
+        "saveButton": "Save",
+        "status": {
+          "success": "The order was successfully updated",
+          "error": "Error updating order"
+        }
+      },
+      "constructor": {
+        "title": "Order's products"
+      },
+      "price": "Price: {number}"
+    }
+  },
+  "footer": {
+    "line1": "This is my educational demonstration project",
+    "line2": "All media files are taken from the Internet, all rights belong to their owners"
+  }
+}
