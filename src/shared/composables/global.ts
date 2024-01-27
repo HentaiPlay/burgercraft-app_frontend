@@ -18,4 +18,5 @@ const global: GlobalComposable = {
   isReady: isReady
 }
 
+// TODO: так как это не композабл нужно вынести в другой слой
 export default global
